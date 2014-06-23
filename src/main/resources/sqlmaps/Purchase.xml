@@ -37,6 +37,33 @@
 			</isNotNull>
 		</dynamic>
 	</sql>
+	
+	<sql id="whereConditionPurchaseByPage">
+		<dynamic prepend="WHERE">
+			<isNotNull property="condition">
+				<isNotNull property="condition.id" prepend="AND">
+			<![CDATA[
+	                    id = #condition.id#
+			]]>
+				</isNotNull>
+				<isNotNull property="condition.name" prepend="AND">
+			<![CDATA[
+	                    name = #condition.name#
+			]]>
+				</isNotNull>
+				<isNotNull property="condition.orgId" prepend="AND">
+			<![CDATA[
+	                    org_id = #condition.orgId#
+			]]>
+				</isNotNull>
+			</isNotNull>
+			<isNotNull property="sort">    
+		        <iterate property="sor.entrySet" conjunction="," close=")" open=" marketId in (">    
+		            #marketIdList[]#    
+		        </iterate>    
+		    </isNotNull>
+		</dynamic>
+	</sql>
 
 	<select id="findPurchase" parameterClass="Purchase" resultMap="rm_Purchase">
         <![CDATA[
@@ -103,6 +130,13 @@
 	</delete>
 
 	<select id="countPurchase" resultClass="long" parameterClass="map">
+  		<![CDATA[
+            SELECT count(*) FROM purchase
+        ]]>
+		<include refid="whereConditionPurchase" />
+	</select>
+	
+	<select id="findPurchaseByPage" resultClass="Purchase" parameterClass="map">
   		<![CDATA[
             SELECT count(*) FROM purchase
         ]]>

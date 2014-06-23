@@ -82,7 +82,7 @@ var pup = function ($) {
                             $.ajax({
                                 type: dataRequestType,
                                 dataType: "json",
-                                cache: dataCache,
+                                cache: false,
                                 url: contextPath + dataUrl,
                                 data : dataParams
                             }).done(function(json) {
@@ -98,7 +98,8 @@ var pup = function ($) {
                                         if(beforeRender && typeof beforeRender == 'function') {
                                             beforeRender(json);
                                         }
-                                        $(targetSelector).html(baidu.template(htmlData, json) + "");
+                                        
+                                        $(targetSelector).html(baidu.template(htmlData, json));
                                         if(afterRender && typeof afterRender == 'function') {
                                             afterRender(json);
                                         }
@@ -110,7 +111,7 @@ var pup = function ($) {
                             if(beforeRender && typeof beforeRender == 'function') {
                                 beforeRender();
                             }
-                            $(targetSelector).html(baidu.template(htmlData));
+                            $(targetSelector).html(htmlData);
                             if(afterRender && typeof afterRender == 'function') {
                                 afterRender();
                             }

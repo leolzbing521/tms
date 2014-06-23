@@ -245,9 +245,16 @@ public class GenericDaoIbatis implements GenericDao {
     }
     
     @Override
-    public <T extends BaseModel> List<T> findByNamedQuery(String queryName,
+    public <T extends BaseModel> List<T> findByNamedAndPageQuery(String queryName,
             Object queryParams, Pagination page, Class<T> claz) {
         return getSqlMapClientTemplate(IbatisDaoUtils.getDbName(claz), DataSourceType.SELECT).queryForList(queryName, queryParams,
+                page.getSkip(),
+                page.getPageCount());
+    }
+    
+    @Override
+    public <T extends BaseModel> List<T> findByNamedAndPageQuery(String queryName, Pagination page, Class<T> claz) {
+        return getSqlMapClientTemplate(IbatisDaoUtils.getDbName(claz), DataSourceType.SELECT).queryForList(queryName,
                 page.getSkip(),
                 page.getPageCount());
     }
@@ -263,9 +270,17 @@ public class GenericDaoIbatis implements GenericDao {
     }
 
     @Override
-    public <T> List<T> findByNamedQuery(String queryName, Object queryParamsObject,
+    public <T> List<T> findByNamedAndPageQuery(String queryName, Object queryParamsObject,
             Pagination page, Class<? extends BaseModel> claz, Class<T> returnType) {
         return getSqlMapClientTemplate(IbatisDaoUtils.getDbName(claz), DataSourceType.SELECT).queryForList(queryName, queryParamsObject,
+                page.getSkip(),
+                page.getPageCount());
+    }
+    
+    @Override
+    public <T> List<T> findByNamedAndPageQuery(String queryName,
+            Pagination page, Class<? extends BaseModel> claz, Class<T> returnType) {
+        return getSqlMapClientTemplate(IbatisDaoUtils.getDbName(claz), DataSourceType.SELECT).queryForList(queryName,
                 page.getSkip(),
                 page.getPageCount());
     }

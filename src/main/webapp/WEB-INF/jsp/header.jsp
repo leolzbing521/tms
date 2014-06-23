@@ -73,6 +73,17 @@
 						<li role="presentation"><a role='menuitem', tabindex="-1", href='javascript:pup.template.renderTemplateByKey("example.pageLoad")'>会员管理</a></li>
 					</ul>
 				</li>
+				<li class="dropdown">
+					<a class="dropdown-toggle" href="#", data-toggle="dropdown">
+						授权
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+						<li role="presentation"><a role='menuitem', tabindex="-1", href='javascript:pup.template.renderTemplateByKey("example.pageLoad")'>用户管理</a></li>
+						<li role="presentation"><a role='menuitem', tabindex="-1", href='javascript:pup.template.renderTemplateByKey("example.pageLoad")'>角色管理</a></li>
+						<li role="presentation"><a role='menuitem', tabindex="-1", href='javascript:pup.template.renderTemplateByKey("example.pageLoad")'>菜单管理</a></li>
+					</ul>
+				</li>
         	</ul>
         	<c:if test="${sessionScope.user }">
 				<ul class="nav navbar-nav navbar-right">

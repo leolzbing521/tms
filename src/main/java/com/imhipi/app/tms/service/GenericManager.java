@@ -127,13 +127,17 @@ public interface GenericManager {
     
     <T extends BaseModel> List<T> findByNamedQuery(String queryName, Object queryParamsObject, T baseModel);
     
-    <T extends BaseModel> List<T> findByNamedQuery(String queryName, Object queryParamsObject, Pagination page, Class<T> claz);
+    <T extends BaseModel> List<T> findByNamedAndPageQuery(String queryName, Object queryParamsObject, Pagination page, Class<T> claz);
+    
+    <T extends BaseModel> List<T> findByNamedAndPageQuery(String queryName, Pagination page, Class<T> claz);
     
     <T> List<T> findByNamedQuery(String queryName, Object queryParamsObject, BaseModel baseModel, Class<T> returnType);
     
     <T> List<T> findByNamedQuery(String queryName, Object queryParamsObject, Class<? extends BaseModel> claz, Class<T> returnType);
 
-    <T> List<T> findByNamedQuery(String queryName, Object queryParamsObject, Pagination page, Class<? extends BaseModel> claz, Class<T> returnType);
+    <T> List<T> findByNamedAndPageQuery(String queryName, Object queryParamsObject, Pagination page, Class<? extends BaseModel> claz, Class<T> returnType);
+    
+    <T> List<T> findByNamedAndPageQuery(String queryName, Pagination page, Class<? extends BaseModel> claz, Class<T> returnType);
     
     <T> List<T> findSingleColumnByNameQuery(String queryName, Map<String, Object> queryParams, Class<? extends BaseModel> claz, Class<T> returnType);
     

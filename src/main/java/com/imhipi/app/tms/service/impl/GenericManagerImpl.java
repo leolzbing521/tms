@@ -294,8 +294,13 @@ public class GenericManagerImpl implements GenericManager {
      * {@inheritDoc}
      */
     @Override
-    public <T extends BaseModel> List<T> findByNamedQuery(String queryName, Object queryParams, Pagination page, Class<T> claz) {
-        return genericDao.findByNamedQuery(queryName, queryParams, page, claz);
+    public <T extends BaseModel> List<T> findByNamedAndPageQuery(String queryName, Object queryParams, Pagination page, Class<T> claz) {
+        return genericDao.findByNamedAndPageQuery(queryName, queryParams, page, claz);
+    }
+    
+    @Override
+    public <T extends BaseModel> List<T> findByNamedAndPageQuery(String queryName, Pagination page, Class<T> claz) {
+        return genericDao.findByNamedQuery(queryName, page, claz);
     }
     
     @Override
@@ -309,10 +314,15 @@ public class GenericManagerImpl implements GenericManager {
     }
 
     @Override
-    public <T> List<T> findByNamedQuery(String queryName, Object queryParamsObject, Pagination page, Class<? extends BaseModel> claz, Class<T> returnType) {
-        return genericDao.findByNamedQuery(queryName, queryParamsObject, page, claz, returnType);
+    public <T> List<T> findByNamedAndPageQuery(String queryName, Object queryParamsObject, Pagination page, Class<? extends BaseModel> claz, Class<T> returnType) {
+        return genericDao.findByNamedAndPageQuery(queryName, queryParamsObject, page, claz, returnType);
     }
-
+    
+    @Override
+    public <T> List<T> findByNamedAndPageQuery(String queryName, Pagination page, Class<? extends BaseModel> claz, Class<T> returnType) {
+        return genericDao.findByNamedQuery(queryName, page, claz, returnType);
+    }
+    
     @Override
     public <T> List<T> findSingleColumnByNameQuery(String queryName, Map<String, Object> queryParams, Class<? extends BaseModel> claz, Class<T> returnType) {
         return genericDao.findSingleColumnByNameQuery(queryName, queryParams, claz, returnType);
@@ -337,4 +347,5 @@ public class GenericManagerImpl implements GenericManager {
     public Long save(String insertName, Object queryParams, Class<? extends BaseModel> claz) {
         return genericDao.save(insertName, queryParams, claz);
     }
+
 }

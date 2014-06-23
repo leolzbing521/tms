@@ -1,13 +1,13 @@
 <table class="table mm-box">
 	<tr class="th-inverse">
 		<th>名称</th>
-		<th>分店</th>
+		<th>所属分店</th>
 		<th>采购人</th>
 		<th>采购时间</th>
 		<th>操作</th>
 	</tr>
 	<tbody>
-		<%for(var i=0;i<5;i++){%>
+		<%for(var i=0;i<1;i++){%>
         	<tr>
              	<td>2014_6_45_1</td>
              	<td>商丘分店</td>
@@ -27,10 +27,11 @@
 <div id="purchasePageBar"></div>
 
 <!-- script block -->
-<%
-	alert(page);
-	purchasePagination.bar('#purchasePageBar');
+<script type="text/javascript">
+purchasePagination.bar("#purchasePageBar");
+</script>
 
-%>
+
+
 	
 	

@@ -1,7 +1,5 @@
 package com.imhipi.app.tms.web;
 
-import java.util.Collections;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +36,7 @@ public class PurchaseCtrl {
 		page.setTotal(gm.countTotalNum(new Purchase(), page.getCondition()));
 		
 		model.addAttribute("pagination", page);
-		model.addAttribute("data", Collections.EMPTY_LIST);
+		model.addAttribute("data", gm.findByNamedAndPageQuery("findPurchaseByPage", page, Purchase.class));
 		return "jsonView";
 	}
 
