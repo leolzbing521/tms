@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="OrganizationSQL">
+
+	<typeAlias alias="Organization" type="com.imhipi.app.tms.model.Organization" />
+
+	<resultMap id="rm_Organization" class="Organization">
+		<result property="id" />
+		<result property="name"/>
+		<result property="type"/>
+		<result property="address"/>
+		<result property="tel"/>
+		<result property="parentId" column="parent_id"/>
+		<result property="viewOrder" column="view_order"/>
+		<result property="ctime" column="ctime"/>
+	</resultMap>
+
+	<sql id="whereConditionOrganization">
+		<dynamic prepend="WHERE">
+			<isNotNull property="id" prepend="AND">
+		<![CDATA[
+                    id = #id#
+		]]>
+			</isNotNull>
+			<isNotNull property="name" prepend="AND">
+		<![CDATA[
+                    name = #name#
+		]]>
+			</isNotNull>
+			<isNotNull property="type" prepend="AND">
+		<![CDATA[
+                    type = #type#
+		]]>
+			</isNotNull>
+			<isNotNull property="tel" prepend="AND">
+		<![CDATA[
+                    tel = #tel#
+		]]>
+			</isNotNull>
+			<isNotNull property="parentId" prepend="AND">
+		<![CDATA[
+                    parent_id = #parentId#
+		]]>
+			</isNotNull>
+			order by view_order
+		</dynamic>
+	</sql>
+
+	<select id="findOrganization" parameterClass="Organization" resultMap="rm_Organization">
+        <![CDATA[
+            SELECT * FROM $tableName$
+        ]]>
+		<include refid="whereConditionOrganization" />
+	</select>
+
+	<insert id="saveOrganization" parameterClass="Organization">
+        <![CDATA[
+            INSERT INTO $tableName$ (name, type, address, tel, parent_id, view_order, ctime) 
+            VALUES (#name#, #type#, #address#, #tel#, #parentId#, #viewOrder#, #ctime#)
+        ]]>
+		<selectKey resultClass="java.lang.Long" keyProperty="id"
+			type="post">
+			select last_insert_id();
+		</selectKey>
+	</insert>
+
+	<update id="updateOrganization" parameterClass="Organization">
+        <![CDATA[
+            UPDATE $tableName$
+        ]]>
+		<dynamic prepend="SET">
+			<isNotNull property="name" prepend="AND">
+		<![CDATA[
+                    name = #name#
+		]]>
+			</isNotNull>
+			<isNotNull property="type" prepend="AND">
+		<![CDATA[
+                    type = #type#
+		]]>
+			</isNotNull>
+			<isNotNull property="tel" prepend="AND">
+		<![CDATA[
+                    tel = #tel#
+		]]>
+			</isNotNull>
+			<isNotNull property="address" prepend="AND">
+		<![CDATA[
+                    address = #address#
+		]]>
+			</isNotNull>
+			<isNotNull property="parentId" prepend="AND">
+		<![CDATA[
+                    parent_id = #parentId#
+		]]>
+			</isNotNull>
+			<isNotNull property="viewOrder" prepend="AND">
+		<![CDATA[
+                    viewOrder = #viewOrder#
+		]]>
+			</isNotNull>	
+		</dynamic>
+		where id = #id#
+	</update>
+
+	<delete id="removeOrganization" parameterClass="Organization">
+        <![CDATA[
+            DELETE FROM $tableName$
+        ]]>
+		where id = #id#
+	</delete>
+
+	<select id="countOrganization" resultClass="long" parameterClass="Organization">
+  		<![CDATA[
+            SELECT count(*) FROM $tableName$
+        ]]>
+		<include refid="whereConditionOrganization" />
+	</select>
+</sqlMap>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+      
+    <!-- Spring Json View -->
+	<bean name="jsonView" class="org.springframework.web.servlet.view.json.JsonView">
+		<property name="jsonWriter">
+			<ref bean="jsonWriter" />
+		</property>
+	</bean>
+	
+	<!-- Spring Json View String Writer -->
+	<bean name="jsonWriter" class="org.springframework.web.servlet.view.json.writer.jsonlib.JsonlibJsonStringWriter">
+		<property name="convertAllMapValues">
+			<value>false</value>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ExchangeSQL">
+
+	<typeAlias alias="Exchange" type="com.imhipi.app.tms.model.Exchange" />
+
+	<resultMap id="rm_Exchange" class="Exchange">
+		<result property="id" />
+		<result property="purchaseItemId" column="purchase_item_id"/>
+		<result property="gemType" column="gem_type"/>
+		<result property="type"/>
+		<result property="weight"/>
+		<result property="ctime"/>
+	</resultMap>
+
+	<sql id="whereConditionExchange">
+		<dynamic prepend="WHERE">
+			<isNotNull property="id" prepend="AND">
+		<![CDATA[
+                    id = #id#
+		]]>
+			</isNotNull>
+			<isNotNull property="purchaseItemId" prepend="AND">
+		<![CDATA[
+                    purchase_item_id = #purchaseItemId#
+		]]>
+			</isNotNull>
+			<isNotNull property="gemType" prepend="AND">
+		<![CDATA[
+                    gem_type = #gemType#
+		]]>
+			</isNotNull>
+			<isNotNull property="type" prepend="AND">
+		<![CDATA[
+                    type = #type#
+		]]>
+			</isNotNull>
+			<isNotNull property="weight" prepend="AND">
+		<![CDATA[
+                    weight = #weight#
+		]]>
+			</isNotNull>
+		</dynamic>
+	</sql>
+
+	<select id="findExchange" parameterClass="Exchange" resultMap="rm_Exchange">
+        <![CDATA[
+            SELECT * FROM $tableName$
+        ]]>
+		<include refid="whereConditionExchange" />
+	</select>
+
+	<insert id="saveExchange" parameterClass="Exchange">
+        <![CDATA[
+            INSERT INTO $tableName$ (purchase_item_id, gem_type, type, weight, ctime) 
+            VALUES (#purchaseItemId#, #gemType#, #type#, #weight#, #ctime#)
+        ]]>
+		<selectKey resultClass="java.lang.Long" keyProperty="id"
+			type="post">
+			select last_insert_id();
+		</selectKey>
+	</insert>
+
+	<update id="updateExchange" parameterClass="Exchange">
+        <![CDATA[
+            UPDATE $tableName$
+        ]]>
+		<dynamic prepend="SET">
+			<isNotNull property="purchaseItemId" prepend="AND">
+		<![CDATA[
+                    purchase_item_id = #purchaseItemId#
+		]]>
+			</isNotNull>
+			<isNotNull property="gemType" prepend="AND">
+		<![CDATA[
+                    gem_type = #gemType#
+		]]>
+			</isNotNull>
+			<isNotNull property="type" prepend="AND">
+		<![CDATA[
+                    type = #type#
+		]]>
+			</isNotNull>
+			<isNotNull property="weight" prepend="AND">
+		<![CDATA[
+                    weight = #weight#
+		]]>
+			</isNotNull>		
+		</dynamic>
+		where id = #id#
+	</update>
+
+	<delete id="removeExchange" parameterClass="Exchange">
+        <![CDATA[
+            DELETE FROM $tableName$
+        ]]>
+		where id = #id#
+	</delete>
+
+	<select id="countExchange" resultClass="long" parameterClass="Exchange">
+  		<![CDATA[
+            SELECT count(*) FROM $tableName$
+        ]]>
+		<include refid="whereConditionExchange" />
+	</select>
+</sqlMap>

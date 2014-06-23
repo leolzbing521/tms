@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="PurchaseSQL">
+
+	<typeAlias alias="Purchase" type="com.imhipi.app.tms.model.Purchase" />
+
+	<resultMap id="rm_Purchase" class="Purchase">
+		<result property="id" />
+		<result property="name"/>
+		<result property="amount"/>
+		<result property="comment"/>
+		<result property="orgId" column="org_id"/>
+		<result property="cuserId" column="cuser_id"/>
+		<result property="ctime"/>
+		<result property="uuserId" column="uuser_id"/>
+		<result property="utime"/>
+	</resultMap>
+
+	<sql id="whereConditionPurchase">
+		<dynamic prepend="WHERE">
+			<isNotNull property="id" prepend="AND">
+		<![CDATA[
+                    id = #id#
+		]]>
+			</isNotNull>
+			<isNotNull property="name" prepend="AND">
+		<![CDATA[
+                    name = #name#
+		]]>
+			</isNotNull>
+			<isNotNull property="orgId" prepend="AND">
+		<![CDATA[
+                    org_id = #orgId#
+		]]>
+			</isNotNull>
+		</dynamic>
+	</sql>
+
+	<select id="findPurchase" parameterClass="Purchase" resultMap="rm_Purchase">
+        <![CDATA[
+            SELECT * FROM $tableName$
+        ]]>
+		<include refid="whereConditionPurchase" />
+	</select>
+
+	<insert id="savePurchase" parameterClass="Purchase">
+        <![CDATA[
+            INSERT INTO $tableName$ (name, amount, comment, org_id, cuser_id, ctime, uuser_id, uuserId) 
+            VALUES (#name#, #amount#, #comment#, #orgId#, #cuserId#, #ctime#, #uuserId#, #utime#)
+        ]]>
+		<selectKey resultClass="java.lang.Long" keyProperty="id"
+			type="post">
+			select last_insert_id();
+		</selectKey>
+	</insert>
+
+	<update id="updatePurchase" parameterClass="Purchase">
+        <![CDATA[
+            UPDATE $tableName$
+        ]]>
+		<dynamic prepend="SET">
+			<isNotNull property="name" prepend="AND">
+		<![CDATA[
+                    name = #name#
+		]]>
+			</isNotNull>
+			<isNotNull property="amount" prepend="AND">
+		<![CDATA[
+                    amount = #amount#
+		]]>
+			</isNotNull>
+			<isNotNull property="comment" prepend="AND">
+		<![CDATA[
+                    comment = #comment#
+		]]>
+			</isNotNull>
+			<isNotNull property="orgId" prepend="AND">
+		<![CDATA[
+                    org_id = #orgId#
+		]]>
+			</isNotNull>
+			<isNotNull property="uuserId" prepend="AND">
+		<![CDATA[
+                    uuser_id = #uuserId#
+		]]>
+			</isNotNull>
+			<isNotNull property="utime" prepend="AND">
+		<![CDATA[
+                    utime = #utime#
+		]]>
+			</isNotNull>	
+		</dynamic>
+		where id = #id#
+	</update>
+
+	<delete id="removePurchase" parameterClass="Purchase">
+        <![CDATA[
+            DELETE FROM $tableName$
+        ]]>
+		where id = #id#
+	</delete>
+
+	<select id="countPurchase" resultClass="long" parameterClass="map">
+  		<![CDATA[
+            SELECT count(*) FROM purchase
+        ]]>
+		<include refid="whereConditionPurchase" />
+	</select>
+	
+</sqlMap>

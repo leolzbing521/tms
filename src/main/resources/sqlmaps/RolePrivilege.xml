@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="RolePrivilegeSQL">
+
+	<typeAlias alias="RolePrivilege" type="com.imhipi.app.tms.model.RolePrivilege" />
+
+	<resultMap id="rm_RolePrivilege" class="RolePrivilege">
+		<result property="id" />
+		<result property="privilegeId" column="privilege_id"/>
+		<result property="roleId" column="role_id"/>
+	</resultMap>
+
+	<sql id="whereConditionRolePrivilege">
+		<dynamic prepend="WHERE">
+			<isNotNull property="id" prepend="AND">
+		<![CDATA[
+                    id = #id#
+		]]>
+			</isNotNull>
+			<isNotNull property="privilegeId" prepend="AND">
+		<![CDATA[
+                    privilege_id = #privilegeId#
+		]]>
+			</isNotNull>
+			<isNotNull property="roleId" prepend="AND">
+		<![CDATA[
+                    role_id = #roleId#
+		]]>
+			</isNotNull>
+		</dynamic>
+	</sql>
+
+	<select id="findRolePrivilege" parameterClass="RolePrivilege" resultMap="rm_RolePrivilege">
+        <![CDATA[
+            SELECT * FROM $tableName$
+        ]]>
+		<include refid="whereConditionRolePrivilege" />
+	</select>
+
+	<insert id="saveRolePrivilege" parameterClass="RolePrivilege">
+        <![CDATA[
+            INSERT INTO $tableName$ (privilege_id, role_id) 
+            VALUES (#privilegeId#, #roleId#)
+        ]]>
+		<selectKey resultClass="java.lang.Long" keyProperty="id"
+			type="post">
+			select last_insert_id();
+		</selectKey>
+	</insert>
+
+	<update id="updateRolePrivilege" parameterClass="RolePrivilege">
+        <![CDATA[
+            UPDATE $tableName$
+        ]]>
+		<dynamic prepend="SET">
+			<isNotNull property="privilegeId" prepend="AND">
+		<![CDATA[
+                    privilege_id = #privilegeId#
+		]]>
+			</isNotNull>
+			<isNotNull property="roleId" prepend="AND">
+		<![CDATA[
+                    role_id = #roleId#
+		]]>
+			</isNotNull>
+		</dynamic>
+		where id = #id#
+	</update>
+
+	<delete id="removeRolePrivilege" parameterClass="RolePrivilege">
+        <![CDATA[
+            DELETE FROM $tableName$
+        ]]>
+		where id = #id#
+	</delete>
+
+	<select id="countRolePrivilege" resultClass="long" parameterClass="RolePrivilege">
+  		<![CDATA[
+            SELECT count(*) FROM $tableName$
+        ]]>
+		<include refid="whereConditionRolePrivilege" />
+	</select>
+</sqlMap>

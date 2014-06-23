@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="PurchaseItemSQL">
+
+	<typeAlias alias="PurchaseItem" type="com.imhipi.app.tms.model.PurchaseItem" />
+
+	<resultMap id="rm_PurchaseItem" class="PurchaseItem">
+		<result property="id" />
+		<result property="name" />
+		<result property="barcode" />
+		<result property="material" />
+		<result property="weight" />
+		<result property="status" />
+		<result property="type" />
+		<result property="amount" />
+		<result property="purchaseId" column="purchase_id" />
+		<result property="diamondDimension" column="diamond_dimension" />
+		<result property="diamondAmount" column="diamond_amount" />
+		<result property="cuserId" column="cuser_id" />
+		<result property="ctime" />
+		<result property="uuserId" column="uuser_id" />
+		<result property="utime" />
+	</resultMap>
+
+	<sql id="whereConditionPurchaseItem">
+		<dynamic prepend="WHERE">
+			<isNotNull property="id" prepend="AND">
+		<![CDATA[
+                    id = #id#
+		]]>
+			</isNotNull>
+			<isNotNull property="name" prepend="AND">
+		<![CDATA[
+                    name like '%$name$%'
+		]]>
+			</isNotNull>
+			<isNotNull property="barcode" prepend="AND">
+		<![CDATA[
+                    barcode = #barcode#
+		]]>
+			</isNotNull>
+			<isNotNull property="material" prepend="AND">
+		<![CDATA[
+                    material = #material#
+		]]>
+			</isNotNull>
+			<isNotNull property="type" prepend="AND">
+		<![CDATA[
+                    type = #type#
+		]]>
+			</isNotNull>
+			<isNotNull property="status" prepend="AND">
+		<![CDATA[
+                    status = #status#
+		]]>
+			</isNotNull>
+			<isNotNull property="purchaseId" prepend="AND">
+		<![CDATA[
+                    purchase_id = #purchaseId#
+		]]>
+			</isNotNull>
+			<isNotNull property="diamondDimension" prepend="AND">
+		<![CDATA[
+                    diamond_dimension = #diamondDimension#
+		]]>
+			</isNotNull>
+		</dynamic>
+	</sql>
+
+	<select id="findPurchaseItem" parameterClass="PurchaseItem" resultMap="rm_PurchaseItem">
+        <![CDATA[
+            SELECT * FROM $tableName$
+        ]]>
+		<include refid="whereConditionPurchaseItem" />
+	</select>
+
+	<insert id="savePurchaseItem" parameterClass="PurchaseItem">
+        <![CDATA[
+            INSERT INTO $tableName$ (name, barcode, material, type, weight, status, amount, purchase_id,
+            diamond_dimension, diamond_amount, cuser_id, ctime, uuser_id, uuserId) 
+            VALUES (#name#, #barcode#, #material#, #type#, #weight#, #status#, #amount#,
+            #purchaseId#, #diamondDimension#, #diamondAmount#, #cuserId#, #ctime#, #uuserId#, #utime#)
+        ]]>
+		<selectKey resultClass="java.lang.Long" keyProperty="id"
+			type="post">
+			select last_insert_id();
+		</selectKey>
+	</insert>
+
+	<update id="updatePurchaseItem" parameterClass="PurchaseItem">
+        <![CDATA[
+            UPDATE $tableName$
+        ]]>
+		<dynamic prepend="SET">
+			<isNotNull property="name" prepend="AND">
+		<![CDATA[
+                    name = #name#
+		]]>
+			</isNotNull>
+			<isNotNull property="barcode" prepend="AND">
+		<![CDATA[
+                    barcode = #barcode#
+		]]>
+			</isNotNull>
+			<isNotNull property="material" prepend="AND">
+		<![CDATA[
+                    material = #material#
+		]]>
+			</isNotNull>
+			<isNotNull property="type" prepend="AND">
+		<![CDATA[
+                    type = #type#
+		]]>
+			</isNotNull>
+			<isNotNull property="weight" prepend="AND">
+		<![CDATA[
+                    weight = #weight#
+		]]>
+			</isNotNull>
+			<isNotNull property="amount" prepend="AND">
+		<![CDATA[
+                    amount = #amount#
+		]]>
+			</isNotNull>
+			<isNotNull property="status" prepend="AND">
+		<![CDATA[
+                    status = #status#
+		]]>
+			</isNotNull>
+			<isNotNull property="purchaseId" prepend="AND">
+		<![CDATA[
+                    purchase_id = #purchaseId#
+		]]>
+			</isNotNull>
+			<isNotNull property="diamondDimension" prepend="AND">
+		<![CDATA[
+                    diamond_dimension = #diamondDimension#
+		]]>
+			</isNotNull>
+			<isNotNull property="diamondAmount" prepend="AND">
+		<![CDATA[
+                    diamond_amount = #diamondAmount#
+		]]>
+			</isNotNull>
+			<isNotNull property="uuserId" prepend="AND">
+		<![CDATA[
+                    uuser_id = #uuserId#
+		]]>
+			</isNotNull>
+			<isNotNull property="utime" prepend="AND">
+		<![CDATA[
+                    utime = #utime#
+		]]>
+			</isNotNull>	
+		</dynamic>
+		where id = #id#
+	</update>
+
+	<delete id="removePurchaseItem" parameterClass="PurchaseItem">
+        <![CDATA[
+            DELETE FROM $tableName$
+        ]]>
+		where id = #id#
+	</delete>
+
+	<select id="countPurchaseItem" resultClass="long" parameterClass="PurchaseItem">
+  		<![CDATA[
+            SELECT count(*) FROM $tableName$
+        ]]>
+		<include refid="whereConditionPurchaseItem" />
+	</select>
+</sqlMap>

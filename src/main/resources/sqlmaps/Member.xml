@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="MemberSQL">
+
+	<typeAlias alias="Member" type="com.imhipi.app.tms.model.Member" />
+
+	<resultMap id="rm_Member" class="Member">
+		<result property="id" />
+		<result property="realName" column="real_name"/>
+		<result property="phone" column="phone"/>
+		<result property="identityCard" column="identity_card"/>
+		<result property="monetary" />
+		<result property="sex" column="sex"/>
+		<result property="integral" />
+		<result property="cuserId" column="cuser_id"/>
+		<result property="uuserId" column="uuser_id"/>
+		<result property="ctime" />
+		<result property="utime" />
+	</resultMap>
+
+	<sql id="whereConditionMember">
+		<dynamic prepend="WHERE">
+			<isNotNull property="id" prepend="AND">
+		<![CDATA[
+                    id = #id#
+		]]>
+			</isNotNull>
+			<isNotNull property="realName" prepend="AND">
+		<![CDATA[
+                    real_name like '%$realName$%'
+		]]>
+			</isNotNull>
+			<isNotNull property="phone" prepend="AND">
+		<![CDATA[
+                    phone like '%$phone$%'
+		]]>
+			</isNotNull>
+			<isNotNull property="identityCard" prepend="AND">
+		<![CDATA[
+                    identity_card like '%$identityCard$%'
+		]]>
+			</isNotNull>
+			<isNotNull property="sex" prepend="AND">
+		<![CDATA[
+                    sex = #sex#
+		]]>
+			</isNotNull>
+			<isNotNull property="integral" prepend="AND">
+		<![CDATA[
+                    integral = #integral#
+		]]>
+			</isNotNull>
+		</dynamic>
+	</sql>
+
+	<select id="findMember" parameterClass="Member" resultMap="rm_Member">
+        <![CDATA[
+            SELECT * FROM $tableName$
+        ]]>
+		<include refid="whereConditionMember" />
+	</select>
+
+	<insert id="saveMember" parameterClass="Member">
+        <![CDATA[
+            INSERT INTO $tableName$ (real_name, phone, identity_card, monetary, sex, integral, cuser_id, ctime, uuser_id, utime) 
+            VALUES (#realName#, #phone#, #identityCard#, #monetary#, #sex#, #integral#, #cuserId#, #ctime#, #uuserId#, #utime#)
+        ]]>
+		<selectKey resultClass="java.lang.Long" keyProperty="id"
+			type="post">
+			select last_insert_id();
+		</selectKey>
+	</insert>
+
+	<update id="updateMember" parameterClass="Member">
+        <![CDATA[
+            UPDATE $tableName$
+        ]]>
+		<dynamic prepend="SET">
+			<isNotNull property="realName" prepend="AND">
+		<![CDATA[
+                    real_name = #realName#
+		]]>
+			</isNotNull>
+			<isNotNull property="phone" prepend="AND">
+		<![CDATA[
+                    phone = #phone#
+		]]>
+			</isNotNull>
+			<isNotNull property="identityCard" prepend="AND">
+		<![CDATA[
+                    identity_card = #identityCard#
+		]]>
+			</isNotNull>
+			<isNotNull property="monetary" prepend="AND">
+		<![CDATA[
+                    monetary = #monetary#
+		]]>
+			</isNotNull>
+			<isNotNull property="sex" prepend="AND">
+		<![CDATA[
+                    sex = #sex#
+		]]>
+			</isNotNull>
+			<isNotNull property="integral" prepend="AND">
+		<![CDATA[
+                    integral = #integral#
+		]]>
+			</isNotNull>
+			<isNotNull property="uuserId" prepend="AND">
+		<![CDATA[
+                    uuser_id = #uuserId#
+		]]>
+			</isNotNull>
+			<isNotNull property="utime" prepend="AND">
+		<![CDATA[
+                    utime = #utime#
+		]]>
+			</isNotNull>
+		</dynamic>
+		where id = #id#
+	</update>
+
+	<delete id="removeMember" parameterClass="Member">
+        <![CDATA[
+            DELETE FROM $tableName$
+        ]]>
+		where id = #id#
+	</delete>
+
+	<select id="countMember" resultClass="long" parameterClass="Member">
+  		<![CDATA[
+            SELECT count(*) FROM $tableName$
+        ]]>
+		<include refid="whereConditionMember" />
+	</select>
+</sqlMap>

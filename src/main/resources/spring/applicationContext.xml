@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-3.2.xsd
+            http://www.springframework.org/schema/task
+            http://www.springframework.org/schema/task/spring-task-3.2.xsd"
+       default-lazy-init="true">
+       
+    <!-- Activates scanning of @component -->
+    <context:component-scan base-package="com.imhipi.app.tms.component"/>
+    
+    <!-- Activates scanning of @component -->
+    <context:component-scan base-package="com.imhipi.app.tms.web.resolver"/>
+    
+    <!-- Activates scanning of @Repository -->
+    <context:component-scan base-package="com.imhipi.app.tms.dao"/>
+    
+    <!-- Activates scanning of @Service -->
+    <context:component-scan base-package="com.imhipi.app.tms.service"/>
+    
+    <context:property-placeholder location="classpath:jdbc.properties,classpath:page.properties,classpath:system-config.properties" />
+    
+    <bean id="tmsDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${jdbc.tms.driverClassName}"/>
+		<property name="jdbcUrl" value="${jdbc.tms.url}"/>
+		<property name="acquireIncrement" value="${jdbc.c3p0.acquireIncrement}"/>
+		<property name="acquireRetryAttempts" value="${jdbc.c3p0.acquireRetryAttempts}"/>
+		<property name="acquireRetryDelay" value="${jdbc.c3p0.acquireRetryDelay}"/>
+		<property name="autoCommitOnClose" value="${jdbc.c3p0.autoCommitOnClose}"/>
+		<property name="breakAfterAcquireFailure" value="${jdbc.c3p0.breakAfterAcquireFailure}"/>
+		<property name="idleConnectionTestPeriod" value="${jdbc.c3p0.idleConnectionTestPeriod}"/>
+		<property name="maxIdleTime" value="${jdbc.c3p0.maxIdleTime}"/>
+		<property name="checkoutTimeout" value="${jdbc.c3p0.checkoutTimeout}"/>
+		<property name="initialPoolSize" value="${jdbc.c3p0.initialPoolSize}"/>
+		<property name="maxPoolSize" value="${jdbc.c3p0.maxPoolSize}"/>
+		<property name="maxStatements" value="${jdbc.c3p0.maxStatements}"/>
+		<property name="maxStatementsPerConnection" value="${jdbc.c3p0.maxStatementsPerConnection}"/>
+		<property name="numHelperThreads" value="${jdbc.c3p0.numHelperThreads}"/>
+		<property name="testConnectionOnCheckout" value="${jdbc.c3p0.testConnectionOnCheckout}"/>
+		<property name="user" value="${jdbc.tms.username}"/>
+		<property name="password" value="${jdbc.tms.password}"/>
+    </bean>
+    
+    <!-- SqlMap setup for iBATIS Database Layer -->
+    
+    <bean id="tmsSqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+        <property name="configLocation" value="classpath:/sql-tms-config.xml"/>
+        <property name="dataSource" ref="tmsDataSource"/>
+        <property name="lobHandler" ref="lobHandler"/>
+    </bean>
+    
+    <!-- SqlMap setup for iBATIS Database Layer -->
+    
+    <!-- bean of sqlMapClient map -->
+    <bean id="sqlMapClients" class="java.util.HashMap">  
+        <constructor-arg>  
+            <map>  
+                <entry key="scm">
+                    <ref bean="tmsSqlMapClient" />
+                </entry>
+            </map>  
+        </constructor-arg>  
+    </bean>
+    
+    <bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler" lazy-init="true"/>
+
+    <!-- Transaction manager for a single JDBC DataSource -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="tmsSqlMapClient"/>
+    </bean>
+    
+    <!-- <task:scheduler id="myScheduler" pool-size="10"/>
+    <task:scheduled-tasks scheduler="myScheduler">
+        
+    </task:scheduled-tasks> -->
+
+</beans>

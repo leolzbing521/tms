@@ -1,0 +1,36 @@
+<table class="table mm-box">
+	<tr class="th-inverse">
+		<th>名称</th>
+		<th>分店</th>
+		<th>采购人</th>
+		<th>采购时间</th>
+		<th>操作</th>
+	</tr>
+	<tbody>
+		<%for(var i=0;i<5;i++){%>
+        	<tr>
+             	<td>2014_6_45_1</td>
+             	<td>商丘分店</td>
+             	<td>肖冰</td>
+             	<td>2014-06-22</td>
+             	<td>
+             		<div class="text-center">
+             			<span class="icon-btn edit"><i class="icon icon-edit-3"></i></span>
+             			<span class="icon-btn trash"><i class="icon icon-trash"></i></span>
+             		</div>
+             	</td>
+           </tr>
+       <%}%>
+	</tbody>
+</table>
+
+<div id="purchasePageBar"></div>
+
+<!-- script block -->
+<%
+	alert(page);
+	purchasePagination.bar('#purchasePageBar');
+
+%>
+	
+	

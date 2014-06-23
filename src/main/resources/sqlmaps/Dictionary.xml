@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="DictionarySQL">
+
+	<typeAlias alias="Dictionary" type="com.imhipi.app.tms.model.Dictionary" />
+
+	<resultMap id="rm_Dictionary" class="Dictionary">
+		<result property="id" />
+		<result property="key"/>
+		<result property="type"/>
+		<result property="name"/>
+		<result property="parentKey" column="parent_key"/>
+		<result property="viewOrder" column="view_order"/>
+	</resultMap>
+
+	<sql id="whereConditionDictionary">
+		<dynamic prepend="WHERE">
+			<isNotNull property="id" prepend="AND">
+		<![CDATA[
+                    id = #id#
+		]]>
+			</isNotNull>
+			<isNotNull property="key" prepend="AND">
+		<![CDATA[
+                    key = #key#
+		]]>
+			</isNotNull>
+			<isNotNull property="type" prepend="AND">
+		<![CDATA[
+                    type = #type#
+		]]>
+			</isNotNull>
+			<isNotNull property="parentKey" prepend="AND">
+		<![CDATA[
+                    parent_key = #parentKey#
+		]]>
+			</isNotNull>
+			order by view_order
+		</dynamic>
+	</sql>
+
+	<select id="findDictionary" parameterClass="Dictionary" resultMap="rm_Dictionary">
+        <![CDATA[
+            SELECT * FROM $tableName$
+        ]]>
+		<include refid="whereConditionDictionary" />
+	</select>
+
+	<insert id="saveDictionary" parameterClass="Dictionary">
+        <![CDATA[
+            INSERT INTO $tableName$ (key, type, name, parent_key, view_order) 
+            VALUES (#key#, #type#, #name#, #parentKey#, #viewOrder#)
+        ]]>
+		<selectKey resultClass="java.lang.Long" keyProperty="id"
+			type="post">
+			select last_insert_id();
+		</selectKey>
+	</insert>
+
+	<update id="updateDictionary" parameterClass="Dictionary">
+        <![CDATA[
+            UPDATE $tableName$
+        ]]>
+		<dynamic prepend="SET">
+			<isNotNull property="key" prepend="AND">
+		<![CDATA[
+                    key = #key#
+		]]>
+			</isNotNull>
+			<isNotNull property="type" prepend="AND">
+		<![CDATA[
+                    type = #type#
+		]]>
+			</isNotNull>
+			<isNotNull property="name" prepend="AND">
+		<![CDATA[
+                    name = #name#
+		]]>
+			</isNotNull>
+			<isNotNull property="parentKey" prepend="AND">
+		<![CDATA[
+                    parent_key = #parentKey#
+		]]>
+			</isNotNull>
+			<isNotNull property="viewOrder" prepend="AND">
+		<![CDATA[
+                    view_order = #viewOrder#
+		]]>
+			</isNotNull>		
+		</dynamic>
+		where id = #id#
+	</update>
+
+	<delete id="removeDictionary" parameterClass="Dictionary">
+        <![CDATA[
+            DELETE FROM $tableName$
+        ]]>
+		where id = #id#
+	</delete>
+
+	<select id="countDictionary" resultClass="long" parameterClass="Dictionary">
+  		<![CDATA[
+            SELECT count(*) FROM $tableName$
+        ]]>
+		<include refid="whereConditionDictionary" />
+	</select>
+</sqlMap>

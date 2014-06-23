@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+  version="2.0">
+  	<description>ngn JSTL 1.1 functions library</description>
+  	<display-name>ngn JSTL functions</display-name>
+  	<tlib-version>1.0</tlib-version>
+  	<short-name>dict</short-name>
+  	<uri>http://www.energysh.com/jsp/jstl/functions</uri>
+
+	<function>
+		<description>
+			从字典中根据type取得描述类型数据
+		</description><!-- 对这个EL方法的描述   -->   
+		<name>parseVersion</name><!-- 调用EL方法的名称 -->
+		<function-class>com.ngnsoft.ngp.component.DictService</function-class>
+		<function-signature>java.lang.String parseVersion(java.lang.String)
+		</function-signature>
+	</function>
+	
+	<function>
+		<description>
+			从字典中根据urn获取文件绝对路径
+		</description><!-- 对这个EL方法的描述   -->   
+		<name>getAbsolutePath</name><!-- 调用EL方法的名称 -->
+		<function-class>com.ngnsoft.ngp.component.DictService</function-class>
+		<function-signature>java.lang.String getAbsolutePath(java.lang.String)
+		</function-signature>
+	</function>
+
+</taglib>

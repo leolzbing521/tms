@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="UserRoleSQL">
+
+	<typeAlias alias="UserRole" type="com.imhipi.app.tms.model.UserRole" />
+
+	<resultMap id="rm_UserRole" class="UserRole">
+		<result property="id" />
+		<result property="userId" column="user_id"/>
+		<result property="roleId" column="role_id"/>
+	</resultMap>
+
+	<sql id="whereConditionUserRole">
+		<dynamic prepend="WHERE">
+			<isNotNull property="id" prepend="AND">
+		<![CDATA[
+                    id = #id#
+		]]>
+			</isNotNull>
+			<isNotNull property="userId" prepend="AND">
+		<![CDATA[
+                    user_id = #userId#
+		]]>
+			</isNotNull>
+			<isNotNull property="roleId" prepend="AND">
+		<![CDATA[
+                    role_id = #roleId#
+		]]>
+			</isNotNull>
+		</dynamic>
+	</sql>
+
+	<select id="findUserRole" parameterClass="UserRole" resultMap="rm_UserRole">
+        <![CDATA[
+            SELECT * FROM $tableName$
+        ]]>
+		<include refid="whereConditionUserRole" />
+	</select>
+
+	<insert id="saveUserRole" parameterClass="UserRole">
+        <![CDATA[
+            INSERT INTO $tableName$ (user_id, role_id) 
+            VALUES (#userId#, #roleId#)
+        ]]>
+		<selectKey resultClass="java.lang.Long" keyProperty="id"
+			type="post">
+			select last_insert_id();
+		</selectKey>
+	</insert>
+
+	<update id="updateUserRole" parameterClass="UserRole">
+        <![CDATA[
+            UPDATE $tableName$
+        ]]>
+		<dynamic prepend="SET">
+			<isNotNull property="userId" prepend="AND">
+		<![CDATA[
+                    user_id = #userId#
+		]]>
+			</isNotNull>
+			<isNotNull property="roleId" prepend="AND">
+		<![CDATA[
+                    role_id = #roleId#
+		]]>
+			</isNotNull>
+		</dynamic>
+		where id = #id#
+	</update>
+
+	<delete id="removeUserRole" parameterClass="UserRole">
+        <![CDATA[
+            DELETE FROM $tableName$
+        ]]>
+		where id = #id#
+	</delete>
+
+	<select id="countUserRole" resultClass="long" parameterClass="UserRole">
+  		<![CDATA[
+            SELECT count(*) FROM $tableName$
+        ]]>
+		<include refid="whereConditionUserRole" />
+	</select>
+</sqlMap>

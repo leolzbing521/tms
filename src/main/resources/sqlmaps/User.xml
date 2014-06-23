@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="UserSQL">
+
+	<typeAlias alias="User" type="com.imhipi.app.tms.model.User" />
+
+	<resultMap id="rm_User" class="User">
+		<result property="id" />
+		<result property="username"/>
+		<result property="password"/>
+		<result property="realName" column="real_name" />
+		<result property="sex"/>
+		<result property="position"/>
+		<result property="status"/>
+		<result property="workno"/>
+		<result property="email"/>
+		<result property="orgId" column="org_id" />
+		<result property="areaCode" column="area_code" />
+		<result property="ctime"/>
+	</resultMap>
+
+	<sql id="whereConditionUser">
+		<dynamic prepend="WHERE">
+			<isNotNull property="id" prepend="AND">
+		<![CDATA[
+                    id = #id#
+		]]>
+			</isNotNull>
+			<isNotNull property="username" prepend="AND">
+		<![CDATA[
+                    username = #username#
+		]]>
+			</isNotNull>
+			<isNotNull property="password" prepend="AND">
+		<![CDATA[
+                    password = #password#
+		]]>
+			</isNotNull>
+			<isNotNull property="sex" prepend="AND">
+		<![CDATA[
+                    sex = #sex#
+		]]>
+			</isNotNull>
+			<isNotNull property="position" prepend="AND">
+		<![CDATA[
+                    position = #position#
+		]]>
+			</isNotNull>
+			<isNotNull property="status" prepend="AND">
+		<![CDATA[
+                    status = #status#
+		]]>
+			</isNotNull>
+			<isNotNull property="workno" prepend="AND">
+		<![CDATA[
+                    workno = #workno#
+		]]>
+			</isNotNull>
+			<isNotNull property="email" prepend="AND">
+		<![CDATA[
+                    email = #email#
+		]]>
+			</isNotNull>
+			<isNotNull property="orgId" prepend="AND">
+		<![CDATA[
+                    org_id = #orgId#
+		]]>
+			</isNotNull>
+			<isNotNull property="areaCode" prepend="AND">
+		<![CDATA[
+                    area_code = #areaCode#
+		]]>
+			</isNotNull>
+			<isNotNull property="realName" prepend="AND">
+		<![CDATA[
+                    real_name like '%$realName$%'
+		]]>
+			</isNotNull>
+		</dynamic>
+	</sql>
+
+	<select id="findUser" parameterClass="User" resultMap="rm_User">
+        <![CDATA[
+            SELECT * FROM $tableName$
+        ]]>
+		<include refid="whereConditionUser" />
+	</select>
+
+	<insert id="saveUser" parameterClass="User">
+        <![CDATA[
+            INSERT INTO $tableName$ (username, password, real_name, sex, position, status, workno, email, org_id, area_code, ctime) 
+            VALUES (#username#, #password#, #realName#, #sex#, #position#, #status#, #workno#, #email#, #orgId#, #areaCode#, #ctime#)
+        ]]>
+		<selectKey resultClass="java.lang.Long" keyProperty="id"
+			type="post">
+			select last_insert_id();
+		</selectKey>
+	</insert>
+
+	<update id="updateUser" parameterClass="User">
+        <![CDATA[
+            UPDATE $tableName$
+        ]]>
+		<dynamic prepend="SET">
+			<isNotNull property="username" prepend=",">
+		<![CDATA[
+                    username = #username#
+		]]>
+			</isNotNull>
+			<isNotNull property="password" prepend=",">
+		<![CDATA[
+                    password = #password#
+		]]>
+			</isNotNull>
+			<isNotNull property="realName" prepend=",">
+		<![CDATA[
+                    real_name = #realName#
+		]]>
+			</isNotNull>
+			<isNotNull property="sex" prepend=",">
+		<![CDATA[
+                    sex = #sex#
+		]]>
+			</isNotNull>
+			<isNotNull property="position" prepend=",">
+		<![CDATA[
+                    position = #position#
+		]]>
+			</isNotNull>
+			<isNotNull property="status" prepend=",">
+		<![CDATA[
+                    status = #status#
+		]]>
+			</isNotNull>
+			<isNotNull property="workno" prepend=",">
+		<![CDATA[
+                    workno = #workno#
+		]]>
+			</isNotNull>
+			<isNotNull property="email" prepend=",">
+		<![CDATA[
+                    email = #email#
+		]]>
+			</isNotNull>
+			<isNotNull property="orgId" prepend=",">
+		<![CDATA[
+                    org_id = #orgId#
+		]]>
+			</isNotNull>
+			<isNotNull property="areaCode" prepend=",">
+		<![CDATA[
+                    area_code = #areaCode#
+		]]>
+			</isNotNull>
+		</dynamic>
+		where id = #id#
+	</update>
+
+	<delete id="removeUser" parameterClass="User">
+        <![CDATA[
+            DELETE FROM $tableName$
+        ]]>
+		where id = #id#
+	</delete>
+
+	<select id="countUser" resultClass="long" parameterClass="User">
+  		<![CDATA[
+            SELECT count(*) FROM $tableName$
+        ]]>
+		<include refid="whereConditionUser" />
+	</select>
+</sqlMap>

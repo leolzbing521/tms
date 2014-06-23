@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="PrivilegeSQL">
+
+	<typeAlias alias="Privilege" type="com.imhipi.app.tms.model.Privilege" />
+
+	<resultMap id="rm_Privilege" class="Privilege">
+		<result property="id" />
+		<result property="name"/>
+		<result property="funAction" column="fun_action"/>
+		<result property="parentId" column="parent_id"/>
+		<result property="treeLevel" column="tree_level"/>
+		<result property="type"/>
+		<result property="ctime"/>
+	</resultMap>
+
+	<sql id="whereConditionPrivilege">
+		<dynamic prepend="WHERE">
+			<isNotNull property="id" prepend="AND">
+		<![CDATA[
+                    id = #id#
+		]]>
+			</isNotNull>
+			<isNotNull property="funAction" prepend="AND">
+		<![CDATA[
+                    fun_action = #funAction#
+		]]>
+			</isNotNull>
+			<isNotNull property="parentId" prepend="AND">
+		<![CDATA[
+                    parent_id = #parentId#
+		]]>
+			</isNotNull>
+			<isNotNull property="treeLevel" prepend="AND">
+		<![CDATA[
+                    tree_level = #treeLevel#
+		]]>
+			</isNotNull>
+			<isNotNull property="type" prepend="AND">
+		<![CDATA[
+                    type = #type#
+		]]>
+			</isNotNull>
+		</dynamic>
+	</sql>
+
+	<select id="findPrivilege" parameterClass="Privilege" resultMap="rm_Privilege">
+        <![CDATA[
+            SELECT * FROM $tableName$
+        ]]>
+		<include refid="whereConditionPrivilege" />
+	</select>
+
+	<insert id="savePrivilege" parameterClass="Privilege">
+        <![CDATA[
+            INSERT INTO $tableName$ (name, fun_action, parent_id, tree_level, type, ctime) 
+            VALUES (#name#, #funAction#, #parentId#, #treeLevel#, #type#, #ctime#)
+        ]]>
+		<selectKey resultClass="java.lang.Long" keyProperty="id"
+			type="post">
+			select last_insert_id();
+		</selectKey>
+	</insert>
+
+	<update id="updatePrivilege" parameterClass="Privilege">
+        <![CDATA[
+            UPDATE $tableName$
+        ]]>
+		<dynamic prepend="SET">
+			<isNotNull property="name" prepend=",">
+		<![CDATA[
+                    name = #name#
+		]]>
+			</isNotNull>
+			<isNotNull property="funAction" prepend=",">
+		<![CDATA[
+                    fun_action = #funAction#
+		]]>
+			</isNotNull>
+			<isNotNull property="parentId" prepend=",">
+		<![CDATA[
+                    parent_id = #parentId#
+		]]>
+			</isNotNull>
+			<isNotNull property="treeLevel" prepend=",">
+		<![CDATA[
+                    tree_level = #treeLevel#
+		]]>
+			</isNotNull>
+		</dynamic>
+		where id = #id#
+	</update>
+
+	<delete id="removePrivilege" parameterClass="Privilege">
+        <![CDATA[
+            DELETE FROM $tableName$
+        ]]>
+		where id = #id#
+	</delete>
+
+	<select id="countPrivilege" resultClass="long" parameterClass="Privilege">
+  		<![CDATA[
+            SELECT count(*) FROM $tableName$
+        ]]>
+		<include refid="whereConditionPrivilege" />
+	</select>
+</sqlMap>
+

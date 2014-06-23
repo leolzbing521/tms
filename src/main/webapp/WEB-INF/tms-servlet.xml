@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- ========================= VIEW DEFINITIONS ========================= -->
+	
+	<context:annotation-config />
+	
+	<context:component-scan base-package="com.imhipi.app.tms.web" />
+	
+	<!-- <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" scope="prototype"
+        p:prefixJson="false"/> -->
+	
+	<!-- ②：启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->  
+	<!-- <bean  
+	    class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">  
+	</bean>  
+	<bean  
+	    class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">  
+	    <property name="messageConverters">  
+	        <list>  
+	            <bean  
+	                class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />  
+	        </list>  
+	    </property>  
+	</bean> -->
+	
+	<!--Spring Json View Resolver For Ajax  -->
+	<bean name="xmlViewResolver" class="org.springframework.web.servlet.view.XmlViewResolver">
+		<property name="location" value="classpath:spring/views.xml"></property>
+		<property name="order" value="1"></property>
+	</bean>
+	
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+    
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+	
+	<bean
+		class="com.imhipi.app.tms.web.resolver.BaiduTemplateViewResolver"
+		p:prefix="/WEB-INF/jsp/" p:viewName="baiduTemplateView" p:suffix=".html" p:order="2"/>
+	
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" p:order="3"/>
+		
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 设置上传文件的最大尺寸为4MB -->
+		<property name="maxUploadSize">
+			<value>40194304</value>
+		</property>
+		<property name="maxInMemorySize">
+			<value>4096</value>
+		</property>
+		<property name="defaultEncoding" value="utf-8" />
+	</bean>
+
+	
+	<bean id="baiduTemplateView" class="com.imhipi.app.tms.web.resolver.BaiduTemplateView"
+          p:contentType="text/plain" p:url="" scope="prototype"/>
+</beans>

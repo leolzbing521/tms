@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="RoleSQL">
+
+	<typeAlias alias="Role" type="com.imhipi.app.tms.model.Role" />
+
+	<resultMap id="rm_Role" class="Role">
+		<result property="id" />
+		<result property="code"/>
+		<result property="name"/>
+	</resultMap>
+
+	<sql id="whereConditionRole">
+		<dynamic prepend="WHERE">
+			<isNotNull property="id" prepend="AND">
+		<![CDATA[
+                    id = #id#
+		]]>
+			</isNotNull>
+			<isNotNull property="code" prepend="AND">
+		<![CDATA[
+                    code = #code#
+		]]>
+			</isNotNull>
+			<isNotNull property="name" prepend="AND">
+		<![CDATA[
+                    name = #name#
+		]]>
+			</isNotNull>
+		</dynamic>
+	</sql>
+
+	<select id="findRole" parameterClass="Role" resultMap="rm_Role">
+        <![CDATA[
+            SELECT * FROM $tableName$
+        ]]>
+		<include refid="whereConditionRole" />
+	</select>
+
+	<insert id="saveRole" parameterClass="Role">
+        <![CDATA[
+            INSERT INTO $tableName$ (code, name) 
+            VALUES (#code#, #name#)
+        ]]>
+		<selectKey resultClass="java.lang.Long" keyProperty="id"
+			type="post">
+			select last_insert_id();
+		</selectKey>
+	</insert>
+
+	<update id="updateRole" parameterClass="Role">
+        <![CDATA[
+            UPDATE $tableName$
+        ]]>
+		<dynamic prepend="SET">
+			<isNotNull property="code" prepend=",">
+		<![CDATA[
+                    code = #code#
+		]]>
+			</isNotNull>
+			<isNotNull property="name" prepend=",">
+		<![CDATA[
+                    name = #name#
+		]]>
+			</isNotNull>
+		</dynamic>
+		where id = #id#
+	</update>
+
+	<delete id="removeRole" parameterClass="Role">
+        <![CDATA[
+            DELETE FROM $tableName$
+        ]]>
+		where id = #id#
+	</delete>
+
+	<select id="countRole" resultClass="long" parameterClass="Role">
+  		<![CDATA[
+            SELECT count(*) FROM $tableName$
+        ]]>
+		<include refid="whereConditionRole" />
+	</select>
+</sqlMap>

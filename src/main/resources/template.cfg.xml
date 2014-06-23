@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates class="array">
+	<template key="example.pageLoad">
+		<requestUrl>/example/pageLoad</requestUrl>
+		
+		<!-- default to #main, jquery selector expression -->
+		<!-- <targetSelector>#main</targetSelector> -->
+		
+		<!-- default to true -->
+		<!-- <templateCache type="boolean">true</templateCache> -->
+		
+		<!-- default to '/template', do not change -->
+		<!-- <templateUrl>/template</templateUrl> -->
+		
+		<!-- default to requestUrl -->
+		<!-- <templateName>/example/pageLoad</templateName> -->
+		
+		<!-- default to true -->
+		<!-- <data type="boolean">true</data> -->
+		
+		<!-- default to true -->
+		<!-- <dataCache type="boolean">true</dataCache> -->
+		
+		<!-- default to GET -->
+		<!-- <dataRequestType>GET</dataRequestType> -->
+		
+		<!-- default to requestUrl -->
+		<dataUrl>/example/pageLoad</dataUrl>
+		
+		<!-- default to null -->
+		<!-- <dataParams class="Object"></dataParams> -->
+	</template>
+	<template key="purchase.list">
+		<requestUrl>/purchase/list</requestUrl>
+		<data type="boolean">false</data>
+	</template>
+	<template key="purchase.listData">
+		<requestUrl>/purchase/listTable</requestUrl>
+		<dataUrl>/purchase/listData</dataUrl>
+		<targetSelector>#purchaseListData</targetSelector>
+	</template>
+</templates>
