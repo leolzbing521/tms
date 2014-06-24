@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import net.sf.json.xml.XMLSerializer;
 
 import org.apache.commons.io.IOUtils;

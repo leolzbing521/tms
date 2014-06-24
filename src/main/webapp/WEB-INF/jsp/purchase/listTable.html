@@ -7,12 +7,18 @@
 		<th>操作</th>
 	</tr>
 	<tbody>
-		<%for(var i=0;i<1;i++){%>
+		<%for(var i=0;i<data.length;i++){
+			var purchase = data[i];
+		%>
         	<tr>
-             	<td>2014_6_45_1</td>
-             	<td>商丘分店</td>
-             	<td>肖冰</td>
-             	<td>2014-06-22</td>
+             	<td><%=purchase.name%></td>
+             	<td>
+             	<%if(purchase.org) { %>
+             		<%=purchase.org.name%>
+             	<%}%>
+             	</td>
+             	<td><%=purchase.user.realName%></td>
+             	<td><%=format(purchase.ctime)%></td>
              	<td>
              		<div class="text-center">
              			<span class="icon-btn edit"><i class="icon icon-edit-3"></i></span>

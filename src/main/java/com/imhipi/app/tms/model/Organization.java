@@ -27,7 +27,7 @@ public class Organization extends BaseModel {
 	public Organization() {
         
     }
-    
+	
     public Organization(Long id) {
         this.id = id;
     }

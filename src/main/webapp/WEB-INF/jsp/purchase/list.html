@@ -31,6 +31,43 @@
 	</div>
 </div>
 
+<div class="modal fade" tabindex="-1", data-width='760', id="add", style='display: none;'>
+	<form id="formAdd" action="/web/purchase/add">
+		<div class="modal-header">
+			<button class="close"type='button', data-dismiss='modal', aria-hidden='true'> &times</button>
+			<div class="row">
+				<div class="col-md-3">
+					<h4 class="modal-title">添加采购信息</h4>
+				</div>
+			</div>
+		</div>
+		<div class="modal-body">
+			<div class="row m-t-20">
+				<span class="col-md-2 text-right text muted small">名称</span>
+				<div class="col-md-3">
+					<input class="holo", type='text', style='margin-top:-20px;width:170px', id='name', name='name', class='required'>
+				</div>
+				<span class="col-md-2 text-right text muted small">总成本</span>
+				<div class="col-md-3">
+					<input class="holo", type='text', style='margin-top:-20px;width:170px', id='name', name='name', class='required'>
+				</div>
+				<span class="col-md-1 text-left text muted small">元</span>
+			</div>
+			<div class="row" style='margin-top:20px;'>
+				<div class="col-md-10 col-md-offset-1">
+					<input class="holo", type='text', style='width: 100%;', placeholder='备注', id='comment', name='comment'>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<div class="text-center">
+				<button class="cancel btn btn-lg btn-default" id="cancel" style='margin-right: 40px;', type='button'>取消</button>
+				<button class="btn btn-lg btn-success" id="submit", type='submit'>确定</button>
+			</div>
+		</div>
+	</form>
+</div>
+
 <div class="row m-t-25">
 	<div class="col-sm-8 col-sm-offset-2">
 		<div class="row" id="purchaseListData"></div>
@@ -44,5 +81,14 @@ var purchasePagination = new pup.Pagination({
 });
 //跳转到第一页
 purchasePagination.first();
+
+$("#muAdd").click(function() {
+	$('#add').modal('show');
+});
+
+$(".cancel1").click(function() {
+	$('#add').modal('hide');
+});
+
 </script>
 

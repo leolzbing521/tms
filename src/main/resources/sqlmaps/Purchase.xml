@@ -17,6 +17,22 @@
 		<result property="uuserId" column="uuser_id"/>
 		<result property="utime"/>
 	</resultMap>
+	
+	<resultMap id="rm_User" class="User">
+		<result property="id" />
+		<result property="realName" column="real_name" />
+	</resultMap>
+	
+	<resultMap id="rm_Org" class="Organization">
+		<result property="id" />
+		<result property="name"/>
+		<result property="parentId" column="parent_id"/>
+	</resultMap>
+	
+	<resultMap id="rm_purchase_with_user_org" class="Purchase" extends="rm_Purchase" >
+        <result property="user" column="cuser_id" select="find_user_by_purchase"/>
+        <result property="org" column="org_id" select="find_org_by_purchase"/>
+    </resultMap>
 
 	<sql id="whereConditionPurchase">
 		<dynamic prepend="WHERE">
@@ -57,10 +73,12 @@
 			]]>
 				</isNotNull>
 			</isNotNull>
-			<isNotNull property="sort">    
-		        <iterate property="sor.entrySet" conjunction="," close=")" open=" marketId in (">    
-		            #marketIdList[]#    
-		        </iterate>    
+			<isNotNull property="sort" prepend="order by">    
+		    	<isNotNull property="sort.ctime" prepend=",">
+			<![CDATA[
+	                    ctime sort.ctime
+			]]>
+				</isNotNull>	        
 		    </isNotNull>
 		</dynamic>
 	</sql>
@@ -71,6 +89,18 @@
         ]]>
 		<include refid="whereConditionPurchase" />
 	</select>
+	
+	<select id="find_user_by_purchase" resultMap="rm_User">
+        <![CDATA[
+            SELECT u.id, u.real_name FROM user u, purchase p WHERE u.id = p.cuser_id and u.id = #value#
+        ]]>
+    </select>
+    
+    <select id="find_org_by_purchase" resultMap="rm_Org">
+        <![CDATA[
+            SELECT u.id, u.name, u.parent_id FROM organization u, purchase p WHERE u.id = p.org_id and u.id = #value#
+        ]]>
+    </select>
 
 	<insert id="savePurchase" parameterClass="Purchase">
         <![CDATA[
@@ -129,18 +159,18 @@
 		where id = #id#
 	</delete>
 
-	<select id="countPurchase" resultClass="long" parameterClass="map">
+	<select id="findPurchaseByPage" resultMap="rm_purchase_with_user_org" parameterClass="Pagination">
   		<![CDATA[
-            SELECT count(*) FROM purchase
+            SELECT * FROM purchase
         ]]>
-		<include refid="whereConditionPurchase" />
+		<include refid="whereConditionPurchaseByPage" />
 	</select>
 	
-	<select id="findPurchaseByPage" resultClass="Purchase" parameterClass="map">
+	<select id="countPurchase" resultClass="long" parameterClass="Pagination">
   		<![CDATA[
             SELECT count(*) FROM purchase
         ]]>
-		<include refid="whereConditionPurchase" />
+		<include refid="whereConditionPurchaseByPage" />
 	</select>
 	
 </sqlMap>

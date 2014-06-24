@@ -21,8 +21,6 @@ var pup = function ($) {
 
     return {
         template: {
-        	a: 1,
-
             renderTemplateByKey : function(key, params, optional) {
                 if(!key || !templateCfg[key]) {
                     throw new Error('template is not defined in template.cfg.js. key:' + key);
@@ -72,17 +70,16 @@ var pup = function ($) {
                     $target = targetSelector;
                 }
                 if(requestUrl) {
-                	
                 	$.ajax({
-                		url: contextPath + requestUrlPrefix + requestUrl,
+                		url: contextPath + requestUrlPrefix + requestUrl + "?wsdl=" + new Date().getTime(),
                         type: dataRequestType,
-                        cache: templateCache,
+                        cache: false,
                     }).done(function(htmlData) {
                     	if(data && dataUrl) {
                             $.ajax({
                                 type: dataRequestType,
                                 dataType: "json",
-                                cache: false,
+                                cache: dataCache,
                                 url: contextPath + dataUrl,
                                 data : dataParams
                             }).done(function(json) {
@@ -166,7 +163,7 @@ var pup = function ($) {
             this.conditions = {};
             this.where = '';
             this.sorts = {};
-            this.total = 0
+            this.total = 0;
             this.pageCount = 10;
             this.currentPage = 1;
 

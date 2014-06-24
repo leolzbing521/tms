@@ -24,6 +24,10 @@ public class Purchase extends BaseModel {
     
     private Long uuserId;
     
+    private User user;
+    
+    private Organization org;
+    
 	public Purchase() {
         
     }
@@ -32,6 +36,22 @@ public class Purchase extends BaseModel {
         this.id = id;
     }
     
+	public Organization getOrg() {
+		return org;
+	}
+
+	public void setOrg(Organization org) {
+		this.org = org;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public Long getId() {
 		return id;
 	}

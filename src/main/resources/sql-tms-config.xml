@@ -5,6 +5,8 @@
 <sqlMapConfig>
     <settings enhancementEnabled="true" maxTransactions="1024"
         maxRequests="2048" maxSessions="512"/>
+        
+    <typeAlias alias="Pagination" type="com.imhipi.app.tms.model.Pagination"/>
     
     <typeHandler jdbcType="BLOB" javaType ="byte" callback="org.springframework.orm.ibatis.support.BlobByteArrayTypeHandler"/>
     <typeHandler jdbcType="CLOB" javaType="java.lang.String" callback="org.springframework.orm.ibatis.support.ClobStringTypeHandler"/>
