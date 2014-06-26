@@ -11,7 +11,7 @@ import com.imhipi.app.tms.model.Pagination;
 
 @Controller
 @RequestMapping("/user")
-public class UserCtrl {
+public class UserCtrl extends BaseController {
 	
 	private final String LIST_ACTION = "/web/user";
 	

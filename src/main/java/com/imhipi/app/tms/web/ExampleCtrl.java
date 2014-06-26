@@ -9,7 +9,7 @@ import com.imhipi.app.tms.component.SystemService;
 
 @Controller
 @RequestMapping("example")
-public class ExampleCtrl {
+public class ExampleCtrl extends BaseController {
 	
 	@Autowired
 	private SystemService sysService;

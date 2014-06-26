@@ -33,7 +33,7 @@
         <result property="user" column="cuser_id" select="find_user_by_purchase"/>
         <result property="org" column="org_id" select="find_org_by_purchase"/>
     </resultMap>
-
+    
 	<sql id="whereConditionPurchase">
 		<dynamic prepend="WHERE">
 			<isNotNull property="id" prepend="AND">
@@ -73,10 +73,12 @@
 			]]>
 				</isNotNull>
 			</isNotNull>
-			<isNotNull property="sort" prepend="order by">    
+		</dynamic>
+		<dynamic prepend="order by">
+			<isNotNull property="sort">    
 		    	<isNotNull property="sort.ctime" prepend=",">
 			<![CDATA[
-	                    ctime sort.ctime
+	                    ctime $sort.ctime$
 			]]>
 				</isNotNull>	        
 		    </isNotNull>
@@ -92,19 +94,19 @@
 	
 	<select id="find_user_by_purchase" resultMap="rm_User">
         <![CDATA[
-            SELECT u.id, u.real_name FROM user u, purchase p WHERE u.id = p.cuser_id and u.id = #value#
+            SELECT u.id, u.real_name FROM user u WHERE u.id = #value# 
         ]]>
     </select>
     
     <select id="find_org_by_purchase" resultMap="rm_Org">
         <![CDATA[
-            SELECT u.id, u.name, u.parent_id FROM organization u, purchase p WHERE u.id = p.org_id and u.id = #value#
+            SELECT u.id, u.name, u.parent_id FROM organization u WHERE u.id = #value#
         ]]>
     </select>
 
 	<insert id="savePurchase" parameterClass="Purchase">
         <![CDATA[
-            INSERT INTO $tableName$ (name, amount, comment, org_id, cuser_id, ctime, uuser_id, uuserId) 
+            INSERT INTO $tableName$ (name, amount, comment, org_id, cuser_id, ctime, uuser_id, utime) 
             VALUES (#name#, #amount#, #comment#, #orgId#, #cuserId#, #ctime#, #uuserId#, #utime#)
         ]]>
 		<selectKey resultClass="java.lang.Long" keyProperty="id"

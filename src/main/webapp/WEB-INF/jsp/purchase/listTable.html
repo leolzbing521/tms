@@ -21,8 +21,8 @@
              	<td><%=format(purchase.ctime)%></td>
              	<td>
              		<div class="text-center">
-             			<span class="icon-btn edit"><i class="icon icon-edit-3"></i></span>
-             			<span class="icon-btn trash"><i class="icon icon-trash"></i></span>
+             			<span class="icon-btn edit" id="<%=purchase.id%>"><i class="icon icon-edit-3"></i></span>
+             			<span class="icon-btn trash" id="<%=purchase.id%>"><i class="icon icon-trash"></i></span>
              		</div>
              	</td>
            </tr>
@@ -34,6 +34,59 @@
 
 <!-- script block -->
 <script type="text/javascript">
+$("#purchaseListData .edit").click(function(ev) {
+    ev.preventDefault();
+    var url = "purchase/" + $(this).attr("id");
+    $.ajax({
+        type: "GET",
+        url: url,
+        dataType: "json",
+        data: {id : $(this).attr("id")},
+        success: function (data) {
+            var purchase = data.purchase;
+            $("#formModify #id").val(purchase.id);
+            $("#formModify #name").val(purchase.name);
+            $("#formModify #amount").val(purchase.amount);
+            $("#formModify #comment").val(purchase.comment);
+            $("#modify").modal("show");
+            $("#formModify").validate_popover({onsubmit: false, popoverPosition: "top"});
+            $("#modify").on("scroll", function() { $.validator.reposition(); });
+            $("#modify").on("hide.bs.modal", function (e) {
+               $(".popover").each( function() {
+                  $(this).hide();
+               });
+            });
+            $(window).resize(function() {
+                $.validator.reposition();
+            });
+        }
+    });
+});
+
+$("#formModify").submit(function(ev) {
+    ev.preventDefault();
+    if($("#formModify").validate().form()) {
+        var url = $(this).attr("action");
+        var formData = $(this).serializeObject();
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: "json",
+            data: formData,
+            success: function (data) {
+                if(data.msg.type == "success") {
+                    $("#formModify")[0].reset();
+                    $("#modify").modal("hide");
+                    purchasePagination.reload();
+                }
+                toast(data.msg);
+            }
+        });
+    }
+    return false;
+});
+
+
 purchasePagination.bar("#purchasePageBar");
 </script>
 

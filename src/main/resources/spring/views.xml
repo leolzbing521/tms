@@ -11,9 +11,12 @@
 	</bean>
 	
 	<!-- Spring Json View String Writer -->
-	<bean name="jsonWriter" class="org.springframework.web.servlet.view.json.writer.jsonlib.JsonlibJsonStringWriter">
+	<bean name="jsonWriter" class="org.springframework.web.servlet.view.json.writer.sojo.SojoJsonStringWriter">
 		<property name="convertAllMapValues">
 			<value>false</value>
+		</property>
+		<property name="keepValueTypesMode">
+			<value>ALL</value>
 		</property>
 	</bean>
 </beans>

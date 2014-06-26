@@ -11,7 +11,7 @@ import com.imhipi.app.tms.component.SystemService;
 
 @Controller
 @RequestMapping("templateCfg")
-public class TempateCfgCtrl {
+public class TempateCfgCtrl extends BaseController {
 	
 	@Autowired
 	private SystemService sysService;

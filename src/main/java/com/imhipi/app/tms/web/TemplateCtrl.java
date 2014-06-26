@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("template")
-public class TemplateCtrl {
+public class TemplateCtrl extends BaseController {
 	
 	@RequestMapping(value="example/pageLoad")
 	public String getDefaultCfg(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {

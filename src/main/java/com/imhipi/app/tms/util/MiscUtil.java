@@ -120,4 +120,6 @@ public class MiscUtil {
     	System.out.println((int)(rate * 100));
     }
     
+    
+    
 }

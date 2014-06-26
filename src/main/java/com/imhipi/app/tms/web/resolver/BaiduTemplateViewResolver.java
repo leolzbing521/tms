@@ -59,11 +59,11 @@ public class BaiduTemplateViewResolver extends AbstractCachingViewResolver imple
         }
         String requestedFilePath = prefix + viewName + suffix;
         Resource resource = null;
-        //String url = "";
+        String url = "";
         try {
             logger.finest(requestedFilePath);
             resource = getApplicationContext().getResource(requestedFilePath);
-            //url = resource.getURI().toString();
+            url = resource.getURI().toString();
         } catch (Exception e) {
             // this exception should be catched and return null in order to call
             // next view resolver

@@ -7,7 +7,7 @@ public class Pagination {
 
 	private int currentPage;
 	
-	private int pageCount = 0;
+	private int pageCount = 10;
 	
 	private Long total;
 	

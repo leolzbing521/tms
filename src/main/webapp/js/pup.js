@@ -71,9 +71,9 @@ var pup = function ($) {
                 }
                 if(requestUrl) {
                 	$.ajax({
-                		url: contextPath + requestUrlPrefix + requestUrl + "?wsdl=" + new Date().getTime(),
+                		url: contextPath + requestUrlPrefix + requestUrl,
                         type: dataRequestType,
-                        cache: false,
+                        cache: templateCache,
                     }).done(function(htmlData) {
                     	if(data && dataUrl) {
                             $.ajax({
@@ -237,11 +237,11 @@ var pup = function ($) {
                 var paginationParamName = this.paginationParamName;
                 var thiz = this;
                 pup.template.renderTemplateByKey(this.templateKey, {
-                    'page[condition]': this.conditions,
-                    'page[where]': this.where,
-                    'page[sort]': this.sorts,
-                    'page[currentPage]': pageNum
-                    //pageCount : 10
+                    'condition': this.conditions,
+                    'where': this.where,
+                    'sort': this.sorts,
+                    'currentPage': pageNum,
+                    //'pageCount' : 10
                 },
                 {
                     beforeRender : function (data) {

@@ -92,7 +92,7 @@
 						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuUser">
 							<li role="presentation">
 								<a role='menuitem', tabindex="-1", href='/user/setting'>设置</a>
-								<a role='menuitem', tabindex="-1", href='/logout'>注销</a>
+								<a role='menuitem', tabindex="-1", href='logout'>注销</a>
 							</li>
 						</ul>
 					</li>

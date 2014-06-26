@@ -300,7 +300,7 @@ public class GenericManagerImpl implements GenericManager {
     
     @Override
     public <T extends BaseModel> List<T> findByNamedAndPageQuery(String queryName, Pagination page, Class<T> claz) {
-        return genericDao.findByNamedQuery(queryName, page, claz);
+        return genericDao.findByNamedAndPageQuery(queryName, page, claz);
     }
     
     @Override
@@ -320,7 +320,7 @@ public class GenericManagerImpl implements GenericManager {
     
     @Override
     public <T> List<T> findByNamedAndPageQuery(String queryName, Pagination page, Class<? extends BaseModel> claz, Class<T> returnType) {
-        return genericDao.findByNamedQuery(queryName, page, claz, returnType);
+        return genericDao.findByNamedAndPageQuery(queryName, page, claz, returnType);
     }
     
     @Override
