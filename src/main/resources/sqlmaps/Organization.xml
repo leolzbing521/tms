@@ -44,8 +44,8 @@
                     parent_id = #parentId#
 		]]>
 			</isNotNull>
-			order by view_order
 		</dynamic>
+		order by view_order
 	</sql>
 
 	<select id="findOrganization" parameterClass="Organization" resultMap="rm_Organization">

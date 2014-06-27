@@ -25,7 +25,7 @@ public class OrgService {
 	public void init() {
 		List<Organization> orgs = genericManager.findMulti(new Organization());
 		Organization rootOrg = new  Organization();
-		rootOrg.setParentId(0l);
+		rootOrg.setId(0l);
 		List<Organization> treeOrgs = buildOrg(rootOrg, orgs);
 		for(Organization org : treeOrgs) {
 			rootOrgs.add(org);
