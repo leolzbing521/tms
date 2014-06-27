@@ -120,32 +120,32 @@
             UPDATE $tableName$
         ]]>
 		<dynamic prepend="SET">
-			<isNotNull property="name" prepend="AND">
+			<isNotNull property="name" prepend=",">
 		<![CDATA[
                     name = #name#
 		]]>
 			</isNotNull>
-			<isNotNull property="amount" prepend="AND">
+			<isNotNull property="amount" prepend=",">
 		<![CDATA[
                     amount = #amount#
 		]]>
 			</isNotNull>
-			<isNotNull property="comment" prepend="AND">
+			<isNotNull property="comment" prepend=",">
 		<![CDATA[
                     comment = #comment#
 		]]>
 			</isNotNull>
-			<isNotNull property="orgId" prepend="AND">
+			<isNotNull property="orgId" prepend=",">
 		<![CDATA[
                     org_id = #orgId#
 		]]>
 			</isNotNull>
-			<isNotNull property="uuserId" prepend="AND">
+			<isNotNull property="uuserId" prepend=",">
 		<![CDATA[
                     uuser_id = #uuserId#
 		]]>
 			</isNotNull>
-			<isNotNull property="utime" prepend="AND">
+			<isNotNull property="utime" prepend=",">
 		<![CDATA[
                     utime = #utime#
 		]]>

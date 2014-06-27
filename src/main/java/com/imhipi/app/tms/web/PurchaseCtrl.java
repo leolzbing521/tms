@@ -71,5 +71,12 @@ public class PurchaseCtrl extends BaseController {
 		model.addAttribute("msg", new ResponseMsg(ResponseMsgType.SUCCESS.value(), "修改成功"));
 		return "jsonView";
 	}
+	
+	@RequestMapping(value="{id}", method = RequestMethod.DELETE)
+	public String remove(@PathVariable Long id, HttpServletRequest request, Model model) {
+		gm.remove(id, Purchase.class);
+		model.addAttribute("msg", new ResponseMsg(ResponseMsgType.SUCCESS.value(), "删除成功"));
+		return "jsonView";
+	}
 
 }

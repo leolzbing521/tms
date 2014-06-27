@@ -175,11 +175,11 @@ $("#formAdd").submit(function(ev) {
     return false;
 });
 
-var curOrderId = 0;
+var curPurchaseId = 0;
 
 $('#opDelConfirm #ok').click(function() {
     $('#opDelConfirm').modal('hide');
-    var url = 'purchase/' + curOrderId;
+    var url = 'purchase/' + curPurchaseId;
     $.ajax({
         type: 'DELETE',
         url: url,
@@ -191,9 +191,31 @@ $('#opDelConfirm #ok').click(function() {
             	purchasePagination.reload();
             }
             toast(data.msg);
-
         }
     });
+});
+
+$("#formModify").submit(function(ev) {
+    ev.preventDefault();
+    if($("#formModify").validate().form()) {
+        var url = $(this).attr("action");
+        var formData = $(this).serializeObject();
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: "json",
+            data: formData,
+            success: function (data) {
+                if(data.msg.type == "success") {
+                    $("#formModify")[0].reset();
+                    $("#modify").modal("hide");
+                    purchasePagination.reload();
+                }
+                toast(data.msg);
+            }
+        });
+    }
+    return false;
 });
 
 </script>
