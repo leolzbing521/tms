@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.imhipi.app.tms.component.OrgService;
 import com.imhipi.app.tms.component.PageConfig;
 import com.imhipi.app.tms.enums.ResponseMsgType;
 import com.imhipi.app.tms.model.Pagination;
@@ -29,8 +30,18 @@ public class PurchaseCtrl extends BaseController {
     private PageConfig pageConfig;
 	
 	@Autowired
+	private OrgService orgService;
+	
+	@Autowired
 	@Qualifier("genericManager")
 	private GenericManager gm;
+	
+	@RequestMapping(value="list", method = RequestMethod.GET)
+	public String list(ModelMap map, Pagination page, HttpServletRequest request, Model model) {
+		
+		model.addAttribute("orgs", null);
+		return "jsonView";
+	}
 	
 	@RequestMapping(value="listData", method = RequestMethod.GET)
 	public String listData(ModelMap map, Pagination page, HttpServletRequest request, Model model) {

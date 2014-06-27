@@ -33,7 +33,6 @@
 	</template>
 	<template key="purchase.list">
 		<requestUrl>/purchase/list</requestUrl>
-		<data type="boolean">false</data>
 	</template>
 	<template key="purchase.listData">
 		<requestUrl>/purchase/listTable</requestUrl>

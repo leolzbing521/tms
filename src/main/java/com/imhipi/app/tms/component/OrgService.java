@@ -1,18 +1,14 @@
 package com.imhipi.app.tms.component;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
-import com.imhipi.app.tms.model.Dictionary;
 import com.imhipi.app.tms.model.Organization;
 import com.imhipi.app.tms.service.GenericManager;
 
@@ -23,20 +19,26 @@ public class OrgService {
 	@Qualifier("genericManager")
 	private GenericManager genericManager;
 	
-	private Map<Long, List<Organization>> orgMap = new HashMap<Long, List<Organization>>();
-
+	private List<Organization> rootOrgs = new ArrayList<Organization>();
+	
 	@PostConstruct
 	public void init() {
 		List<Organization> orgs = genericManager.findMulti(new Organization());
 		Organization rootOrg = new  Organization();
 		rootOrg.setParentId(0l);
 		List<Organization> treeOrgs = buildOrg(rootOrg, orgs);
+		for(Organization org : treeOrgs) {
+			rootOrgs.add(org);
+		}
 	}
 	
 	private List<Organization> buildOrg(Organization parent, List<Organization> orgs) {
 		List<Organization> children = getChildren(parent.getId(), orgs);
-		if(!children.isEmpty()) {
-			orgMap.put(parent.getId(), children);
+		if(children.size() > 0) {
+			parent.setChildren(children);
+			for(Organization org : children) {
+				buildOrg(org, orgs);
+			}
 		}
 		return children;
 	}

@@ -1,6 +1,7 @@
 package com.imhipi.app.tms.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -24,6 +25,8 @@ public class Organization extends BaseModel {
     
     private Integer viewOrder;
     
+    private List<Organization> children;
+    
 	public Organization() {
         
     }
@@ -32,6 +35,14 @@ public class Organization extends BaseModel {
         this.id = id;
     }
     
+	public List<Organization> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Organization> children) {
+		this.children = children;
+	}
+
 	public Long getId() {
 		return id;
 	}

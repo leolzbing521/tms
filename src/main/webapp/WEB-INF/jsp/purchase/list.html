@@ -8,7 +8,7 @@
 	<div class="col-sm-8 col-sm-offset-2 mm-box form-horizontal filter-pan">
 		<form id="query" onsubmit="return false;">
 			<div class="form-group">
-				<label class="control-label col-md-2">条形码</label>
+				<label class="control-label col-md-2">采购名称</label>
 				<div class="col-md-10">
 					<input class="holo", type="text", name="barcode", id="barcode", style="display: inline-block;margin-right:10px;width:300px;">
 					<button class="btn btn-primary m-l-5", data-toggle="modal", type="submit", id="queryQuick">
@@ -18,12 +18,14 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-md-2">商品类型</label>
-				<div class="btn-group" data-toggle="buttons-radio", id="area", name="area">
-					<button class="btn btn-sm btn-light-info active" value="">全部</button>
-					<button class="btn btn-sm btn-light-info" value="1">黄金</button>
-					<button class="btn btn-sm btn-light-info" value="2">铂金</button>
-					<button class="btn btn-sm btn-light-info" value="3">翡翠</button>
+				<label class="control-label col-md-2">分店</label>
+				<div class="col-md-10">
+					<div class="labelRadio" id="seletOrgs">
+						<%for(var i=0;i<orgs.length;i++){
+						%>
+				        	<input name='org', type='radio', value='<%=orgs[i].id%>', data-name="<%=orgs[i].name%>">
+				        <%}%>
+					</div>
 				</div>
 			</div>
 		</form>
