@@ -373,6 +373,7 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<defaultGoal>compile</defaultGoal>
 		<finalName>tms</finalName>
 	</build>
 </project>
