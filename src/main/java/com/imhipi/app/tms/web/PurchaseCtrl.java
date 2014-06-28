@@ -47,6 +47,7 @@ public class PurchaseCtrl extends BaseController {
 		if (PageUtils.isEmpty(page)) {
             page = pageConfig.getDefaultPage();
         }
+		page.setTotal(gm.countTotalNum(new Purchase(), page));
 		
 		model.addAttribute("pagination", page);
 		model.addAttribute("data", gm.findByNamedAndPageQuery("findPurchaseByPage", page, Purchase.class));

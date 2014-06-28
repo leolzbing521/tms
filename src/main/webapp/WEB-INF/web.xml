@@ -35,27 +35,23 @@
 		<url-pattern>/web/*</url-pattern>
 	</filter-mapping>
 	
-	<!-- <filter>
+	<filter>
 		<description>会话检查过滤器</description>
 		<filter-name>sessionCheckFilter</filter-name>
 		<filter-class>
-			com.ngnsoft.ngp.filter.SessionCheckFilter
+			com.imhipi.app.tms.filter.SessionCheckFilter
 		</filter-class>
 		<init-param>
 			<param-name>failUrl</param-name>
 			<param-value>jsp/session_fail.jsp</param-value>
 		</init-param>
 		<init-param>
-			<param-name>indexUrl</param-name>
-			<param-value>web/system/index</param-value>
-		</init-param>
-		<init-param>
 			<param-name>logonUrl</param-name>
-			<param-value>web/system/login</param-value>
+			<param-value>web/login</param-value>
 		</init-param>
 		<init-param>
 			<param-name>logoutUrl</param-name>
-			<param-value>logout.htm</param-value>
+			<param-value>web/logout</param-value>
 		</init-param>
 		<init-param>
 			<param-name>client</param-name>
@@ -66,7 +62,7 @@
 	<filter-mapping>
 	    <filter-name>sessionCheckFilter</filter-name>
 	    <url-pattern>/web/*</url-pattern>
-	</filter-mapping> -->
+	</filter-mapping>
   
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

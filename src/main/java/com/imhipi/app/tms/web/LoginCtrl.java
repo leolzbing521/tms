@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,13 +22,15 @@ public class LoginCtrl extends BaseController {
 	@Qualifier("genericManager")
 	private GenericManager gm;
 	
-	@RequestMapping(value="login", method = RequestMethod.POST)
+	@RequestMapping(value="login")
 	public String login(Pagination page, HttpServletRequest request,
 			@ModelAttribute User loginUser, Model model, String msg) {
-		User user = gm.findObject(loginUser);
-		if(user != null) {
-			request.getSession().setAttribute("user", user);
-			return "main";
+		if(StringUtils.hasText(loginUser.getUsername()) && StringUtils.hasText(loginUser.getPassword())) {
+			User user = gm.findObject(loginUser);
+			if(user != null) {
+				request.getSession().setAttribute("user", user);
+				return "main";
+			}
 		}
 		return "auth/login";
 	}
