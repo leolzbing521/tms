@@ -31,5 +31,35 @@ public class TemplateCtrl extends BaseController {
 		
 		return "purchase/listTable";
 	}
+	
+	@RequestMapping(value="purchaseItem/list")
+	public String purchaseItemList(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {
+		
+		return "purchaseItem/list";
+	}
+	
+	@RequestMapping(value="purchaseItem/listTable")
+	public String purchaseItemListData(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {
+		
+		return "purchaseItem/listTable";
+	}
+	
+	@RequestMapping(value="purchaseItem/goldAttach")
+	public String goldAttach(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {
+		
+		return "purchaseItem/goldAttach";
+	}
+	
+	@RequestMapping(value="purchaseItem/platinumAttach")
+	public String platinumAttach(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {
+		
+		return "purchaseItem/platinumAttach";
+	}
+	
+	@RequestMapping(value="purchaseItem/jadeiteAttach")
+	public String jadeiteAttach(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {
+		
+		return "purchaseItem/jadeiteAttach";
+	}
 
 }

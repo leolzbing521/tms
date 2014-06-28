@@ -30,7 +30,7 @@
 	</resultMap>
 	
 	<resultMap id="rm_purchase_with_user_org" class="Purchase" extends="rm_Purchase" >
-        <result property="user" column="cuser_id" select="find_user_by_purchase"/>
+        <result property="user" column="cuser_id"  select="find_user_by_purchase"/>
         <result property="org" column="org_id" select="find_org_by_purchase"/>
     </resultMap>
     
@@ -52,6 +52,7 @@
 		]]>
 			</isNotNull>
 		</dynamic>
+		order by ctime desc
 	</sql>
 	
 	<sql id="whereConditionPurchaseByPage">
@@ -64,12 +65,12 @@
 				</isNotNull>
 				<isNotNull property="condition.name" prepend="AND">
 			<![CDATA[
-	                    name = #condition.name#
+	                    name LIKE '%$condition.name$%'
 			]]>
 				</isNotNull>
 				<isNotNull property="condition.orgId" prepend="AND">
 			<![CDATA[
-	                    org_id = #condition.orgId#
+	                    org_id = $condition.orgId$
 			]]>
 				</isNotNull>
 			</isNotNull>
@@ -92,13 +93,13 @@
 		<include refid="whereConditionPurchase" />
 	</select>
 	
-	<select id="find_user_by_purchase" resultMap="rm_User">
+	<select id="find_user_by_purchase" resultClass="User">
         <![CDATA[
             SELECT u.id, u.real_name FROM user u WHERE u.id = #value# 
         ]]>
     </select>
     
-    <select id="find_org_by_purchase" resultMap="rm_Org">
+    <select id="find_org_by_purchase" resultClass="Organization">
         <![CDATA[
             SELECT u.id, u.name, u.parent_id FROM organization u WHERE u.id = #value#
         ]]>

@@ -55,6 +55,7 @@ var pup = function ($) {
                 var dataCache = true;
                 if (options.dataCache == false) dataCache = false;
                 var requestUrl = options.requestUrl || defaultRequestUrl;
+                var templateRequestType = options.templateRequestType || 'GET';
                 var dataRequestType = options.dataRequestType || 'GET';
                 var dataUrl = options.dataUrl || options.requestUrl || null;
                 var dataParams = options.dataParams || {};
@@ -72,7 +73,7 @@ var pup = function ($) {
                 if(requestUrl) {
                 	$.ajax({
                 		url: contextPath + requestUrlPrefix + requestUrl,
-                        type: dataRequestType,
+                        type: templateRequestType,
                         cache: templateCache,
                     }).done(function(htmlData) {
                     	if(data && dataUrl) {
@@ -81,7 +82,7 @@ var pup = function ($) {
                                 dataType: "json",
                                 cache: dataCache,
                                 url: contextPath + dataUrl,
-                                data : dataParams
+                                data : dataParams,
                             }).done(function(json) {
                                 if(json.err) {
                                     if(json.err.code == 'unlogin')

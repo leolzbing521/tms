@@ -1,0 +1,62 @@
+<!-- html block -->
+<div class="row m-t-20">
+	<span class="col-md-2 text-right text-muted small">镶钻</span>
+	<div class="col-md-3">
+		<div class="btn-group" data-toggle="buttons-radio", id="hasDiamond", name="hasDiamond">
+			<%for(var i=0;i<hasDiamonds.length;i++){
+			%>
+				<%if(i == 0){%>
+					<button class="btn btn-sm btn-light-info active" type="button", value="true"><%=hasDiamonds[i].name%></button>
+				<%}else{%>
+		        	<button class="btn btn-sm btn-light-info" type="button", value="<%=hasDiamonds[i].key%>"><%=hasDiamonds[i].name%></button>
+				<%}%>
+	        <%}%>
+		</div>
+	</div>
+	<span class="col-md-2 text-right text-muted small">钻石总价</span>
+	<div class="col-md-3">
+		<input class="holo", type="text", style="margin-top:-20px;width:170px", id="diamondAmount", name="diamondAmount">
+	</div>
+	<span class="col-md-1 text-left text-muted small">元</span>
+</div>
+<div class="row m-t-20">
+	<span class="col-md-2 text-right text-muted small">钻石尺寸</span>
+	<div class="col-md-8">
+		<select class="selectpicker" name="diamondDimension" id="diamondDimension" data-live-search="true">
+			<%for(var i=0;i<diamondDimens.length;i++){
+			%>
+				<option value="<%=diamondDimens[i].id%>"><%=diamondDimens[i].name%></option>
+			<%}%>
+        </select>				
+    </div>
+</div>
+
+<!-- script block -->
+<script type="text/javascript">
+
+$(".selectpicker").selectpicker({noneSelectedText:"请选择"});
+
+setInputClass($("#formAdd #hasDiamond > .btn.active").val());
+
+$("#formAdd #hasDiamond").find("button").click(function() {
+	setInputClass($(this).val());
+});
+
+function setInputClass(val) {
+	if(val == "y") {
+		$("#formAdd #diamongAmount").addClass("required");
+		$("#formAdd #diamongAmount").addClass("number");
+		$("#formAdd #diamondDimension").removeAttr("disabled");
+		/* $("#formAdd #diamondDimension option").each(function() {
+			$(this).text() == "0")
+		    	$(this).remove();
+		}); */
+	} else if(val == "n") {
+		$("#formAdd #diamongAmount").removeClass("required");
+		$("#formAdd #diamongAmount").removeClass("number");
+		$("#formAdd #diamondDimension").attr("disabled", "disabled");
+	}
+}
+
+</script>
+

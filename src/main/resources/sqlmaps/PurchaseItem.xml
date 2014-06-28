@@ -11,11 +11,12 @@
 		<result property="name" />
 		<result property="barcode" />
 		<result property="material" />
-		<result property="weight" />
-		<result property="status" />
-		<result property="type" />
+		<result property="weight" column="weight"/>
+		<result property="sell" />
+		<result property="type" column="type" />
 		<result property="amount" />
 		<result property="purchaseId" column="purchase_id" />
+		<result property="hasDiamond" column="has_diamond" />
 		<result property="diamondDimension" column="diamond_dimension" />
 		<result property="diamondAmount" column="diamond_amount" />
 		<result property="cuserId" column="cuser_id" />
@@ -23,6 +24,10 @@
 		<result property="uuserId" column="uuser_id" />
 		<result property="utime" />
 	</resultMap>
+	
+	<resultMap id="rm_purchaseItem_with_purchase" class="PurchaseItem" extends="rm_PurchaseItem" >
+        <result property="purchase" column="purchase_id"  select="find_purchase_by_purchaseItem"/>
+    </resultMap>
 
 	<sql id="whereConditionPurchaseItem">
 		<dynamic prepend="WHERE">
@@ -51,9 +56,9 @@
                     type = #type#
 		]]>
 			</isNotNull>
-			<isNotNull property="status" prepend="AND">
+			<isNotNull property="sell" prepend="AND">
 		<![CDATA[
-                    status = #status#
+                    sell = #sell#
 		]]>
 			</isNotNull>
 			<isNotNull property="purchaseId" prepend="AND">
@@ -68,6 +73,53 @@
 			</isNotNull>
 		</dynamic>
 	</sql>
+	
+	<sql id="whereConditionPurchaseItemByPage">
+		<dynamic prepend="WHERE">
+			<isNotNull property="condition">
+				<isNotNull property="condition.id" prepend="AND">
+			<![CDATA[
+	                    id = #condition.id#
+			]]>
+				</isNotNull>
+				<isNotNull property="condition.name" prepend="AND">
+			<![CDATA[
+	                    name LIKE '%$condition.name$%'
+			]]>
+				</isNotNull>
+				<isNotNull property="condition.purchaseId" prepend="AND">
+			<![CDATA[
+	                    purchase_id = #condition.purchaseId#
+			]]>
+				</isNotNull>
+				<isNotNull property="condition.type" prepend="AND">
+			<![CDATA[
+	                    type = #condition.type#
+			]]>
+				</isNotNull>
+				<isNotNull property="condition.material" prepend="AND">
+			<![CDATA[
+	                    material = #condition.material#
+			]]>
+				</isNotNull>
+			</isNotNull>
+		</dynamic>
+		<dynamic prepend="order by">
+			<isNotNull property="sort">    
+		    	<isNotNull property="sort.ctime" prepend=",">
+			<![CDATA[
+	                    ctime $sort.ctime$
+			]]>
+				</isNotNull>	        
+		    </isNotNull>
+		</dynamic>
+	</sql>
+	
+	<select id="find_purchase_by_purchaseItem" resultClass="Purchase">
+        <![CDATA[
+            SELECT u.id, u.name FROM purchase u WHERE u.id = #value# 
+        ]]>
+    </select>
 
 	<select id="findPurchaseItem" parameterClass="PurchaseItem" resultMap="rm_PurchaseItem">
         <![CDATA[
@@ -78,10 +130,10 @@
 
 	<insert id="savePurchaseItem" parameterClass="PurchaseItem">
         <![CDATA[
-            INSERT INTO $tableName$ (name, barcode, material, type, weight, status, amount, purchase_id,
-            diamond_dimension, diamond_amount, cuser_id, ctime, uuser_id, uuserId) 
-            VALUES (#name#, #barcode#, #material#, #type#, #weight#, #status#, #amount#,
-            #purchaseId#, #diamondDimension#, #diamondAmount#, #cuserId#, #ctime#, #uuserId#, #utime#)
+            INSERT INTO $tableName$ (name, barcode, material, type, weight, sell, amount, purchase_id,
+            has_diamond, diamond_dimension, diamond_amount, cuser_id, ctime, uuser_id, utime) 
+            VALUES (#name#, #barcode#, #material#, #type#, #weight#, #sell#, #amount#,
+            #purchaseId#, #hasDiamond#, #diamondDimension#, #diamondAmount#, #cuserId#, #ctime#, #uuserId#, #utime#)
         ]]>
 		<selectKey resultClass="java.lang.Long" keyProperty="id"
 			type="post">
@@ -104,6 +156,11 @@
                     barcode = #barcode#
 		]]>
 			</isNotNull>
+			<isNotNull property="hasDiamond" prepend="AND">
+		<![CDATA[
+                    has_diamond = #hasDiamond#
+		]]>
+			</isNotNull>
 			<isNotNull property="material" prepend="AND">
 		<![CDATA[
                     material = #material#
@@ -124,9 +181,9 @@
                     amount = #amount#
 		]]>
 			</isNotNull>
-			<isNotNull property="status" prepend="AND">
+			<isNotNull property="sell" prepend="AND">
 		<![CDATA[
-                    status = #status#
+                    sell = #sell#
 		]]>
 			</isNotNull>
 			<isNotNull property="purchaseId" prepend="AND">
@@ -165,10 +222,17 @@
 		where id = #id#
 	</delete>
 
-	<select id="countPurchaseItem" resultClass="long" parameterClass="PurchaseItem">
+	<select id="findPurchaseItemByPage" resultMap="rm_purchaseItem_with_purchase" parameterClass="Pagination">
   		<![CDATA[
-            SELECT count(*) FROM $tableName$
+            SELECT * FROM purchase_item
         ]]>
-		<include refid="whereConditionPurchaseItem" />
+		<include refid="whereConditionPurchaseItemByPage" />
+	</select>
+	
+	<select id="countPurchaseItem" resultClass="long" parameterClass="Pagination">
+  		<![CDATA[
+            SELECT count(*) FROM purchase_item
+        ]]>
+		<include refid="whereConditionPurchaseItemByPage" />
 	</select>
 </sqlMap>

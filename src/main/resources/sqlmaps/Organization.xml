@@ -8,10 +8,10 @@
 
 	<resultMap id="rm_Organization" class="Organization">
 		<result property="id" />
-		<result property="name"/>
-		<result property="type"/>
-		<result property="address"/>
-		<result property="tel"/>
+		<result property="name" column="name"/>
+		<result property="type" column="type"/>
+		<result property="address" column="address"/>
+		<result property="tel" column="tel"/>
 		<result property="parentId" column="parent_id"/>
 		<result property="viewOrder" column="view_order"/>
 		<result property="ctime" column="ctime"/>

@@ -10,7 +10,7 @@
 			<div class="form-group">
 				<label class="control-label col-md-2">采购名称</label>
 				<div class="col-md-10">
-					<input class="holo", type="text", name="barcode", id="barcode", style="display: inline-block;margin-right:10px;width:300px;">
+					<input class="holo", type="text", name="name", id="name", style="display: inline-block;margin-right:10px;width:300px;">
 					<button class="btn btn-primary m-l-5", data-toggle="modal", type="submit", id="queryQuick">
 						<i class="icon-search-8" style="margin-right: 5px;"s></i>
 						<span>快速查找</span>
@@ -20,10 +20,11 @@
 			<div class="form-group">
 				<label class="control-label col-md-2">分店</label>
 				<div class="col-md-10">
-					<div class="labelRadio" id="seletOrgs">
+					<div class="labelRadio" id="selectOrgs">
+						<input name="org", checked="checked", type="radio", value="", data-name="全部">
 						<%for(var i=0;i<orgs.length;i++){
 						%>
-				        	<input name='org', type='radio', value='<%=orgs[i].id%>', data-name="<%=orgs[i].name%>">
+				        	<input name="org", type="radio", value="<%=orgs[i].id%>", data-name="<%=orgs[i].name%>">
 				        <%}%>
 					</div>
 				</div>
@@ -107,13 +108,13 @@
 	</form>
 </div>
 
-<div class="modal fade" id="opDelConfirm" tabindex='-1', style='display: none;'>
+<div class="modal fade" id="opDelConfirm" tabindex="-1", style="display: none;">
 	<div class="modal-body">
 		<p id="confirmMsg">确定删除？
 	</div>
 	<div class="modal-footer">
 		<div class="text-center">
-			<button class="cancel btn btn-default" style='margin-right: 40px;', data-dismiss='modal'>取消</button>
+			<button class="cancel btn btn-default" style="margin-right: 40px;", data-dismiss="modal">取消</button>
 			<button id="ok" class="btn btn-danger">确定</button>
 		</div>
 	</div>
@@ -130,7 +131,7 @@
 var purchasePagination = new pup.Pagination({
     templateKey : "purchase.listData"
 });
-//跳转到第一页
+/* 跳转到第一页 */
 purchasePagination.setSort({ctime:"DESC"}).first();
 
 $("#cancel, .close").click(function() {
@@ -179,17 +180,17 @@ $("#formAdd").submit(function(ev) {
 
 var curPurchaseId = 0;
 
-$('#opDelConfirm #ok').click(function() {
-    $('#opDelConfirm').modal('hide');
-    var url = 'purchase/' + curPurchaseId;
+$("#opDelConfirm #ok").click(function() {
+    $("#opDelConfirm").modal("hide");
+    var url = "purchase/" + curPurchaseId;
     $.ajax({
-        type: 'DELETE',
+        type: "DELETE",
         url: url,
-        dataType: 'json',
+        dataType: "json",
         data: {},
         success: function (data) {
             var formData = data.msg.body;
-            if(data.msg.type == 'success'){
+            if(data.msg.type == "success"){
             	purchasePagination.reload();
             }
             toast(data.msg);
@@ -218,6 +219,24 @@ $("#formModify").submit(function(ev) {
         });
     }
     return false;
+});
+
+$("#queryQuick").click(function() {
+	var condition = {};
+    if($("#query #name").val() != "") {
+        condition.name = $("#query #name").val();
+    } else if(lr.val() != "") {
+        condition.orgId = lr.val();
+    }
+    purchasePagination.setCondition(condition).first();
+});
+
+var lr = new pup.widgets.labelRadio("#selectOrgs").radio(function(value) {
+	var condition = {};
+    if(lr.val() != "") {
+        condition.orgId = lr.val();
+    }
+    purchasePagination.setCondition(condition).first();
 });
 
 </script>

@@ -4,7 +4,7 @@ public enum GemType {
 
 	RING("ring"), NECKLACE("necklace"), EARRING("earring"),
 	
-	BRACELET("bracelet"), PENDANT("PENDANT");
+	BRACELET("bracelet"), PENDANT("pendant");
 	
 	private String name;
 	

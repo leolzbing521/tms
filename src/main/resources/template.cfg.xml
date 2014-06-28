@@ -16,6 +16,9 @@
 		<!-- default to requestUrl -->
 		<!-- <templateName>/example/pageLoad</templateName> -->
 		
+		<!-- default to GET -->
+		<!-- <templateRequestType>GET</templateRequestType> -->
+		
 		<!-- default to true -->
 		<!-- <data type="boolean">true</data> -->
 		
@@ -38,5 +41,29 @@
 		<requestUrl>/purchase/listTable</requestUrl>
 		<dataUrl>/purchase/listData</dataUrl>
 		<targetSelector>#purchaseListData</targetSelector>
+		<dataRequestType>POST</dataRequestType>
+	</template>
+	<template key="purchaseItem.list">
+		<requestUrl>/purchaseItem/list</requestUrl>
+	</template>
+	<template key="purchaseItem.listData">
+		<requestUrl>/purchaseItem/listTable</requestUrl>
+		<dataUrl>/purchaseItem/listData</dataUrl>
+		<targetSelector>#purchaseItemListData</targetSelector>
+		<dataRequestType>POST</dataRequestType>
+	</template>
+	<template key="purchaseItem.goldAttach">
+		<requestUrl>/purchaseItem/goldAttach</requestUrl>
+		<targetSelector>#attachContent</targetSelector>
+		<data type="boolean">false</data>
+	</template>
+	<template key="purchaseItem.platinumAttach">
+		<requestUrl>/purchaseItem/platinumAttach</requestUrl>
+		<targetSelector>#attachContent</targetSelector>
+	</template>
+	<template key="purchaseItem.jadeiteAttach">
+		<requestUrl>/purchaseItem/jadeiteAttach</requestUrl>
+		<targetSelector>#attachContent</targetSelector>
+		<data type="boolean">false</data>
 	</template>
 </templates>

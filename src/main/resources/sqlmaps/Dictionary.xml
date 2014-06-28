@@ -47,6 +47,12 @@
         ]]>
 		<include refid="whereConditionDictionary" />
 	</select>
+	
+	<select id="findRootDictGroupType" resultMap="rm_Dictionary">
+        <![CDATA[
+            SELECT * FROM dictionary group by type
+        ]]>
+	</select>
 
 	<insert id="saveDictionary" parameterClass="Dictionary">
         <![CDATA[

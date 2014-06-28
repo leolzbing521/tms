@@ -22,11 +22,13 @@ public class PurchaseItem extends BaseModel {
     
     private Double weight;
     
-    private String status;
+    private Boolean sell;
     
     private Double amount;
     
     private Long purchaseId;
+    
+    private Boolean hasDiamond;
     
     private String diamondDimension;
     
@@ -36,6 +38,12 @@ public class PurchaseItem extends BaseModel {
     
     private Long uuserId;
     
+    private Purchase purchase;
+    
+    private String typeName;
+    
+    private String materialName;
+    
 	public PurchaseItem() {
         
     }
@@ -44,6 +52,30 @@ public class PurchaseItem extends BaseModel {
         this.id = id;
     }
     
+	public String getMaterialName() {
+		return materialName;
+	}
+
+	public void setMaterialName(String materialName) {
+		this.materialName = materialName;
+	}
+
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
+	public Purchase getPurchase() {
+		return purchase;
+	}
+
+	public void setPurchase(Purchase purchase) {
+		this.purchase = purchase;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -92,12 +124,12 @@ public class PurchaseItem extends BaseModel {
 		this.weight = weight;
 	}
 
-	public String getStatus() {
-		return status;
+	public Boolean getSell() {
+		return sell;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setSell(Boolean sell) {
+		this.sell = sell;
 	}
 
 	public Double getAmount() {
@@ -148,6 +180,14 @@ public class PurchaseItem extends BaseModel {
 		this.uuserId = uuserId;
 	}
 
+	public boolean getHasDiamond() {
+		return hasDiamond;
+	}
+
+	public void setHasDiamond(boolean hasDiamond) {
+		this.hasDiamond = hasDiamond;
+	}
+
 	@Override
     public Serializable getPrimaryKey() {
         return id;
@@ -161,6 +201,9 @@ public class PurchaseItem extends BaseModel {
     @Override
     public void prepareForSave() {
         super.prepareForSave();
+        sell = false;
+        if(hasDiamond == null)
+        	hasDiamond = false;
     }
     
 }

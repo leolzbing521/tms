@@ -1,0 +1,88 @@
+<table class="table mm-box">
+	<tr class="th-inverse">
+		<th>名称</th>
+		<th>条形码</th>
+		<th>所属采购</th>
+		<th>类型</th>
+		<th>材质</th>
+		<th>克重(g)</th>
+		<th>单价</th>
+		<th>镶钻</th>
+		<th>操作</th>
+	</tr>
+	<tbody>
+		<%for(var i=0;i<data.length;i++){
+			var purchaseItem = data[i];
+		%>
+        	<tr>
+             	<td><%=purchaseItem.name%></td>
+             	<td><%=purchaseItem.barcode%></td>
+             	<td><%=purchaseItem.purchase.name%></td>
+             	<td><%=purchaseItem.typeName%></td>
+             	<td><%=purchaseItem.materialName%></td>
+             	<td><%=purchaseItem.weight%></td>
+             	<td><%=purchaseItem.amount%></td>
+             	<td>
+	             	<% if(purchaseItem.hasDiamond) {%>
+	             		是
+	             	<%} else {%>
+	             		否
+	             	<%}%>
+             	</td>
+             	<td>
+             		<div class="text-center">
+             			<span class="icon-btn edit" id="<%=purchaseItem.id%>"><i class="icon icon-edit-3"></i></span>
+             			<span class="icon-btn trash" id="<%=purchaseItem.id%>"><i class="icon icon-trash"></i></span>
+             		</div>
+             	</td>
+           </tr>
+       <%}%>
+	</tbody>
+</table>
+
+<div id="purchaseItemPageBar"></div>
+
+<!-- script block -->
+<script type="text/javascript">
+$("#purchaseItemListData .edit").click(function(ev) {
+    ev.preventDefault();
+    var url = "purchaseItem/" + $(this).attr("id");
+    $.ajax({
+        type: "GET",
+        url: url,
+        dataType: "json",
+        data: {id : $(this).attr("id")},
+        success: function (data) {
+            var purchase = data.purchase;
+            $("#formModify #id").val(purchase.id);
+            $("#formModify #name").val(purchase.name);
+            $("#formModify #amount").val(purchase.amount);
+            $("#formModify #comment").val(purchase.comment);
+            $("#modify").modal("show");
+            $("#formModify").validate_popover({onsubmit: false, popoverPosition: "top"});
+            $("#modify").on("scroll", function() { $.validator.reposition(); });
+            $("#modify").on("hide.bs.modal", function (e) {
+               $(".popover").each( function() {
+                  $(this).hide();
+               });
+            });
+            $(window).resize(function() {
+                $.validator.reposition();
+            });
+        }
+    });
+});
+
+$("#purchaseItemListData .trash").click(function(ev) {
+	curPurchaseItemId = $(this).attr("id");
+	$("#opDelConfirm").modal("show");
+});
+
+
+purchaseItemPagination.bar("#purchaseItemPageBar");
+</script>
+
+
+
+	
+	

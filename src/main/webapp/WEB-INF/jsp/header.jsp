@@ -40,7 +40,7 @@
 					</a>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
 						<li role="presentation"><a role='menuitem', tabindex="-1", href='javascript:pup.template.renderTemplateByKey("purchase.list")'>采购管理</a></li>
-						<li role="presentation"><a role='menuitem', tabindex="-1", href='javascript:pup.template.renderTemplateByKey("example.pageLoad")'>商品管理</a></li>
+						<li role="presentation"><a role='menuitem', tabindex="-1", href='javascript:pup.template.renderTemplateByKey("purchaseItem.list")'>商品管理</a></li>
 					</ul>
 				</li>
 				

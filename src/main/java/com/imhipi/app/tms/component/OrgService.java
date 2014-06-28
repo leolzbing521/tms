@@ -19,7 +19,7 @@ public class OrgService {
 	@Qualifier("genericManager")
 	private GenericManager genericManager;
 	
-	private List<Organization> rootOrgs = new ArrayList<Organization>();
+	private static List<Organization> rootOrgs = new ArrayList<Organization>();
 	
 	@PostConstruct
 	public void init() {
@@ -51,6 +51,10 @@ public class OrgService {
 			}
 		}
 		return children;
+	}
+	
+	public static List<Organization> getRootOrgs() {
+		return rootOrgs;
 	}
 
 }
