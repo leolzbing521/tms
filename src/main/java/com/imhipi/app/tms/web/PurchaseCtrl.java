@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.imhipi.app.tms.component.DictService;
 import com.imhipi.app.tms.component.OrgService;
 import com.imhipi.app.tms.component.PageConfig;
+import com.imhipi.app.tms.enums.DictRootType;
 import com.imhipi.app.tms.enums.ResponseMsgType;
 import com.imhipi.app.tms.model.Pagination;
 import com.imhipi.app.tms.model.Purchase;
@@ -32,12 +34,17 @@ public class PurchaseCtrl extends BaseController {
 	private OrgService orgService;
 	
 	@Autowired
+	private DictService dictService;
+	
+	@Autowired
 	@Qualifier("genericManager")
 	private GenericManager gm;
 	
 	@RequestMapping(value="list", method = RequestMethod.GET)
 	public String list(Model model) {
-		
+		model.addAttribute("purchases", gm.findMulti(new Purchase()));
+		model.addAttribute("materials", dictService.getDictsByType(DictRootType.MATERIAL_TYPE));
+		model.addAttribute("types", dictService.getDictsByType(DictRootType.GEM_TYPE));
 		model.addAttribute("orgs", orgService.getRootOrgs());
 		return "jsonView";
 	}

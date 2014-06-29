@@ -66,4 +66,19 @@
 		<targetSelector>#attachContent</targetSelector>
 		<data type="boolean">false</data>
 	</template>
+	<template key="purchaseItem.goldUpdAttach">
+		<requestUrl>/purchaseItem/goldUpdAttach</requestUrl>
+		<targetSelector>#attachUpdContent</targetSelector>
+		<data type="boolean">false</data>
+	</template>
+	<template key="purchaseItem.platinumUpdAttach">
+		<requestUrl>/purchaseItem/platinumUpdAttach</requestUrl>
+		<dataUrl>/purchaseItem/platinumAttach</dataUrl>
+		<targetSelector>#attachUpdContent</targetSelector>
+	</template>
+	<template key="purchaseItem.jadeiteUpdAttach">
+		<requestUrl>/purchaseItem/jadeiteUpdAttach</requestUrl>
+		<targetSelector>#attachUpdContent</targetSelector>
+		<data type="boolean">false</data>
+	</template>
 </templates>

@@ -62,4 +62,22 @@ public class TemplateCtrl extends BaseController {
 		return "purchaseItem/jadeiteAttach";
 	}
 
+	@RequestMapping(value="purchaseItem/goldUpdAttach")
+	public String goldUpdAttach(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {
+		
+		return "purchaseItem/goldUpdAttach";
+	}
+	
+	@RequestMapping(value="purchaseItem/platinumUpdAttach")
+	public String platinumUpdAttach(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {
+		
+		return "purchaseItem/platinumUpdAttach";
+	}
+	
+	@RequestMapping(value="purchaseItem/jadeiteUpdAttach")
+	public String jadeiteUpdAttach(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {
+		
+		return "purchaseItem/jadeiteUpdAttach";
+	}
+	
 }

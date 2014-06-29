@@ -36,31 +36,43 @@
 
 $(".selectpicker").selectpicker({noneSelectedText:"请选择"});
 
-setInputClass($("#formAdd #hasDiamond > .btn.active").val());
+$("#formModify #hasDiamond").find("button").each(function() {
+    if($(this).val() == purchaseItemUpdAttach.hasDiamond + "") {
+        $(this).button("toggle");
+        setInputClass($(this).val());
+    }
+});
 
-$("#formAdd #hasDiamond").find("button").click(function() {
+$("#formModify #hasDiamond").find("button").click(function() {
 	setInputClass($(this).val());
 });
 
 function setInputClass(val) {
 	if(val == "true") {
-		$("#formAdd #diamondAmount").removeAttr("readonly");
-		$("#formAdd #diamondAmount").addClass("required");
-		$("#formAdd #diamondAmount").addClass("number");
-		$("#formAdd #diamondDimension").removeAttr("disabled");
-		$("#formAdd #diamondDimension option").each(function() {
+		$("#formModify #diamondAmount").removeAttr("readonly");
+		$("#formModify #diamondAmount").addClass("required");
+		$("#formModify #diamondAmount").addClass("number");
+		$("#formModify #diamondDimension").removeAttr("disabled");
+		if(purchaseItemUpdAttach.diamondAmount != undefined) {
+			$("#formModify #diamondAmount").val(purchaseItemUpdAttach.diamondAmount);
+		}
+		$("#formModify #diamondDimension option").each(function() {
 			if($(this).text() == "0")
 		    	$(this).remove();
+			if(purchaseItemUpdAttach.diamondDimension != undefined && 
+					$(this).val() == purchaseItemUpdAttach.diamondDimension) {
+				$(this).prop("selected", true)
+			}
 		});
 	} else if(val == "false") {
-		$("#formAdd #diamondAmount").val("");
-		$("#formAdd #diamondAmount").attr("readonly", "readonly");
-		$("#formAdd #diamondAmount").removeClass("required");
-		$("#formAdd #diamondAmount").removeClass("number");
-		$("#formAdd #diamondDimension").append("<option selected=selected>0</option>");
-		$("#formAdd #diamondDimension").attr("disabled", "disabled");
+		$("#formModify #diamondAmount").val("");
+		$("#formModify #diamondAmount").attr("readonly", "readonly");
+		$("#formModify #diamondAmount").removeClass("required");
+		$("#formModify #diamondAmount").removeClass("number");
+		$("#formModify #diamondDimension").append("<option selected=selected>0</option>");
+		$("#formModify #diamondDimension").attr("disabled", "disabled");
 	}
-	$("#formAdd #diamondDimension").selectpicker("refresh");
+	$("#formModify #diamondDimension").selectpicker("refresh");
 }
 
 </script>

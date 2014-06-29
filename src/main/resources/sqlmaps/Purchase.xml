@@ -93,13 +93,13 @@
 		<include refid="whereConditionPurchase" />
 	</select>
 	
-	<select id="find_user_by_purchase" resultClass="User">
+	<select id="find_user_by_purchase" resultMap="rm_User">
         <![CDATA[
             SELECT u.id, u.real_name FROM user u WHERE u.id = #value# 
         ]]>
     </select>
     
-    <select id="find_org_by_purchase" resultClass="Organization">
+    <select id="find_org_by_purchase" resultMap="rm_Org">
         <![CDATA[
             SELECT u.id, u.name, u.parent_id FROM organization u WHERE u.id = #value#
         ]]>

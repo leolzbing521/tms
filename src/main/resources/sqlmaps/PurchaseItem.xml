@@ -146,67 +146,67 @@
             UPDATE $tableName$
         ]]>
 		<dynamic prepend="SET">
-			<isNotNull property="name" prepend="AND">
+			<isNotNull property="name" prepend=",">
 		<![CDATA[
                     name = #name#
 		]]>
 			</isNotNull>
-			<isNotNull property="barcode" prepend="AND">
+			<isNotNull property="barcode" prepend=",">
 		<![CDATA[
                     barcode = #barcode#
 		]]>
 			</isNotNull>
-			<isNotNull property="hasDiamond" prepend="AND">
+			<isNotNull property="hasDiamond" prepend=",">
 		<![CDATA[
                     has_diamond = #hasDiamond#
 		]]>
 			</isNotNull>
-			<isNotNull property="material" prepend="AND">
+			<isNotNull property="material" prepend=",">
 		<![CDATA[
                     material = #material#
 		]]>
 			</isNotNull>
-			<isNotNull property="type" prepend="AND">
+			<isNotNull property="type" prepend=",">
 		<![CDATA[
                     type = #type#
 		]]>
 			</isNotNull>
-			<isNotNull property="weight" prepend="AND">
+			<isNotNull property="weight" prepend=",">
 		<![CDATA[
                     weight = #weight#
 		]]>
 			</isNotNull>
-			<isNotNull property="amount" prepend="AND">
+			<isNotNull property="amount" prepend=",">
 		<![CDATA[
                     amount = #amount#
 		]]>
 			</isNotNull>
-			<isNotNull property="sell" prepend="AND">
+			<isNotNull property="sell" prepend=",">
 		<![CDATA[
                     sell = #sell#
 		]]>
 			</isNotNull>
-			<isNotNull property="purchaseId" prepend="AND">
+			<isNotNull property="purchaseId" prepend=",">
 		<![CDATA[
                     purchase_id = #purchaseId#
 		]]>
 			</isNotNull>
-			<isNotNull property="diamondDimension" prepend="AND">
+			<isNotNull property="diamondDimension" prepend=",">
 		<![CDATA[
                     diamond_dimension = #diamondDimension#
 		]]>
 			</isNotNull>
-			<isNotNull property="diamondAmount" prepend="AND">
+			<isNotNull property="diamondAmount" prepend=",">
 		<![CDATA[
                     diamond_amount = #diamondAmount#
 		]]>
 			</isNotNull>
-			<isNotNull property="uuserId" prepend="AND">
+			<isNotNull property="uuserId" prepend=",">
 		<![CDATA[
                     uuser_id = #uuserId#
 		]]>
 			</isNotNull>
-			<isNotNull property="utime" prepend="AND">
+			<isNotNull property="utime" prepend=",">
 		<![CDATA[
                     utime = #utime#
 		]]>

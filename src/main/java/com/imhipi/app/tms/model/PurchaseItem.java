@@ -180,11 +180,11 @@ public class PurchaseItem extends BaseModel {
 		this.uuserId = uuserId;
 	}
 
-	public boolean getHasDiamond() {
+	public Boolean getHasDiamond() {
 		return hasDiamond;
 	}
 
-	public void setHasDiamond(boolean hasDiamond) {
+	public void setHasDiamond(Boolean hasDiamond) {
 		this.hasDiamond = hasDiamond;
 	}
 

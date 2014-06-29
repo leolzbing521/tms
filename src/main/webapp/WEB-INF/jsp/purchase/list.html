@@ -70,6 +70,84 @@
 	</form>
 </div>
 
+<div class="modal fade" tabindex="-1", data-width="760", id="addItem", style="display: none;">
+	<form id="formAddItem" action="purchaseItem/add">
+		<div class="modal-header">
+			<button class="close", type="button", data-dismiss="modal", aria-hidden="true"> &times</button>
+			<div class="row">
+				<div class="col-md-3">
+					<h4 class="modal-title">添加商品信息</h4>
+				</div>
+			</div>
+		</div>
+		<div class="modal-body">
+			<div class="row m-t-20">
+				<span class="col-md-2 text-right text-muted small">名称</span>
+				<div class="col-md-3">
+					<input class="holo required", type="text", style="margin-top:-20px;width:170px", id="name", name="name">
+				</div>
+				<span class="col-md-2 text-right text-muted small">条形码</span>
+				<div class="col-md-3">
+					<input class="holo required", type="text", style="margin-top:-20px;width:170px", id="barcode", name="barcode">
+				</div>
+			</div>
+			<div class="row m-t-20">
+				<span class="col-md-2 text-right text-muted small">材质</span>
+				<div class="col-md-3">
+					<div class="btn-group" data-toggle="buttons-radio", id="material">
+						<%for(var i=0;i<materials.length;i++){
+						%>
+							<%if(i == 0){%>
+								<button class="btn btn-sm btn-light-info active" type="button", value="<%=materials[i].key%>"><%=materials[i].name%></button>
+							<%}else{%>
+								<button class="btn btn-sm btn-light-info" type="button", value="<%=materials[i].key%>"><%=materials[i].name%></button>
+							<%}%>
+				        <%}%>
+					</div>
+				</div>
+				<span class="col-md-2 text-right text-muted small">所属采购</span>
+				<div class="col-md-3">
+					<input type="hidden" name="purchaseId" id="hidPurchaseId">
+					<select class="selectpicker" id="purchaseId" disabled="disabled" data-live-search="true">
+						<%for(var i=0;i<purchases.length;i++){
+						%>
+				        	<option value="<%=purchases[i].id%>"><%=purchases[i].name%></option>
+				        <%}%>
+                    </select>				
+                </div>
+			</div>
+			<div id="attachContent">
+			</div>
+			<div class="row m-t-20">
+				<span class="col-md-2 text-right text-muted small">类型</span>
+				<div class="col-md-8">
+					<div class="btn-group" data-toggle="buttons-radio", id="type">
+						<%for(var i=0;i<types.length;i++){
+						%>
+							<%if(i == 0){%>
+								<button class="btn btn-sm btn-light-info active" type="button", value="<%=types[i].key%>"><%=types[i].name%></button>
+							<%}else{%>
+								<button class="btn btn-sm btn-light-info" type="button", value="<%=types[i].key%>"><%=types[i].name%></button>
+							<%}%>
+				        <%}%>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-md-10 col-md-offset-1">
+					<input class="holo", type="text", style="width: 100%;", placeholder="备注", id="comment", name="comment">
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<div class="text-center">
+				<button class="cancel btn btn-lg btn-default" id="cancel" style="margin-right: 40px;", type="button">取消</button>
+				<button class="btn btn-lg btn-success" id="submit", type="submit">确定</button>
+			</div>
+		</div>
+	</form>
+</div>
+
 <div class="modal fade" tabindex="-1", data-width="760", id="modify", style="display: none;">
 	<form id="formModify" action="purchase/modify">
 		<div class="modal-header">
@@ -128,6 +206,9 @@
 
 <!-- script block -->
 <script type="text/javascript">
+
+$(".selectpicker").selectpicker({noneSelectedText:"请选择"});
+
 var purchasePagination = new pup.Pagination({
     templateKey : "purchase.listData"
 });
@@ -152,7 +233,7 @@ $("#muAdd").click(function() {
     });
     $(window).resize(function() {
         $.validator.reposition();
-     });
+    });
 });
 
 $("#formAdd").submit(function(ev) {
@@ -170,6 +251,51 @@ $("#formAdd").submit(function(ev) {
                     $("#formAdd")[0].reset();
                     $("#add").modal("hide");
                     purchasePagination.first();
+                }
+                toast(data.msg);
+            }
+        });
+    }
+    return false;
+});
+
+addAttachContent($("#formAddItem #material > .btn.active").val());
+
+$("#formAddItem #material").find("button").click(function() {
+	addAttachContent($(this).val());
+});
+
+function addAttachContent(val) {
+	if(val == "gold") {
+		pup.template.renderTemplateByKey("purchaseItem.goldAttach");
+	} else if(val == "platinum") {
+		pup.template.renderTemplateByKey("purchaseItem.platinumAttach");
+	} else if(val == "jadeite"){
+		pup.template.renderTemplateByKey("purchaseItem.jadeiteAttach");
+	}
+}
+
+$("#formAddItem").submit(function(ev) {
+    ev.preventDefault();
+    if($("#formAddItem").validate().form()) {
+        var url = $(this).attr("action");
+        var formData = $(this).serializeObject();
+        
+        formData.material = $("#formAddItem #material > .btn.active").val();
+        formData.type = $("#formAddItem #type > .btn.active").val();
+        if($("#formAddItem #hasDiamond > .btn.active").val() != undefined) {
+        	formData.hasDiamond = $("#formAddItem #hasDiamond > .btn.active").val();
+        }
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: "json",
+            data: formData,
+            success: function (data) {
+            	
+                if(data.msg.type == "success") {
+                    $("#formAddItem")[0].reset();
+                    $("#addItem").modal("hide");
                 }
                 toast(data.msg);
             }

@@ -4,7 +4,7 @@
 		<th>所属分店</th>
 		<th>采购人</th>
 		<th>采购时间</th>
-		<th>操作</th>
+		<th class="text-center">操作</th>
 	</tr>
 	<tbody>
 		<%for(var i=0;i<data.length;i++){
@@ -21,8 +21,9 @@
              	<td><%=format(purchase.ctime)%></td>
              	<td>
              		<div class="text-center">
-             			<span class="icon-btn edit" id="<%=purchase.id%>"><i class="icon icon-edit-3"></i></span>
-             			<span class="icon-btn trash" id="<%=purchase.id%>"><i class="icon icon-trash"></i></span>
+             			<span class="icon-btn edit" id="<%=purchase.id%>" title="编辑"><i class="icon icon-edit-3"></i></span>
+             			<span class="icon-btn trash" id="<%=purchase.id%>" title="删除"><i class="icon icon-trash"></i></span>
+             			<span class="icon-btn plus" id="<%=purchase.id%>" title="添加商品"><i class="icon icon-plus-6"></i></span>
              		</div>
              	</td>
            </tr>
@@ -66,6 +67,31 @@ $("#purchaseListData .edit").click(function(ev) {
 $("#purchaseListData .trash").click(function(ev) {
 	curPurchaseId = $(this).attr("id");
 	$("#opDelConfirm").modal("show");
+});
+
+$("#purchaseListData .plus").click(function(ev) {
+	curPurchaseId = $(this).attr("id");
+	
+	$("#addItem #purchaseId option").each(function() {
+		if($(this).val() == curPurchaseId) {
+			$(this).prop("selected", "selected");
+			$("#addItem #hidPurchaseId").val($(this).val());
+			return true;
+		}
+	});
+	$("#addItem #purchaseId").selectpicker("refresh");
+	
+	$("#addItem").modal("show");
+    $("#formAddItem").validate_popover({onsubmit: false, popoverPosition: "top"});
+    $("#addItem").on("scroll", function() { $.validator.reposition(); });
+    $("#addItem").on("hide.bs.modal", function (e) {
+       $(".popover").each( function() {
+          $(this).hide();
+       });
+    });
+    $(window).resize(function() {
+        $.validator.reposition();
+    });
 });
 
 

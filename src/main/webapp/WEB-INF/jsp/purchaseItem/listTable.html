@@ -44,6 +44,10 @@
 
 <!-- script block -->
 <script type="text/javascript">
+
+var purchaseItemUpdAttach = {};
+
+
 $("#purchaseItemListData .edit").click(function(ev) {
     ev.preventDefault();
     var url = "purchaseItem/" + $(this).attr("id");
@@ -53,11 +57,37 @@ $("#purchaseItemListData .edit").click(function(ev) {
         dataType: "json",
         data: {id : $(this).attr("id")},
         success: function (data) {
-            var purchase = data.purchase;
-            $("#formModify #id").val(purchase.id);
-            $("#formModify #name").val(purchase.name);
-            $("#formModify #amount").val(purchase.amount);
-            $("#formModify #comment").val(purchase.comment);
+            var purchaseItem = data.purchaseItem;
+            $("#formModify #id").val(purchaseItem.id);
+            $("#formModify #name").val(purchaseItem.name);
+            $("#formModify #barcode").val(purchaseItem.barcode);
+            purchaseItemUpdAttach = {};
+            if(purchaseItem.weight != undefined) {
+            	purchaseItemUpdAttach.weight = purchaseItem.weight;
+            }
+            
+            if(purchaseItem.hasDiamond != undefined) {
+            	purchaseItemUpdAttach.hasDiamond = purchaseItem.hasDiamond;
+            }
+            
+            if(purchaseItem.diamondAmount != undefined) {
+            	purchaseItemUpdAttach.diamondAmount = purchaseItem.diamondAmount;
+            }
+            
+            if(purchaseItem.amount != undefined) {
+            	purchaseItemUpdAttach.amount = purchaseItem.amount;
+            }
+            
+            if(purchaseItem.diamondDimension != undefined) {
+            	purchaseItemUpdAttach.diamondDimension = purchaseItem.diamondDimension;
+            }
+            
+            $("#formAdd #material").find("button").each(function() {
+            	if($(this).val() == purchaseItem.material) {
+            		$("#formModify #material").html($(this).html());
+            		addAttachUpdContent($(this).val());
+            	}
+            });
             $("#modify").modal("show");
             $("#formModify").validate_popover({onsubmit: false, popoverPosition: "top"});
             $("#modify").on("scroll", function() { $.validator.reposition(); });
@@ -72,6 +102,16 @@ $("#purchaseItemListData .edit").click(function(ev) {
         }
     });
 });
+
+function addAttachUpdContent(val) {
+	if(val == "gold") {
+		pup.template.renderTemplateByKey("purchaseItem.goldUpdAttach");
+	} else if(val == "platinum") {
+		pup.template.renderTemplateByKey("purchaseItem.platinumUpdAttach");
+	} else if(val == "jadeite"){
+		pup.template.renderTemplateByKey("purchaseItem.jadeiteUpdAttach");
+	}
+}
 
 $("#purchaseItemListData .trash").click(function(ev) {
 	curPurchaseItemId = $(this).attr("id");
