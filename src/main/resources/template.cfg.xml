@@ -81,4 +81,13 @@
 		<targetSelector>#attachUpdContent</targetSelector>
 		<data type="boolean">false</data>
 	</template>
+	<template key="sale.list">
+		<requestUrl>/sale/list</requestUrl>
+	</template>
+	<template key="sale.listData">
+		<requestUrl>/sale/listTable</requestUrl>
+		<dataUrl>/sale/listData</dataUrl>
+		<targetSelector>#saleListData</targetSelector>
+		<dataRequestType>POST</dataRequestType>
+	</template>
 </templates>

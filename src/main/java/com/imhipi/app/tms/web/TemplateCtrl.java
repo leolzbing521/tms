@@ -80,4 +80,16 @@ public class TemplateCtrl extends BaseController {
 		return "purchaseItem/jadeiteUpdAttach";
 	}
 	
+	@RequestMapping(value="sale/list")
+	public String saleList(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {
+		
+		return "sale/list";
+	}
+	
+	@RequestMapping(value="sale/listTable")
+	public String saleListData(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {
+		
+		return "sale/listTable";
+	}
+	
 }

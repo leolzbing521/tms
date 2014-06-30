@@ -50,8 +50,7 @@
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-						<li role="presentation"><a role='menuitem', tabindex="-1", href='javascript:pup.template.renderTemplateByKey("example.pageLoad")'>销售管理</a></li>
-						<li role="presentation"><a role='menuitem', tabindex="-1", href='javascript:pup.template.renderTemplateByKey("example.pageLoad")'>以旧换新</a></li>
+						<li role="presentation"><a role='menuitem', tabindex="-1", href='javascript:pup.template.renderTemplateByKey("sale.list")'>销售管理</a></li>
 					</ul>
 				</li>
 				

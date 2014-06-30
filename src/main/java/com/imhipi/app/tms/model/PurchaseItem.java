@@ -44,6 +44,8 @@ public class PurchaseItem extends BaseModel {
     
     private String materialName;
     
+    private String diamondDimensionName;
+    
 	public PurchaseItem() {
         
     }
@@ -52,6 +54,14 @@ public class PurchaseItem extends BaseModel {
         this.id = id;
     }
     
+	public String getDiamondDimensionName() {
+		return diamondDimensionName;
+	}
+
+	public void setDiamondDimensionName(String diamondDimensionName) {
+		this.diamondDimensionName = diamondDimensionName;
+	}
+
 	public String getMaterialName() {
 		return materialName;
 	}

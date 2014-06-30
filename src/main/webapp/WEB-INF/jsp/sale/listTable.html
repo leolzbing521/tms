@@ -1,0 +1,69 @@
+<table class="table mm-box">
+	<tr class="th-inverse">
+		<th>名称</th>
+		<th>条形码</th>
+		<th>类型</th>
+		<th>材质</th>
+		<th>克重(g)</th>
+		<th>镶钻</th>
+		<th>钻石尺寸</th>
+		<th>操作</th>
+	</tr>
+	<tbody>
+		<%for(var i=0;i<data.length;i++){
+			var purchaseItem = data[i];
+		%>
+        	<tr>
+             	<td><%=purchaseItem.name%></td>
+             	<td><%=purchaseItem.barcode%></td>
+             	<td><%=purchaseItem.typeName%></td>
+             	<td><%=purchaseItem.materialName%></td>
+             	<td><%=purchaseItem.weight%></td>
+             	<td>
+	             	<% if(purchaseItem.hasDiamond) {%>
+	             		是
+	             	<%} else {%>
+	             		否
+	             	<%}%>
+             	</td>
+             	<td>
+	             	<% if(purchaseItem.diamondDimension && purchaseItem.diamondDimension != "0") {%>
+	             		<%=purchaseItem.diamondDimensionName%>
+	             	<%} else {%>
+	             		
+	             	<%}%>
+             	</td>
+             	<td>
+             		<div class="text-center">
+             			<span class="icon-btn sell" id="<%=purchaseItem.id%>" title="销售"><i class="icon icon-hammer"></i></span>
+             			<span class="icon-btn exchange" id="<%=purchaseItem.id%>" title="以旧换新"><i class="icon icon-exchange-1"></i></span>
+             		</div>
+             	</td>
+           </tr>
+       <%}%>
+	</tbody>
+</table>
+
+<div id="purchaseItemPageBar"></div>
+
+<!-- script block -->
+<script type="text/javascript">
+
+$("#saleListData .sell").click(function(ev) {
+	curPurchaseItemId = $(this).attr("id");
+	$("#sellType").modal("show");
+});
+
+$("#saleListData .exchange").click(function(ev) {
+	curPurchaseItemId = $(this).attr("id");
+	$("#opDelConfirm").modal("show");
+});
+
+
+purchaseItemPagination.bar("#purchaseItemPageBar");
+</script>
+
+
+
+	
+	
