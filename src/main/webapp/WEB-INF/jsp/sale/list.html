@@ -201,7 +201,7 @@
 		<button class="close"type="button", data-dismiss="modal", aria-hidden="true"> &times</button>
 		<div class="row">
 			<div class="col-md-8">
-				<h4 class="modal-title">购买方式</h4>
+				<h4 class="modal-title">购买对象</h4>
 			</div>
 		</div>
 	</div>
@@ -210,20 +210,20 @@
 			<div class="text-center">
 				<button type="button" class="btn btn-default btn-info btn-lg" id="commonType">
 					<i class="icon-user-1" style="margin-right: 5px;"></i>
-					<span>普通购买</span>
+					<span>普通人群</span>
 				</button>
-				<button type="button" class="btn btn-default btn-success btn-lg" style="margin-left : 50px;" id="menberType">
+				<button type="button" class="btn btn-default btn-success btn-lg" style="margin-left : 50px;" id="memberType">
 					<i class="icon-users-3" style="margin-right: 5px;"></i>
-					<span>会员购买</span>
+					<span>公司会员</span>
 				</button>
 			</div>
 		</div>
 	</div>
 </div>
 
-<div class="modal fade" id="opDelConfirm" tabindex="-1", style="display: none;">
+<div class="modal fade" id="opSellConfirm" tabindex="-1", style="display: none;">
 	<div class="modal-body">
-		<p id="confirmMsg">确定删除？
+		<p id="confirmMsg">确定销售此商品？
 	</div>
 	<div class="modal-footer">
 		<div class="text-center">
@@ -354,6 +354,58 @@ function queryData(isQuickBtn) {
     }
     purchaseItemPagination.setCondition(condition).first();
 }
+
+
+$("#opSellConfirm #ok").click(function() {
+    $("#opSellConfirm").modal("hide");
+    var url = "purchaseItem/" + curPurchaseItemId;
+    $.ajax({
+        type: "GET",
+        url: url,
+        dataType: "json",
+        data: {},
+        success: function (data) {
+            var formData = data.msg.body;
+            if(data.msg.type == "success"){
+            	purchasePagination.reload();
+            }
+            toast(data.msg);
+        }
+    });
+});
+
+
+var curSellType = null;
+
+$("#commonType").click(function() {
+	/* confirm the submit form */
+	$("#opSellConfirm").modal("show");
+});
+
+$("#memberType").click(function() {
+	/* close the dialog */
+	$.when($("#sellType").modal("hide"))
+	.done(function() {
+		
+	});
+	$("#sellType").modal("hide").on("hidden", function () {
+		pup.widgets.layerManager.open({
+	        /* default random, not required */
+	        layerKey : "memberList",
+	        template : {
+	            /* template key */
+	            key : "member.list",
+	            /* template request params */
+	            dataParam : {},
+	            /* callback fn */
+	            beforeRender : function() {},
+	            /* callback fn */
+	            afterRender : function() {}
+	        }
+	    });
+	});
+});
+
 
 </script>
 

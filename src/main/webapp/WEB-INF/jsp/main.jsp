@@ -67,7 +67,7 @@ $(function() {
 </script>
 </head>
 <body>
-	<div id="wrap", data-viewgroup='fullScreenLayers', data-viewid='fsl-1'>
+	<div id="wrap">
 		<jsp:include page="header.jsp"></jsp:include>
 		<div class="container">
 			<div id="main"></div>

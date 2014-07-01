@@ -1,0 +1,100 @@
+<table class="table mm-box">
+	<tr class="th-inverse">
+		<th>姓名</th>
+		<th>电话</th>
+		<th>身份证</th>
+		<th class="text-center">操作</th>
+	</tr>
+	<tbody>
+		<%for(var i=0;i<data.length;i++){
+			var member = data[i];
+		%>
+        	<tr>
+             	<td><%=member.realName%></td>
+             	<td><%=member.phone%></td>
+             	<td><%=member.identityCard%></td>
+             	<td>
+           			<div class="input-control radio">
+					    <label>
+					        <input type="radio" />
+					        <span class="check"></span>
+					        Check me out
+					    </label>
+					</div>
+             	</td>
+           </tr>
+       <%}%>
+	</tbody>
+</table>
+
+<div id="purchasePageBar"></div>
+
+<!-- script block -->
+<script type="text/javascript">
+$("#purchaseListData .edit").click(function(ev) {
+    ev.preventDefault();
+    var url = "purchase/" + $(this).attr("id");
+    $.ajax({
+        type: "GET",
+        url: url,
+        dataType: "json",
+        data: {id : $(this).attr("id")},
+        success: function (data) {
+            var purchase = data.purchase;
+            $("#formModify #id").val(purchase.id);
+            $("#formModify #name").val(purchase.name);
+            $("#formModify #amount").val(purchase.amount);
+            $("#formModify #comment").val(purchase.comment);
+            $("#modify").modal("show");
+            $("#formModify").validate_popover({onsubmit: false, popoverPosition: "top"});
+            $("#modify").on("scroll", function() { $.validator.reposition(); });
+            $("#modify").on("hide.bs.modal", function (e) {
+               $(".popover").each( function() {
+                  $(this).hide();
+               });
+            });
+            $(window).resize(function() {
+                $.validator.reposition();
+            });
+        }
+    });
+});
+
+$("#purchaseListData .trash").click(function(ev) {
+	curPurchaseId = $(this).attr("id");
+	$("#opDelConfirm").modal("show");
+});
+
+$("#purchaseListData .plus").click(function(ev) {
+	curPurchaseId = $(this).attr("id");
+	
+	$("#addItem #purchaseId option").each(function() {
+		if($(this).val() == curPurchaseId) {
+			$(this).prop("selected", "selected");
+			$("#addItem #hidPurchaseId").val($(this).val());
+			return true;
+		}
+	});
+	$("#addItem #purchaseId").selectpicker("refresh");
+	
+	$("#addItem").modal("show");
+    $("#formAddItem").validate_popover({onsubmit: false, popoverPosition: "top"});
+    $("#addItem").on("scroll", function() { $.validator.reposition(); });
+    $("#addItem").on("hide.bs.modal", function (e) {
+       $(".popover").each( function() {
+          $(this).hide();
+       });
+    });
+    $(window).resize(function() {
+        $.validator.reposition();
+    });
+});
+
+
+purchasePagination.bar("#purchasePageBar");
+</script>
+
+
+
+	
+	

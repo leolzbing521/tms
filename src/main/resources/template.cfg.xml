@@ -90,4 +90,13 @@
 		<targetSelector>#saleListData</targetSelector>
 		<dataRequestType>POST</dataRequestType>
 	</template>
+	<template key="member.list">
+		<requestUrl>/member/list</requestUrl>
+	</template>
+	<template key="member.listData">
+		<requestUrl>/member/listTable</requestUrl>
+		<dataUrl>/member/listData</dataUrl>
+		<targetSelector>#memberListData</targetSelector>
+		<dataRequestType>POST</dataRequestType>
+	</template>
 </templates>

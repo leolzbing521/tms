@@ -489,6 +489,12 @@ var pup = function ($) {
                             btnCloseZIndex = optional.closeButton.zIndex;
                         }
                     }
+                    
+                    //remove modal-open class and model-backdrop attribute in order to show the dialog normally
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+                    $('.modal-scrollable').remove();
+                    
                     var $target = $(targetSelector);
                     if(!$target) {
                         throw new Error('Can\'t find layer target element like : ' + targetSelector);
@@ -506,7 +512,7 @@ var pup = function ($) {
                     layers.push(layerKey);
                     $target.data('layers', layers);
 
-                    var $layer = $('<div></div>');
+                    var $layer = $('<div style="overflow: auto;"></div>');
                     $layer.attr('data-pup-widgets-layer-key', layerKey);
                     $layer.css('display', 'none');
                     $layer.addClass('row');
