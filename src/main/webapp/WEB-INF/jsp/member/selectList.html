@@ -8,25 +8,25 @@
 	<div class="col-sm-8 col-sm-offset-2 mm-box form-horizontal filter-pan">
 		<form id="query" onsubmit="return false;">
 			<div class="form-group">
-				<label class="control-label col-md-2">采购名称</label>
+				<label class="control-label col-md-2">手机号</label>
+				<div class="col-md-10">
+					<input class="holo", type="text", name="phone", id="phone", style="display: inline-block;margin-right:10px;width:300px;">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-md-2">姓名</label>
 				<div class="col-md-10">
 					<input class="holo", type="text", name="name", id="name", style="display: inline-block;margin-right:10px;width:300px;">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-md-2">身份证</label>
+				<div class="col-md-10">
+					<input class="holo", type="text", name="identityCard", id="identityCard", style="display: inline-block;margin-right:10px;width:300px;">
 					<button class="btn btn-primary m-l-5", data-toggle="modal", type="submit", id="queryQuick">
 						<i class="icon-search-8" style="margin-right: 5px;"s></i>
 						<span>快速查找</span>
 					</button>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="control-label col-md-2">分店</label>
-				<div class="col-md-10">
-					<div class="labelRadio" id="selectOrgs">
-						<input name="org", checked="checked", type="radio", value="", data-name="全部">
-						<%for(var i=0;i<orgs.length;i++){
-						%>
-				        	<input name="org", type="radio", value="<%=orgs[i].id%>", data-name="<%=orgs[i].name%>">
-				        <%}%>
-					</div>
 				</div>
 			</div>
 		</form>
@@ -39,95 +39,35 @@
 			<button class="close"type="button", data-dismiss="modal", aria-hidden="true"> &times</button>
 			<div class="row">
 				<div class="col-md-3">
-					<h4 class="modal-title">添加采购信息</h4>
+					<h4 class="modal-title">添加会员信息</h4>
 				</div>
 			</div>
 		</div>
 		<div class="modal-body">
 			<div class="row m-t-20">
-				<span class="col-md-2 text-right text-muted small">名称</span>
+				<span class="col-md-2 text-right text-muted small">姓名</span>
 				<div class="col-md-3">
 					<input class="holo required", type="text", style="margin-top:-20px;width:170px", id="name", name="name">
 				</div>
-				<span class="col-md-2 text-right text-muted small">总成本</span>
+				<span class="col-md-2 text-right text-muted small">手机号</span>
 				<div class="col-md-3">
-					<input class="holo digits", type="text", style="margin-top:-20px;width:170px", id="amount", name="amount">
-				</div>
-				<span class="col-md-1 text-left text-muted small">元</span>
-			</div>
-			<div class="row" style="margin-top:20px;">
-				<div class="col-md-10 col-md-offset-1">
-					<input class="holo", type="text", style="width: 100%;", placeholder="备注", id="comment", name="comment">
-				</div>
-			</div>
-		</div>
-		<div class="modal-footer">
-			<div class="text-center">
-				<button class="cancel btn btn-lg btn-default" id="cancel" style="margin-right: 40px;", type="button">取消</button>
-				<button class="btn btn-lg btn-success" id="submit", type="submit">确定</button>
-			</div>
-		</div>
-	</form>
-</div>
-
-<div class="modal fade" tabindex="-1", data-width="760", id="addItem", style="display: none;">
-	<form id="formAddItem" action="purchaseItem/add">
-		<div class="modal-header">
-			<button class="close", type="button", data-dismiss="modal", aria-hidden="true"> &times</button>
-			<div class="row">
-				<div class="col-md-3">
-					<h4 class="modal-title">添加商品信息</h4>
-				</div>
-			</div>
-		</div>
-		<div class="modal-body">
-			<div class="row m-t-20">
-				<span class="col-md-2 text-right text-muted small">名称</span>
-				<div class="col-md-3">
-					<input class="holo required", type="text", style="margin-top:-20px;width:170px", id="name", name="name">
-				</div>
-				<span class="col-md-2 text-right text-muted small">条形码</span>
-				<div class="col-md-3">
-					<input class="holo required", type="text", style="margin-top:-20px;width:170px", id="barcode", name="barcode">
+					<input class="holo digits", type="text", style="margin-top:-20px;width:170px", id="phone", name="phone">
 				</div>
 			</div>
 			<div class="row m-t-20">
-				<span class="col-md-2 text-right text-muted small">材质</span>
+				<span class="col-md-2 text-right text-muted small">身份证</span>
 				<div class="col-md-3">
-					<div class="btn-group" data-toggle="buttons-radio", id="material">
-						<%for(var i=0;i<materials.length;i++){
-						%>
-							<%if(i == 0){%>
-								<button class="btn btn-sm btn-light-info active" type="button", value="<%=materials[i].key%>"><%=materials[i].name%></button>
-							<%}else{%>
-								<button class="btn btn-sm btn-light-info" type="button", value="<%=materials[i].key%>"><%=materials[i].name%></button>
-							<%}%>
-				        <%}%>
-					</div>
+					<input class="holo required", type="text", style="margin-top:-20px;width:170px", id="identityCard", name="identityCard">
 				</div>
-				<span class="col-md-2 text-right text-muted small">所属采购</span>
+				<span class="col-md-2 text-right text-muted small">性别</span>
 				<div class="col-md-3">
-					<input type="hidden" name="purchaseId" id="hidPurchaseId">
-					<select class="selectpicker" id="purchaseId" disabled="disabled" data-live-search="true">
-						<%for(var i=0;i<purchases.length;i++){
-						%>
-				        	<option value="<%=purchases[i].id%>"><%=purchases[i].name%></option>
-				        <%}%>
-                    </select>				
-                </div>
-			</div>
-			<div id="attachContent">
-			</div>
-			<div class="row m-t-20">
-				<span class="col-md-2 text-right text-muted small">类型</span>
-				<div class="col-md-8">
 					<div class="btn-group" data-toggle="buttons-radio", id="type">
-						<%for(var i=0;i<types.length;i++){
+						<%for(var i=0;i<sexList.length;i++){
 						%>
 							<%if(i == 0){%>
-								<button class="btn btn-sm btn-light-info active" type="button", value="<%=types[i].key%>"><%=types[i].name%></button>
-							<%}else{%>
-								<button class="btn btn-sm btn-light-info" type="button", value="<%=types[i].key%>"><%=types[i].name%></button>
+								<button class="btn btn-sm btn-light-info active" type="button", value="<%=sexList[i].key%>"><%=sexList[i].name%></button>
+							<%} else {%>
+								<button class="btn btn-sm btn-light-info" type="button", value="<%=sexList[i].key%>"><%=sexList[i].name%></button>
 							<%}%>
 				        <%}%>
 					</div>
@@ -149,7 +89,7 @@
 </div>
 
 <div class="modal fade" tabindex="-1", data-width="760", id="modify", style="display: none;">
-	<form id="formModify" action="purchase/modify">
+	<form id="formModify" action="member/modify">
 		<div class="modal-header">
 			<button class="close"type="button", data-dismiss="modal", aria-hidden="true"> &times</button>
 			<div class="row">
@@ -160,16 +100,33 @@
 		</div>
 		<div class="modal-body">
 			<div class="row m-t-20">
-				<span class="col-md-2 text-right text-muted small">名称</span>
+				<span class="col-md-2 text-right text-muted small">姓名</span>
 				<div class="col-md-3">
-					<input type="hidden" id="id" name="id">
 					<input class="holo required", type="text", style="margin-top:-20px;width:170px", id="name", name="name">
 				</div>
-				<span class="col-md-2 text-right text-muted small">总成本</span>
+				<span class="col-md-2 text-right text-muted small">手机号</span>
 				<div class="col-md-3">
-					<input class="holo number", type="text", style="margin-top:-20px;width:170px", id="amount", name="amount">
+					<input class="holo digits", type="text", style="margin-top:-20px;width:170px", id="phone", name="phone">
 				</div>
-				<span class="col-md-1 text-left text-muted small">元</span>
+			</div>
+			<div class="row m-t-20">
+				<span class="col-md-2 text-right text-muted small">身份证</span>
+				<div class="col-md-3">
+					<input class="holo required", type="text", style="margin-top:-20px;width:170px", id="identityCard", name="identityCard">
+				</div>
+				<span class="col-md-2 text-right text-muted small">性别</span>
+				<div class="col-md-3">
+					<div class="btn-group" data-toggle="buttons-radio", id="type">
+						<%for(var i=0;i<sexList.length;i++){
+						%>
+							<%if(i == 0){%>
+								<button class="btn btn-sm btn-light-info active" type="button", value="<%=sexList[i].key%>"><%=sexList[i].name%></button>
+							<%} else {%>
+								<button class="btn btn-sm btn-light-info" type="button", value="<%=sexList[i].key%>"><%=sexList[i].name%></button>
+							<%}%>
+				        <%}%>
+					</div>
+				</div>
 			</div>
 			<div class="row" style="margin-top:20px;">
 				<div class="col-md-10 col-md-offset-1">
@@ -200,7 +157,7 @@
 
 <div class="row m-t-25">
 	<div class="col-sm-8 col-sm-offset-2">
-		<div class="row" id="purchaseListData"></div>
+		<div class="row" id="memberListData"></div>
 	</div>
 </div>
 
@@ -209,11 +166,11 @@
 
 $(".selectpicker").selectpicker({noneSelectedText:"请选择"});
 
-var purchasePagination = new pup.Pagination({
-    templateKey : "purchase.listData"
+var memberPagination = new pup.Pagination({
+    templateKey : "member.selectListData"
 });
 /* 跳转到第一页 */
-purchasePagination.setSort({ctime:"DESC"}).first();
+memberPagination.setSort({ctime:"DESC"}).first();
 
 $("#cancel, .close").click(function() {
     $(".modal").modal("hide");

@@ -92,16 +92,16 @@ public class TemplateCtrl extends BaseController {
 		return "sale/listTable";
 	}
 	
-	@RequestMapping(value="member/list")
+	@RequestMapping(value="member/selectList")
 	public String memberList(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {
 		
-		return "member/list";
+		return "member/selectList";
 	}
 	
-	@RequestMapping(value="member/listTable")
+	@RequestMapping(value="member/selectListTable")
 	public String memberListData(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {
 		
-		return "member/listTable";
+		return "member/selectListTable";
 	}
 	
 }

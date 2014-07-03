@@ -455,11 +455,13 @@ var pup = function ($) {
                  *         rightOffset : 10px,
                  *         zIndex : 10
                  *     }
+                 *     //关闭层之前回调函数
+                 *     beforeClose : fn(){},
+                 *     //关闭层之后回调函数
+                 *     afterClose : fn(){}
                  * }
                  */
                 open : function(optional) {
-                    console.debug('layerManager.open : ');
-                    console.dir(optional);
                     var layerKey = null;
                     var targetSelector = null;
                     var html = null;
@@ -471,6 +473,8 @@ var pup = function ($) {
                     var btnCloseTopOffset = null;
                     var btnCloseRightOffset = null;
                     var btnCloseZIndex = null;
+                    var beforeClose = null;
+                    var afterClose = null;
                     if(optional) {
                         layerKey = optional.layerKey || ('layer_' + this.layerSuffix++);
                         targetSelector = optional.targetSelector || 'body';
@@ -488,12 +492,14 @@ var pup = function ($) {
                             btnCloseRightOffset = optional.closeButton.rightOffset;
                             btnCloseZIndex = optional.closeButton.zIndex;
                         }
+                        beforeClose = optional.beforeClose;
+                        afterClose = optional.afterClose;
                     }
                     
                     //remove modal-open class and model-backdrop attribute in order to show the dialog normally
-                    $('body').removeClass('modal-open');
-                    $('.modal-backdrop').remove();
-                    $('.modal-scrollable').remove();
+//                    $('body').removeClass('modal-open');
+//                    $('.modal-backdrop').remove();
+//                    $('.modal-scrollable').remove();
                     
                     var $target = $(targetSelector);
                     if(!$target) {
@@ -512,7 +518,8 @@ var pup = function ($) {
                     layers.push(layerKey);
                     $target.data('layers', layers);
 
-                    var $layer = $('<div style="overflow: auto;"></div>');
+                    var $layer = $('<div></div>');
+                    $layer.data('events', {beforeClose : beforeClose, afterClose : afterClose});
                     $layer.attr('data-pup-widgets-layer-key', layerKey);
                     $layer.css('display', 'none');
                     $layer.addClass('row');
@@ -556,14 +563,27 @@ var pup = function ($) {
                         });
                     }
                 },
+                /**
+                 * 关闭一个对话层
+                 * @param optional
+                 * {
+                 *     //default is something random, not required
+                 *     layerKey : 'key for the open layer',
+                 *     //default is body, not required
+                 *     targetSelector : 'jquery selector for where the layer cover on',
+                 *     //afterClose
+                 *     beforeClose : fn(){}
+                 *     afterClose : fn(){}
+                 * }
+                 */
                 close : function(optional) {
-                    console.debug('layerManager.open : ');
-                    console.dir(optional);
                     var layerKey = null;
                     var targetSelector = null;
                     if(optional) {
                         layerKey = optional.layerKey;
                         targetSelector = optional.targetSelector;
+                        beforeClose = optional.beforeClose;
+                        afterClose = optional.afterClose;
                     }
                     if(!targetSelector) {
                         targetSelector = 'body';
@@ -577,25 +597,41 @@ var pup = function ($) {
                         console.debug('no layers in ' + targetSelector);
                         return;
                     }
-                    if(layerKey) {
-                        var $layer = this.layerMap[layerKey].layer;
-                        if(!$layer) {
+                    if(!layerKey) {
+                        layerKey = layers.pop();
+                        if(!layerKey) {
                             return;
-                        } else {
-                            $layer.remove();
-                            var nLayers = [];
-                            for(var i = 0; i < layers.length; i++) {
-                                if(layers[i] != layerKey) {
-                                    nLayers.push(layers[i]);
-                                }
-                            }
-                            layers = nLayers;
-                            $target.data('layers', layers);
                         }
                     } else {
-                        layerKey = layers.pop();
-                        var $layer = this.layerMap[layerKey].layer;
+                        var nLayers = [];
+                        for(var i = 0; i < layers.length; i++) {
+                            if(layers[i] != layerKey) {
+                                nLayers.push(layers[i]);
+                            }
+                        }
+                        layers = nLayers;
+                        $target.data('layers', layers);
+                    }
+                    var $layer = this.layerMap[layerKey].layer;
+                    if(!$layer) {
+                        return;
+                    }
+                    var events = $layer.data('events');
+                    var confirm = true;
+                    if(events && events.beforeClose) {
+                        confirm = events.beforeClose();
+                        if(typeof(confirm) == "undefined") {
+                            confirm = true;
+                        }
+                    }
+                    if(confirm) {
                         $layer.remove();
+                    } else {
+                        layers.push(layerKey);
+                        return;
+                    }
+                    if(events && events.afterClose) {
+                        events.afterClose();
                     }
                     if(layers.length == 0) {
                         $target.find('>div:first').find('>:first').unwrap();
@@ -603,6 +639,15 @@ var pup = function ($) {
                         this.layerMap[layers[layers.length-1]].layer.show();
                     }
                 }
+            }
+        },
+        utils : {
+            isChinese : function(str) {
+                if(/^[\u4e00-\u9fa5]+$/.test(s))
+                {
+                    return false;
+                }
+                return true;
             }
         }
     }

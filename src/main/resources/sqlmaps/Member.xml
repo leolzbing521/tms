@@ -11,9 +11,10 @@
 		<result property="realName" column="real_name"/>
 		<result property="phone" column="phone"/>
 		<result property="identityCard" column="identity_card"/>
-		<result property="monetary" />
+		<result property="monetary" column="monetary"/>
 		<result property="sex" column="sex"/>
 		<result property="integral" />
+		<result property="comment"/>
 		<result property="cuserId" column="cuser_id"/>
 		<result property="uuserId" column="uuser_id"/>
 		<result property="ctime" />
@@ -54,6 +55,64 @@
 			</isNotNull>
 		</dynamic>
 	</sql>
+	
+	<sql id="whereConditionMemberByPage">
+		<dynamic prepend="WHERE">
+			<isNotNull property="condition">
+				<isNotNull property="condition.id" prepend="AND">
+			<![CDATA[
+	                    id = #condition.id#
+			]]>
+				</isNotNull>
+				<isNotNull property="condition.realName" prepend="AND">
+			<![CDATA[
+	                    real_name like '%$condition.realName$%'
+			]]>
+				</isNotNull>
+				<isNotNull property="condition.phone" prepend="AND">
+			<![CDATA[
+	                    phone like '%$condition.phone$%'
+			]]>
+				</isNotNull>
+				<isNotNull property="condition.identityCard" prepend="AND">
+			<![CDATA[
+	                    identity_card like '%$condition.identityCard$%'
+			]]>
+				</isNotNull>
+				<isNotNull property="condition.sex" prepend="AND">
+			<![CDATA[
+	                    sex = #condition.sex#
+			]]>
+				</isNotNull>
+				<isNotNull property="condition.integral" prepend="AND">
+			<![CDATA[
+	                    integral = #condition.integral#
+			]]>
+				</isNotNull>
+			</isNotNull>
+		</dynamic>
+		<dynamic prepend="order by">
+			<isNotNull property="sort">    
+		    	<isNotNull property="sort.ctime" prepend=",">
+			<![CDATA[
+	                    ctime $sort.ctime$
+			]]>
+				</isNotNull>	        
+		    </isNotNull>
+		    <isNotNull property="sort">    
+		    	<isNotNull property="sort.monetary" prepend=",">
+			<![CDATA[
+	                    monetary $sort.monetary$
+			]]>
+				</isNotNull>
+				<isNotNull property="sort.integral" prepend=",">
+			<![CDATA[
+	                    integral $sort.integral$
+			]]>
+				</isNotNull>
+		    </isNotNull>
+		</dynamic>
+	</sql>
 
 	<select id="findMember" parameterClass="Member" resultMap="rm_Member">
         <![CDATA[
@@ -64,8 +123,8 @@
 
 	<insert id="saveMember" parameterClass="Member">
         <![CDATA[
-            INSERT INTO $tableName$ (real_name, phone, identity_card, monetary, sex, integral, cuser_id, ctime, uuser_id, utime) 
-            VALUES (#realName#, #phone#, #identityCard#, #monetary#, #sex#, #integral#, #cuserId#, #ctime#, #uuserId#, #utime#)
+            INSERT INTO $tableName$ (real_name, phone, identity_card, monetary, sex, integral, comment, cuser_id, ctime, uuser_id, utime) 
+            VALUES (#realName#, #phone#, #identityCard#, #monetary#, #sex#, #integral#, #comment#, #cuserId#, #ctime#, #uuserId#, #utime#)
         ]]>
 		<selectKey resultClass="java.lang.Long" keyProperty="id"
 			type="post">
@@ -108,6 +167,11 @@
                     integral = #integral#
 		]]>
 			</isNotNull>
+			<isNotNull property="commnet" prepend="AND">
+		<![CDATA[
+                    commnet = #commnet#
+		]]>
+			</isNotNull>
 			<isNotNull property="uuserId" prepend="AND">
 		<![CDATA[
                     uuser_id = #uuserId#
@@ -129,10 +193,17 @@
 		where id = #id#
 	</delete>
 
-	<select id="countMember" resultClass="long" parameterClass="Member">
+	<select id="findMemberByPage" resultMap="rm_Member" parameterClass="Pagination">
   		<![CDATA[
-            SELECT count(*) FROM $tableName$
+            SELECT * FROM purchase
         ]]>
-		<include refid="whereConditionMember" />
+		<include refid="whereConditionMemberByPage" />
+	</select>
+	
+	<select id="countMember" resultClass="long" parameterClass="Pagination">
+  		<![CDATA[
+            SELECT count(*) FROM purchase
+        ]]>
+		<include refid="whereConditionMemberByPage" />
 	</select>
 </sqlMap>

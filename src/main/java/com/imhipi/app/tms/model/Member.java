@@ -24,6 +24,8 @@ public class Member extends BaseModel {
     
     private Integer integral;
     
+    private String comment;
+    
     private Long cuserId;
     
     private Long uuserId;
@@ -106,6 +108,14 @@ public class Member extends BaseModel {
 
 	public void setUuserId(Long uuserId) {
 		this.uuserId = uuserId;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	@Override

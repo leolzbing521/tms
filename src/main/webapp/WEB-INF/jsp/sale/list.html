@@ -384,17 +384,14 @@ $("#commonType").click(function() {
 
 $("#memberType").click(function() {
 	/* close the dialog */
-	$.when($("#sellType").modal("hide"))
-	.done(function() {
-		
-	});
-	$("#sellType").modal("hide").on("hidden", function () {
+	$("#sellType").modal("hide");
+	window.setTimeout(function () {
 		pup.widgets.layerManager.open({
 	        /* default random, not required */
 	        layerKey : "memberList",
 	        template : {
 	            /* template key */
-	            key : "member.list",
+	            key : "member.select",
 	            /* template request params */
 	            dataParam : {},
 	            /* callback fn */
@@ -403,7 +400,8 @@ $("#memberType").click(function() {
 	            afterRender : function() {}
 	        }
 	    });
-	});
+    }, 600);
+
 });
 
 

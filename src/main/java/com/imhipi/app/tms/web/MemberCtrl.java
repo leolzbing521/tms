@@ -43,10 +43,7 @@ public class MemberCtrl extends BaseController {
 	
 	@RequestMapping(value="list", method = RequestMethod.GET)
 	public String list(Model model) {
-		model.addAttribute("purchases", gm.findMulti(new Purchase()));
-		model.addAttribute("materials", dictService.getDictsByType(DictRootType.MATERIAL_TYPE));
-		model.addAttribute("types", dictService.getDictsByType(DictRootType.GEM_TYPE));
-		model.addAttribute("orgs", orgService.getRootOrgs());
+		model.addAttribute("sexList", dictService.getDictsByType(DictRootType.SEX));
 		return "jsonView";
 	}
 	
@@ -58,7 +55,7 @@ public class MemberCtrl extends BaseController {
 		page.setTotal(gm.countTotalNum(new Purchase(), page));
 		
 		model.addAttribute("pagination", page);
-		model.addAttribute("data", gm.findByNamedAndPageQuery("findPurchaseByPage", page, Member.class));
+		model.addAttribute("data", gm.findByNamedAndPageQuery("findMemberByPage", page, Member.class));
 		return "jsonView";
 	}
 	

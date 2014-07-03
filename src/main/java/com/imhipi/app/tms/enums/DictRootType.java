@@ -4,7 +4,7 @@ public enum DictRootType {
 
 	GEM_TYPE("gemType"), MATERIAL_TYPE("materialType"), HAS_DIAMOND("hasDiamond"),
 	
-	DIAMOND_DIMENSION("diamondDimension");
+	DIAMOND_DIMENSION("diamondDimension"), SEX("sex");
 	
 	private String name;
 	
