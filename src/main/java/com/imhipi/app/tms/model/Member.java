@@ -131,6 +131,8 @@ public class Member extends BaseModel {
     @Override
     public void prepareForSave() {
         super.prepareForSave();
+        monetary = 0;
+        integral = 0;
     }
     
 }

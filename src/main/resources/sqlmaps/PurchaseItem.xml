@@ -12,7 +12,7 @@
 		<result property="barcode" />
 		<result property="material" />
 		<result property="weight" column="weight"/>
-		<result property="sell" />
+		<result property="sell" column="sell" javaType="boolean"/>
 		<result property="type" column="type" />
 		<result property="amount" />
 		<result property="purchaseId" column="purchase_id" />
@@ -28,6 +28,12 @@
 	<resultMap id="rm_purchaseItem_with_purchase" class="PurchaseItem" extends="rm_PurchaseItem" >
         <result property="purchase" column="purchase_id"  select="find_purchase_by_purchaseItem"/>
     </resultMap>
+    
+    <sql id="Range_In_List_Clause" >
+        <iterate property="condition.rangeList" open="(" close=")" conjunction=",">
+			#condition.rangeList[]#
+        </iterate>
+    </sql>
 
 	<sql id="whereConditionPurchaseItem">
 		<dynamic prepend="WHERE">
@@ -101,6 +107,9 @@
 			<![CDATA[
 	                    material = #condition.material#
 			]]>
+				</isNotNull>
+				<isNotNull property="condition.rangeList" prepend="AND">
+                    purchase_id in <include refid="Range_In_List_Clause" />
 				</isNotNull>
 			</isNotNull>
 		</dynamic>

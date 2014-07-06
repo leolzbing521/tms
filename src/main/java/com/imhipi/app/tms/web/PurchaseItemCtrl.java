@@ -24,6 +24,7 @@ import com.imhipi.app.tms.model.PurchaseItem;
 import com.imhipi.app.tms.model.ResponseMsg;
 import com.imhipi.app.tms.model.User;
 import com.imhipi.app.tms.service.GenericManager;
+import com.imhipi.app.tms.service.MemberService;
 import com.imhipi.app.tms.util.PageUtils;
 
 @Controller
@@ -42,6 +43,10 @@ public class PurchaseItemCtrl extends BaseController {
 	@Autowired
 	@Qualifier("genericManager")
 	private GenericManager gm;
+	
+	@Autowired
+	@Qualifier("memberService")
+	private MemberService memberService;
 	
 	@RequestMapping(value="list", method = RequestMethod.GET)
 	public String list(Model model) {
@@ -73,6 +78,17 @@ public class PurchaseItemCtrl extends BaseController {
 			item.setMaterialName(dictService.getDictByTypeAndKey(DictRootType.MATERIAL_TYPE, item.getMaterial()));
 		}
 		model.addAttribute("data", items);
+		return "jsonView";
+	}
+	
+	@RequestMapping(value="sell/{purchaseItemId}/{memberId}", method = RequestMethod.GET)
+	public String sell(@PathVariable Long purchaseItemId, @PathVariable Long memberId, Pagination page, HttpServletRequest request, Model model) {
+		boolean result = memberService.sell((User)request.getSession().getAttribute("user"), purchaseItemId, memberId);
+		if(result) {
+			model.addAttribute("msg", new ResponseMsg(ResponseMsgType.SUCCESS.value(), "操作成功"));
+		} else {
+			model.addAttribute("msg", new ResponseMsg(ResponseMsgType.SUCCESS.value(), "此商品不存在或已售，操作失败"));
+		}
 		return "jsonView";
 	}
 	

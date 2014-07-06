@@ -13,12 +13,12 @@
 		<result property="identityCard" column="identity_card"/>
 		<result property="monetary" column="monetary"/>
 		<result property="sex" column="sex"/>
-		<result property="integral" />
-		<result property="comment"/>
+		<result property="integral" column="integral"/>
+		<result property="comment" column="comment"/>
 		<result property="cuserId" column="cuser_id"/>
 		<result property="uuserId" column="uuser_id"/>
-		<result property="ctime" />
-		<result property="utime" />
+		<result property="ctime" column="ctime"/>
+		<result property="utime" column="utime"/>
 	</resultMap>
 
 	<sql id="whereConditionMember">
@@ -169,7 +169,7 @@
 			</isNotNull>
 			<isNotNull property="commnet" prepend="AND">
 		<![CDATA[
-                    commnet = #commnet#
+                    comment = #comment#
 		]]>
 			</isNotNull>
 			<isNotNull property="uuserId" prepend="AND">
@@ -195,14 +195,14 @@
 
 	<select id="findMemberByPage" resultMap="rm_Member" parameterClass="Pagination">
   		<![CDATA[
-            SELECT * FROM purchase
+            SELECT * FROM member
         ]]>
 		<include refid="whereConditionMemberByPage" />
 	</select>
 	
 	<select id="countMember" resultClass="long" parameterClass="Pagination">
   		<![CDATA[
-            SELECT count(*) FROM purchase
+            SELECT count(*) FROM member
         ]]>
 		<include refid="whereConditionMemberByPage" />
 	</select>

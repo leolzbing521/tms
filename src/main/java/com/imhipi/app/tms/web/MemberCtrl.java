@@ -52,7 +52,7 @@ public class MemberCtrl extends BaseController {
 		if (PageUtils.isEmpty(page)) {
             page = pageConfig.getDefaultPage();
         }
-		page.setTotal(gm.countTotalNum(new Purchase(), page));
+		page.setTotal(gm.countTotalNum(new Member(), page));
 		
 		model.addAttribute("pagination", page);
 		model.addAttribute("data", gm.findByNamedAndPageQuery("findMemberByPage", page, Member.class));
@@ -61,11 +61,31 @@ public class MemberCtrl extends BaseController {
 	
 	@RequestMapping(value="add", method = RequestMethod.POST)
 	public String create(@ModelAttribute Member member, HttpServletRequest request, Model model) {
-		User user = (User)request.getSession().getAttribute("user");
-		member.setCuserId(user.getId());
-		member.setUuserId(user.getId());
-		gm.save(member);
-		model.addAttribute("msg", new ResponseMsg(ResponseMsgType.SUCCESS.value(), "添加成功"));
+		Member phoneMember = new Member();
+		phoneMember.setPhone(member.getPhone());
+		Member checkPhone = gm.findObject(phoneMember);
+		if(checkPhone != null) {
+			model.addAttribute("msg", new ResponseMsg(ResponseMsgType.ERROR.value(), "此电话号码已被注册，添加失败"));
+		} else if(member.getIdentityCard() != null) {
+			Member cardMember = new Member();
+			cardMember.setIdentityCard(member.getIdentityCard());
+			Member checkCard = gm.findObject(cardMember);
+			if(checkCard != null) {
+				model.addAttribute("msg", new ResponseMsg(ResponseMsgType.ERROR.value(), "此身份证已被注册，添加失败"));
+			} else {
+				User user = (User)request.getSession().getAttribute("user");
+				member.setCuserId(user.getId());
+				member.setUuserId(user.getId());
+				gm.save(member);
+				model.addAttribute("msg", new ResponseMsg(ResponseMsgType.SUCCESS.value(), "添加成功"));
+			}
+		} else {
+			User user = (User)request.getSession().getAttribute("user");
+			member.setCuserId(user.getId());
+			member.setUuserId(user.getId());
+			gm.save(member);
+			model.addAttribute("msg", new ResponseMsg(ResponseMsgType.SUCCESS.value(), "添加成功"));
+		}
 		return "jsonView";
 	}
 	

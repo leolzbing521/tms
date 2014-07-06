@@ -228,7 +228,7 @@
 	<div class="modal-footer">
 		<div class="text-center">
 			<button class="cancel btn btn-default" style="margin-right: 40px;", data-dismiss="modal">取消</button>
-			<button id="ok" class="btn btn-danger">确定</button>
+			<button id="ok" class="btn btn-success">确定</button>
 		</div>
 	</div>
 </div>
@@ -250,13 +250,6 @@ var purchaseItemPagination = new pup.Pagination({
 /* 跳转到第一页 */
 purchaseItemPagination.setSort({ctime:"DESC"}).first();
 
-$("#cancel, .close").click(function() {
-    $(".modal").modal("hide");
-    $(".popover").each( function() {
-        $(this).hide();
-    });
-});
-
 $("#muAdd").click(function() {
 	addAttachContent($("#formAdd #material > .btn.active").val());
     $("#add").modal("show");
@@ -272,13 +265,22 @@ $("#muAdd").click(function() {
      });
 });
 
-var curPurchaseItemId = 0;
+var curMemberId = 0;
+
+$(".cancel, .close").click(function() {
+	curMemberId = 0;
+    $(".modal").modal("hide");
+    $(".popover").each( function() {
+        $(this).hide();
+    });
+});
+
 
 $("#opDelConfirm #ok").click(function() {
     $("#opDelConfirm").modal("hide");
     var url = "purchaseItem/" + curPurchaseItemId;
     $.ajax({
-        type: "DELETE",
+        type: "GET",
         url: url,
         dataType: "json",
         data: {},
@@ -355,10 +357,11 @@ function queryData(isQuickBtn) {
     purchaseItemPagination.setCondition(condition).first();
 }
 
+var curPurchaseItemId = null;
 
 $("#opSellConfirm #ok").click(function() {
     $("#opSellConfirm").modal("hide");
-    var url = "purchaseItem/" + curPurchaseItemId;
+    var url = "purchaseItem/sell/" + curPurchaseItemId + "/" + curMemberId;
     $.ajax({
         type: "GET",
         url: url,
@@ -367,7 +370,7 @@ $("#opSellConfirm #ok").click(function() {
         success: function (data) {
             var formData = data.msg.body;
             if(data.msg.type == "success"){
-            	purchasePagination.reload();
+            	purchaseItemPagination.reload();
             }
             toast(data.msg);
         }
@@ -375,10 +378,11 @@ $("#opSellConfirm #ok").click(function() {
 });
 
 
-var curSellType = null;
+var curSellType = 0;
 
 $("#commonType").click(function() {
 	/* confirm the submit form */
+	curMemberId = 0;
 	$("#opSellConfirm").modal("show");
 });
 
@@ -389,7 +393,7 @@ $("#memberType").click(function() {
 		pup.widgets.layerManager.open({
 	        /* default random, not required */
 	        layerKey : "memberList",
-	        template : {
+	        template : {  
 	            /* template key */
 	            key : "member.select",
 	            /* template request params */
@@ -398,7 +402,13 @@ $("#memberType").click(function() {
 	            beforeRender : function() {},
 	            /* callback fn */
 	            afterRender : function() {}
-	        }
+	        },
+	        beforeClose : function() {
+	        	if(curMemberId && curMemberId != 0) {
+	        		$("#opSellConfirm").modal("show");
+	        	}
+                return true;
+            }
 	    });
     }, 600);
 

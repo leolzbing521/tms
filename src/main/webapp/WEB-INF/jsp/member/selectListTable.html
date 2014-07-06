@@ -1,26 +1,26 @@
-<table class="table mm-box">
-	<tr class="th-inverse">
-		<th>姓名</th>
-		<th>电话</th>
-		<th>身份证</th>
-		<th class="text-center">操作</th>
-	</tr>
+<table class="table mm-box table-hover">
+	<thead>
+		<tr class="th-inverse">
+			<th>姓名</th>
+			<th>电话</th>
+			<th>身份证</th>
+			<th>累计消费(元)</th>
+			<th>剩余积分</th>
+			<th class="text-center">操作</th>
+		</tr>
+	</thead>
 	<tbody>
 		<%for(var i=0;i<data.length;i++){
 			var member = data[i];
 		%>
-        	<tr>
+        	<tr class="cust-record" id="<%=member.id%>">
              	<td><%=member.realName%></td>
              	<td><%=member.phone%></td>
              	<td><%=member.identityCard%></td>
+             	<td><%=member.monetary%></td>
+             	<td><%=member.integral%></td>
              	<td>
-           			<div class="input-control radio">
-					    <label>
-					        <input type="radio" />
-					        <span class="check"></span>
-					        Check me out
-					    </label>
-					</div>
+           			<input type="radio" id="selectRadio<%=member.id%>" name="selectRadio" value="<%=member.id%>" onclick="">
              	</td>
            </tr>
        <%}%>
@@ -31,65 +31,18 @@
 
 <!-- script block -->
 <script type="text/javascript">
-$("#purchaseListData .edit").click(function(ev) {
+$("#memberListData .cust-record").click(function(ev) {
     ev.preventDefault();
-    var url = "purchase/" + $(this).attr("id");
-    $.ajax({
-        type: "GET",
-        url: url,
-        dataType: "json",
-        data: {id : $(this).attr("id")},
-        success: function (data) {
-            var purchase = data.purchase;
-            $("#formModify #id").val(purchase.id);
-            $("#formModify #name").val(purchase.name);
-            $("#formModify #amount").val(purchase.amount);
-            $("#formModify #comment").val(purchase.comment);
-            $("#modify").modal("show");
-            $("#formModify").validate_popover({onsubmit: false, popoverPosition: "top"});
-            $("#modify").on("scroll", function() { $.validator.reposition(); });
-            $("#modify").on("hide.bs.modal", function (e) {
-               $(".popover").each( function() {
-                  $(this).hide();
-               });
-            });
-            $(window).resize(function() {
-                $.validator.reposition();
-            });
-        }
-    });
+    curMemberId = $(this).attr("id");
+    $("#selectRadio" + curMemberId).prop("checked", true);
+    pup.widgets.layerManager.close({layerKey : "memberList"});
 });
 
-$("#purchaseListData .trash").click(function(ev) {
-	curPurchaseId = $(this).attr("id");
-	$("#opDelConfirm").modal("show");
+$("#memberListData input[name^=selectRadio]").click(function(ev) {
+	ev.stopPropagation();
+	curMemberId = $(this).val();
+    pup.widgets.layerManager.close({layerKey : "memberList"});
 });
-
-$("#purchaseListData .plus").click(function(ev) {
-	curPurchaseId = $(this).attr("id");
-	
-	$("#addItem #purchaseId option").each(function() {
-		if($(this).val() == curPurchaseId) {
-			$(this).prop("selected", "selected");
-			$("#addItem #hidPurchaseId").val($(this).val());
-			return true;
-		}
-	});
-	$("#addItem #purchaseId").selectpicker("refresh");
-	
-	$("#addItem").modal("show");
-    $("#formAddItem").validate_popover({onsubmit: false, popoverPosition: "top"});
-    $("#addItem").on("scroll", function() { $.validator.reposition(); });
-    $("#addItem").on("hide.bs.modal", function (e) {
-       $(".popover").each( function() {
-          $(this).hide();
-       });
-    });
-    $(window).resize(function() {
-        $.validator.reposition();
-    });
-});
-
 
 memberPagination.bar("#memberPageBar");
 </script>

@@ -22,7 +22,7 @@ public class PurchaseItem extends BaseModel {
     
     private Double weight;
     
-    private Boolean sell;
+    private boolean sell;
     
     private Double amount;
     
@@ -134,11 +134,11 @@ public class PurchaseItem extends BaseModel {
 		this.weight = weight;
 	}
 
-	public Boolean getSell() {
+	public boolean getSell() {
 		return sell;
 	}
 
-	public void setSell(Boolean sell) {
+	public void setSell(boolean sell) {
 		this.sell = sell;
 	}
 

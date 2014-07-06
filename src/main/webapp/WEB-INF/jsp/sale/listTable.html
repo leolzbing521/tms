@@ -35,7 +35,7 @@
              	</td>
              	<td>
              		<div class="text-center">
-             			<%if(purchaseItem.sell) {%>
+             			<%if(!purchaseItem.sell) {%>
              				<span class="icon-btn sell" id="<%=purchaseItem.id%>" title="销售"><i class="icon icon-hammer"></i></span>
              			<%} else {%>
              				<span class="m-r-15">已售</span>

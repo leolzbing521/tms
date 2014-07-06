@@ -6,7 +6,7 @@
 </div>
 <div class="row m-t-20">
 	<div class="col-sm-8 col-sm-offset-2 mm-box form-horizontal filter-pan">
-		<form id="query" onsubmit="return false;">
+		<form id="queryMember" onsubmit="return false;">
 			<div class="form-group">
 				<label class="control-label col-md-2">手机号</label>
 				<div class="col-md-10">
@@ -16,7 +16,7 @@
 			<div class="form-group">
 				<label class="control-label col-md-2">姓名</label>
 				<div class="col-md-10">
-					<input class="holo", type="text", name="name", id="name", style="display: inline-block;margin-right:10px;width:300px;">
+					<input class="holo", type="text", name="realName", id="realName", style="display: inline-block;margin-right:10px;width:300px;">
 				</div>
 			</div>
 			<div class="form-group">
@@ -33,8 +33,8 @@
 	</div>
 </div>
 
-<div class="modal fade" tabindex="-1", data-width="760", id="add", style="display: none;">
-	<form id="formAdd" action="purchase/add">
+<div class="modal fade" tabindex="-1", data-width="760", id="addMember", style="display: none;">
+	<form id="formAddMember" action="member/add">
 		<div class="modal-header">
 			<button class="close"type="button", data-dismiss="modal", aria-hidden="true"> &times</button>
 			<div class="row">
@@ -47,7 +47,7 @@
 			<div class="row m-t-20">
 				<span class="col-md-2 text-right text-muted small">姓名</span>
 				<div class="col-md-3">
-					<input class="holo required", type="text", style="margin-top:-20px;width:170px", id="name", name="name">
+					<input class="holo required", type="text", style="margin-top:-20px;width:170px", id="realName", name="realName">
 				</div>
 				<span class="col-md-2 text-right text-muted small">手机号</span>
 				<div class="col-md-3">
@@ -57,11 +57,11 @@
 			<div class="row m-t-20">
 				<span class="col-md-2 text-right text-muted small">身份证</span>
 				<div class="col-md-3">
-					<input class="holo required", type="text", style="margin-top:-20px;width:170px", id="identityCard", name="identityCard">
+					<input class="holo", type="text", style="margin-top:-20px;width:170px", id="identityCard", name="identityCard">
 				</div>
 				<span class="col-md-2 text-right text-muted small">性别</span>
 				<div class="col-md-3">
-					<div class="btn-group" data-toggle="buttons-radio", id="type">
+					<div class="btn-group" data-toggle="buttons-radio", id="sex">
 						<%for(var i=0;i<sexList.length;i++){
 						%>
 							<%if(i == 0){%>
@@ -86,73 +86,6 @@
 			</div>
 		</div>
 	</form>
-</div>
-
-<div class="modal fade" tabindex="-1", data-width="760", id="modify", style="display: none;">
-	<form id="formModify" action="member/modify">
-		<div class="modal-header">
-			<button class="close"type="button", data-dismiss="modal", aria-hidden="true"> &times</button>
-			<div class="row">
-				<div class="col-md-3">
-					<h4 class="modal-title">修改采购信息</h4>
-				</div>
-			</div>
-		</div>
-		<div class="modal-body">
-			<div class="row m-t-20">
-				<span class="col-md-2 text-right text-muted small">姓名</span>
-				<div class="col-md-3">
-					<input class="holo required", type="text", style="margin-top:-20px;width:170px", id="name", name="name">
-				</div>
-				<span class="col-md-2 text-right text-muted small">手机号</span>
-				<div class="col-md-3">
-					<input class="holo digits", type="text", style="margin-top:-20px;width:170px", id="phone", name="phone">
-				</div>
-			</div>
-			<div class="row m-t-20">
-				<span class="col-md-2 text-right text-muted small">身份证</span>
-				<div class="col-md-3">
-					<input class="holo required", type="text", style="margin-top:-20px;width:170px", id="identityCard", name="identityCard">
-				</div>
-				<span class="col-md-2 text-right text-muted small">性别</span>
-				<div class="col-md-3">
-					<div class="btn-group" data-toggle="buttons-radio", id="type">
-						<%for(var i=0;i<sexList.length;i++){
-						%>
-							<%if(i == 0){%>
-								<button class="btn btn-sm btn-light-info active" type="button", value="<%=sexList[i].key%>"><%=sexList[i].name%></button>
-							<%} else {%>
-								<button class="btn btn-sm btn-light-info" type="button", value="<%=sexList[i].key%>"><%=sexList[i].name%></button>
-							<%}%>
-				        <%}%>
-					</div>
-				</div>
-			</div>
-			<div class="row" style="margin-top:20px;">
-				<div class="col-md-10 col-md-offset-1">
-					<input class="holo", type="text", style="width: 100%;", placeholder="备注", id="comment", name="comment">
-				</div>
-			</div>
-		</div>
-		<div class="modal-footer">
-			<div class="text-center">
-				<button class="cancel btn btn-lg btn-default" id="cancel" style="margin-right: 40px;", type="button">取消</button>
-				<button class="btn btn-lg btn-success" id="submit", type="submit">确定</button>
-			</div>
-		</div>
-	</form>
-</div>
-
-<div class="modal fade" id="opDelConfirm" tabindex="-1", style="display: none;">
-	<div class="modal-body">
-		<p id="confirmMsg">确定删除？
-	</div>
-	<div class="modal-footer">
-		<div class="text-center">
-			<button class="cancel btn btn-default" style="margin-right: 40px;", data-dismiss="modal">取消</button>
-			<button id="ok" class="btn btn-danger">确定</button>
-		</div>
-	</div>
 </div>
 
 <div class="row m-t-25">
@@ -180,10 +113,10 @@ $("#cancel, .close").click(function() {
 });
 
 $("#muAdd").click(function() {
-    $("#add").modal("show");
-    $("#formAdd").validate_popover({onsubmit: false, popoverPosition: "top"});
-    $("#add").on("scroll", function() { $.validator.reposition(); });
-    $("#add").on("hide.bs.modal", function (e) {
+    $("#addMember").modal("show");
+    $("#formAddMember").validate_popover({onsubmit: false, popoverPosition: "top"});
+    $("#addMember").on("scroll", function() { $.validator.reposition(); });
+    $("#addMember").on("hide.bs.modal", function (e) {
        $(".popover").each( function() {
           $(this).hide();
        });
@@ -193,56 +126,13 @@ $("#muAdd").click(function() {
     });
 });
 
-$("#formAdd").submit(function(ev) {
+$("#formAddMember").submit(function(ev) {
     ev.preventDefault();
-    if($("#formAdd").validate().form()) {
-        var url = $(this).attr("action");
-        var formData = $(this).serializeObject();
-        $.ajax({
-            type: "POST",
-            url: url,
-            dataType: "json",
-            data: formData,
-            success: function (data) {
-                if(data.msg.type == "success") {
-                    $("#formAdd")[0].reset();
-                    $("#add").modal("hide");
-                    purchasePagination.first();
-                }
-                toast(data.msg);
-            }
-        });
-    }
-    return false;
-});
-
-addAttachContent($("#formAddItem #material > .btn.active").val());
-
-$("#formAddItem #material").find("button").click(function() {
-	addAttachContent($(this).val());
-});
-
-function addAttachContent(val) {
-	if(val == "gold") {
-		pup.template.renderTemplateByKey("purchaseItem.goldAttach");
-	} else if(val == "platinum") {
-		pup.template.renderTemplateByKey("purchaseItem.platinumAttach");
-	} else if(val == "jadeite"){
-		pup.template.renderTemplateByKey("purchaseItem.jadeiteAttach");
-	}
-}
-
-$("#formAddItem").submit(function(ev) {
-    ev.preventDefault();
-    if($("#formAddItem").validate().form()) {
+    if($("#formAddMember").validate().form()) {
         var url = $(this).attr("action");
         var formData = $(this).serializeObject();
         
-        formData.material = $("#formAddItem #material > .btn.active").val();
-        formData.type = $("#formAddItem #type > .btn.active").val();
-        if($("#formAddItem #hasDiamond > .btn.active").val() != undefined) {
-        	formData.hasDiamond = $("#formAddItem #hasDiamond > .btn.active").val();
-        }
+        formData.sex = $("#formAddMember #sex > .btn.active").val();
         $.ajax({
             type: "POST",
             url: url,
@@ -251,8 +141,9 @@ $("#formAddItem").submit(function(ev) {
             success: function (data) {
             	
                 if(data.msg.type == "success") {
-                    $("#formAddItem")[0].reset();
-                    $("#addItem").modal("hide");
+                    $("#formAddMember")[0].reset();
+                    $("#addMember").modal("hide");
+                    memberPagination.reload();
                 }
                 toast(data.msg);
             }
@@ -261,65 +152,18 @@ $("#formAddItem").submit(function(ev) {
     return false;
 });
 
-var curPurchaseId = 0;
-
-$("#opDelConfirm #ok").click(function() {
-    $("#opDelConfirm").modal("hide");
-    var url = "purchase/" + curPurchaseId;
-    $.ajax({
-        type: "DELETE",
-        url: url,
-        dataType: "json",
-        data: {},
-        success: function (data) {
-            var formData = data.msg.body;
-            if(data.msg.type == "success"){
-            	purchasePagination.reload();
-            }
-            toast(data.msg);
-        }
-    });
-});
-
-$("#formModify").submit(function(ev) {
-    ev.preventDefault();
-    if($("#formModify").validate().form()) {
-        var url = $(this).attr("action");
-        var formData = $(this).serializeObject();
-        $.ajax({
-            type: "POST",
-            url: url,
-            dataType: "json",
-            data: formData,
-            success: function (data) {
-                if(data.msg.type == "success") {
-                    $("#formModify")[0].reset();
-                    $("#modify").modal("hide");
-                    purchasePagination.reload();
-                }
-                toast(data.msg);
-            }
-        });
-    }
-    return false;
-});
-
-$("#queryQuick").click(function() {
+$("#queryMember #queryQuick").click(function() {
 	var condition = {};
-    if($("#query #name").val() != "") {
-        condition.name = $("#query #name").val();
-    } else if(lr.val() != "") {
-        condition.orgId = lr.val();
+    if($("#queryMember #realName").val() != "") {
+        condition.realName = $("#queryMember #realName").val();
     }
-    purchasePagination.setCondition(condition).first();
-});
-
-var lr = new pup.widgets.labelRadio("#selectOrgs").radio(function(value) {
-	var condition = {};
-    if(lr.val() != "") {
-        condition.orgId = lr.val();
+    if($("#queryMember #phone").val() != "") {
+        condition.phone = $("#queryMember #phone").val();
     }
-    purchasePagination.setCondition(condition).first();
+    if($("#queryMember #identityCard").val() != "") {
+        condition.identityCard = $("#queryMember #identityCard").val();
+    }
+    memberPagination.setCondition(condition).first();
 });
 
 </script>

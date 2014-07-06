@@ -1,5 +1,6 @@
 package com.imhipi.app.tms.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +56,17 @@ public class saleCtrl extends BaseController {
 		if (PageUtils.isEmpty(page)) {
             page = pageConfig.getDefaultPage();
         }
+		User user = (User)request.getSession().getAttribute("user");
+		Purchase searchPur = new Purchase();
+		searchPur.setOrgId(user.getId());
+		List<Purchase> purchases = gm.findMulti(searchPur);
+		List<Long> purchaseIds = new ArrayList<Long>();
+		for(Purchase p : purchases) {
+			purchaseIds.add(p.getId());
+		}
+		if(purchaseIds.size() > 0) {
+			page.getCondition().put("rangeList", purchaseIds);
+		}
 		
 		page.setTotal(gm.countTotalNum(new PurchaseItem(), page));
 		
