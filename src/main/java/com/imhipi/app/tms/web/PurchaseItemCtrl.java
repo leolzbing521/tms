@@ -100,7 +100,7 @@ public class PurchaseItemCtrl extends BaseController {
 			User user = (User)request.getSession().getAttribute("user");
 			purchaseItem.setCuserId(user.getId());
 			purchaseItem.setUuserId(user.getId());
-			
+			purchaseItem.setStatus("1");
 			   System.out.print("test item add \n");
 			gm.save(purchaseItem);
 			model.addAttribute("msg", new ResponseMsg(ResponseMsgType.SUCCESS.value(), "添加成功"));

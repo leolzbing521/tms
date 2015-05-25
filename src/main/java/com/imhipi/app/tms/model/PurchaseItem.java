@@ -16,7 +16,7 @@ public class PurchaseItem extends BaseModel {
     
     private String barcode;
     
-    private Long status;
+    private String status;
     
     private String material;
     
@@ -209,15 +209,17 @@ public class PurchaseItem extends BaseModel {
 	/**
 	 * @return the status
 	 */
-	public Long getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
 	/**
 	 * @param status the status to set
 	 */
-	public void setStatus(Long status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
+
+
     
 }
