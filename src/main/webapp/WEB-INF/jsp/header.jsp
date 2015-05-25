@@ -63,7 +63,7 @@
 						<li role="presentation"><a role='menuitem', tabindex="-1", href='javascript:pup.template.renderTemplateByKey("example.pageLoad")'>统计管理</a></li>
 					</ul>
 				</li>
-				<li class="dropdown">
+<!-- 				<li class="dropdown">
 					<a class="dropdown-toggle" href="#", data-toggle="dropdown">
 						会员
 						<span class="caret"></span>
@@ -71,7 +71,7 @@
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
 						<li role="presentation"><a role='menuitem', tabindex="-1", href='javascript:pup.template.renderTemplateByKey("example.pageLoad")'>会员管理</a></li>
 					</ul>
-				</li>
+				</li> -->
 				<li class="dropdown">
 					<a class="dropdown-toggle" href="#", data-toggle="dropdown">
 						授权
