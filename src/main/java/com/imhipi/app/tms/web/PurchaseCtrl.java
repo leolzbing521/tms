@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.alibaba.fastjson.JSON;
 import com.imhipi.app.tms.component.DictService;
 import com.imhipi.app.tms.component.OrgService;
 import com.imhipi.app.tms.component.PageConfig;
@@ -24,7 +25,7 @@ import com.imhipi.app.tms.service.GenericManager;
 import com.imhipi.app.tms.util.PageUtils;
 
 @Controller
-@RequestMapping("/purchase")
+@RequestMapping("purchase")
 public class PurchaseCtrl extends BaseController {
 	
 	@Autowired
@@ -42,10 +43,14 @@ public class PurchaseCtrl extends BaseController {
 	
 	@RequestMapping(value="list", method = RequestMethod.GET)
 	public String list(Model model) {
+	
+		
 		model.addAttribute("purchases", gm.findMulti(new Purchase()));
+		System.out.println(JSON.toJSONString(model));
 		model.addAttribute("materials", dictService.getDictsByType(DictRootType.MATERIAL_TYPE));
-		model.addAttribute("types", dictService.getDictsByType(DictRootType.GEM_TYPE));
-		model.addAttribute("orgs", orgService.getRootOrgs());
+		model.addAttribute("types", DictService.getDictsByType(DictRootType.GEM_TYPE));
+		model.addAttribute("orgs", OrgService.getRootOrgs());
+		System.out.printf("the function list\n");
 		return "jsonView";
 	}
 	

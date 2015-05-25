@@ -26,6 +26,7 @@ public class DictService {
 	
 	private static Map<String, LinkedHashMap<String, Dictionary>> tDictMap = new HashMap<String, LinkedHashMap<String, Dictionary>>();
 
+
 	@PostConstruct
 	public void init() {
 		List<Dictionary> typeDict = null;
@@ -47,7 +48,7 @@ public class DictService {
 		String type = rootType.value();
 		List<Dictionary> dicts = new ArrayList<Dictionary>();
 		
-		if(StringUtils.hasText(type)) {
+		if(StringUtils.hasText(type) && tDictMap.containsKey(type)) {
 			LinkedHashMap<String, Dictionary> dictMap = tDictMap.get(type);
 			for(String key : dictMap.keySet()) {
 				Dictionary dict = new Dictionary();

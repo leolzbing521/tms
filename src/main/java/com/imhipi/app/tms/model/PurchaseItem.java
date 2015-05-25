@@ -16,6 +16,8 @@ public class PurchaseItem extends BaseModel {
     
     private String barcode;
     
+    private Long status;
+    
     private String material;
     
     private String type;
@@ -27,8 +29,6 @@ public class PurchaseItem extends BaseModel {
     private Double amount;
     
     private Long purchaseId;
-    
-    private Boolean hasDiamond;
     
     private String diamondDimension;
     
@@ -190,14 +190,6 @@ public class PurchaseItem extends BaseModel {
 		this.uuserId = uuserId;
 	}
 
-	public Boolean getHasDiamond() {
-		return hasDiamond;
-	}
-
-	public void setHasDiamond(Boolean hasDiamond) {
-		this.hasDiamond = hasDiamond;
-	}
-
 	@Override
     public Serializable getPrimaryKey() {
         return id;
@@ -212,8 +204,20 @@ public class PurchaseItem extends BaseModel {
     public void prepareForSave() {
         super.prepareForSave();
         sell = false;
-        if(hasDiamond == null)
-        	hasDiamond = false;
     }
+
+	/**
+	 * @return the status
+	 */
+	public Long getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(Long status) {
+		this.status = status;
+	}
     
 }

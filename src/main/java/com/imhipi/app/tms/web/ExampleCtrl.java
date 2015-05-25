@@ -16,7 +16,7 @@ public class ExampleCtrl extends BaseController {
 	
 	@RequestMapping(value="pageLoad")
 	public String example(Model model) {
-		model.addAttribute("name", "Michael");
+		model.addAttribute("name", "test  aaMichael");
 		
 		return "jsonView";
 	}

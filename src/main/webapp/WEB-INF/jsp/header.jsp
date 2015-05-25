@@ -7,7 +7,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">SCM</a>
+			<a class="navbar-brand" href="#">test SCM</a>
 		</div>
 		<%-- <div class="collapse navbar-collapse">
 			<c:if test="${!empty sessionScope.user.menu and !empty menus}">

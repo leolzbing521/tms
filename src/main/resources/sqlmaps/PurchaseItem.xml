@@ -12,11 +12,11 @@
 		<result property="barcode" />
 		<result property="material" />
 		<result property="weight" column="weight"/>
-		<result property="sell" column="sell" javaType="boolean"/>
+		<result property="sell" column="sell" javaType="boolean" jdbcType="bit"/>
+		<result property="status" column="status" />
 		<result property="type" column="type" />
 		<result property="amount" />
 		<result property="purchaseId" column="purchase_id" />
-		<result property="hasDiamond" column="has_diamond" />
 		<result property="diamondDimension" column="diamond_dimension" />
 		<result property="diamondAmount" column="diamond_amount" />
 		<result property="cuserId" column="cuser_id" />
@@ -140,9 +140,9 @@
 	<insert id="savePurchaseItem" parameterClass="PurchaseItem">
         <![CDATA[
             INSERT INTO $tableName$ (name, barcode, material, type, weight, sell, amount, purchase_id,
-            has_diamond, diamond_dimension, diamond_amount, cuser_id, ctime, uuser_id, utime) 
+            diamond_dimension, diamond_amount, cuser_id, ctime, uuser_id, utime) 
             VALUES (#name#, #barcode#, #material#, #type#, #weight#, #sell#, #amount#,
-            #purchaseId#, #hasDiamond#, #diamondDimension#, #diamondAmount#, #cuserId#, #ctime#, #uuserId#, #utime#)
+            #purchaseId#, #diamondDimension#, #diamondAmount#, #cuserId#, #ctime#, #uuserId#, #utime#)
         ]]>
 		<selectKey resultClass="java.lang.Long" keyProperty="id"
 			type="post">
@@ -163,11 +163,6 @@
 			<isNotNull property="barcode" prepend=",">
 		<![CDATA[
                     barcode = #barcode#
-		]]>
-			</isNotNull>
-			<isNotNull property="hasDiamond" prepend=",">
-		<![CDATA[
-                    has_diamond = #hasDiamond#
 		]]>
 			</isNotNull>
 			<isNotNull property="material" prepend=",">

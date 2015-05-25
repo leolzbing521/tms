@@ -65,7 +65,7 @@
 	});
 </script>
 
-<title>老铭泰综合管理系统</title>
+<title>副食综合管理系统</title>
 </head>
 <body>
 	<div id="wrap">

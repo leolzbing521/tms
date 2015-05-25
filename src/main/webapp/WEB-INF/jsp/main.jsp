@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>老铭泰综合管理系统</title>
+<title>副食综合管理系统</title>
 
 <link rel="stylesheet", href="<c:url value='/css/jq/jquery-ui-1.10.4.custom.min.css'/>">
 <link rel="stylesheet", href="<c:url value='/css/bootstrap.css'/>">

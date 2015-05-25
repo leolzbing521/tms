@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
 @Controller
 @RequestMapping("template")
 public class TemplateCtrl extends BaseController {
@@ -21,8 +22,8 @@ public class TemplateCtrl extends BaseController {
 	}
 	
 	@RequestMapping(value="purchase/list")
-	public String purchaseList(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {
-		
+	public String purchaseList(HttpServletRequest request,HttpServletResponse response, Model model) throws ServletException, IOException {
+		System.out.printf("the Pushchase list\n");
 		return "purchase/list";
 	}
 	
