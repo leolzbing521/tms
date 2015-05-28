@@ -20,7 +20,11 @@ public class TemplateCtrl extends BaseController {
 		
 		return "example/pageLoad";
 	}
-	
+	@RequestMapping(value="purchase/listBrand")
+	public String purchaseListBrand(HttpServletRequest request,HttpServletResponse response, Model model) throws ServletException, IOException {
+		System.out.printf("the Pushchase list\n");
+		return "purchase/listBrand";
+	}
 	@RequestMapping(value="purchase/list")
 	public String purchaseList(HttpServletRequest request,HttpServletResponse response, Model model) throws ServletException, IOException {
 		System.out.printf("the Pushchase list\n");

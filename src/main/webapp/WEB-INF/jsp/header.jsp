@@ -7,7 +7,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">test SCM</a>
+			<a class="navbar-brand" href="#"> SCMtest</a>
 		</div>
 		<%-- <div class="collapse navbar-collapse">
 			<c:if test="${!empty sessionScope.user.menu and !empty menus}">
@@ -33,16 +33,17 @@
 		</div> --%>
         <div class="collapse navbar-collapse">
         	<ul class="url nav navbar-nav navbar-left">
-        		<li class="dropdown">
-					<a class="dropdown-toggle" href="#", data-toggle="dropdown">
-						采购
-						<span class="caret"></span>
-					</a>
-					<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-						<li role="presentation"><a role='menuitem', tabindex="-1", href='javascript:pup.template.renderTemplateByKey("purchase.list")'>采购管理</a></li>
-						<li role="presentation"><a role='menuitem', tabindex="-1", href='javascript:pup.template.renderTemplateByKey("purchaseItem.list")'>商品管理</a></li>
-					</ul>
-				</li>
+        			<li class="dropdown">
+				<a class="dropdown-toggle" href="#", data-toggle="dropdown">
+					采购
+					<span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+					<li role="presentation"><a role='menuitem', tabindex="-1", href='javascript:pup.template.renderTemplateByKey("purchase.listBrand")'>厂商管理</a></li>
+					<li role="presentation"><a role='menuitem', tabindex="-1", href='javascript:pup.template.renderTemplateByKey("purchase.list")'>采购管理</a></li>
+					<li role="presentation"><a role='menuitem', tabindex="-1", href='javascript:pup.template.renderTemplateByKey("purchaseItem.list")'>商品管理</a></li>
+				</ul>
+			</li>
 				
 				<li class="dropdown">
 					<a class="dropdown-toggle" href="#", data-toggle="dropdown">

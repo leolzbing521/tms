@@ -34,6 +34,9 @@
 		<!-- default to null -->
 		<!-- <dataParams class="Object"></dataParams> -->
 	</template>
+	<template key="purchase.listBrand">
+		<requestUrl>purchase/listBrand</requestUrl>
+	</template>
 	<template key="purchase.list">
 		<requestUrl>/purchase/list</requestUrl>
 	</template>

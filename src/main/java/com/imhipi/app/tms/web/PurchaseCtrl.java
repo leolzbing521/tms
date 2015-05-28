@@ -17,6 +17,7 @@ import com.imhipi.app.tms.component.OrgService;
 import com.imhipi.app.tms.component.PageConfig;
 import com.imhipi.app.tms.enums.DictRootType;
 import com.imhipi.app.tms.enums.ResponseMsgType;
+import com.imhipi.app.tms.model.Brand;
 import com.imhipi.app.tms.model.Pagination;
 import com.imhipi.app.tms.model.Purchase;
 import com.imhipi.app.tms.model.ResponseMsg;
@@ -35,6 +36,9 @@ public class PurchaseCtrl extends BaseController {
 	private OrgService orgService;
 	
 	@Autowired
+	private OrgService BrandService;
+	
+	@Autowired
 	private DictService dictService;
 	
 	@Autowired
@@ -50,6 +54,16 @@ public class PurchaseCtrl extends BaseController {
 		model.addAttribute("materials", dictService.getDictsByType(DictRootType.MATERIAL_TYPE));
 		model.addAttribute("types", DictService.getDictsByType(DictRootType.GEM_TYPE));
 		model.addAttribute("orgs", OrgService.getRootOrgs());
+		System.out.printf("the function list\n");
+		return "jsonView";
+	}
+	@RequestMapping(value="listBrand", method = RequestMethod.GET)
+	public String listBrand(Model model) {
+		model.addAttribute("brand", gm.findMulti(new Brand()));
+		System.out.println(JSON.toJSONString(model));
+		model.addAttribute("brand", dictService.getDictsByType(DictRootType.MATERIAL_TYPE));
+		model.addAttribute("types", DictService.getDictsByType(DictRootType.GEM_TYPE));
+		model.addAttribute("name", OrgService.getRootOrgs());
 		System.out.printf("the function list\n");
 		return "jsonView";
 	}
