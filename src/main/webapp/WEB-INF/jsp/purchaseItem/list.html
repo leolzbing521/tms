@@ -63,7 +63,7 @@
 			<button class="close"type="button", data-dismiss="modal", aria-hidden="true"> &times</button>
 			<div class="row">
 				<div class="col-md-3">
-					<h4 class="modal-title">添加商品信息</h4>
+					<h4 class="modal-title">商品入库信息</h4>
 				</div>
 			</div>
 		</div>
@@ -71,14 +71,40 @@
 			<div class="row m-t-20">
 				<span class="col-md-2 text-right text-muted small">名称</span>
 				<div class="col-md-3">
-					<input class="holo required", type="text", style="margin-top:-20px;width:170px", id="name", name="name">
+					<select class="selectpicker" name="purchaseId" id="purchaseId" data-live-search="true">
+						<%for(var i=0;i<purchases.length;i++){
+						%>
+				        	<option value="<%=purchases[i].id%>"><%=purchases[i].name%></option>
+				        <%}%>
+                   			 </select>				
+                		</div>
+				<span class="col-md-2 text-right text-muted small">所属采购</span>
+				<div class="col-md-3">
+					<select class="selectpicker" name="purchaseId" id="purchaseId" data-live-search="true">
+						<%for(var i=0;i<purchases.length;i++){
+						%>
+				        	<option value="<%=purchases[i].id%>"><%=purchases[i].name%></option>
+				        <%}%>
+                   			 </select>				
+                		</div>
+			</div>
+			<div class="row m-t-20">
+				<span class="col-md-2 text-right text-muted small">进货单价</span>
+				<div class="col-md-3">
+					<input class="holo required", type="text", style="margin-top:-20px;width:170px", id="barcode", name="barcode">
 				</div>
-				<span class="col-md-2 text-right text-muted small">条形码</span>
+				<span class="col-md-2 text-right text-muted small">数量</span>
 				<div class="col-md-3">
 					<input class="holo required", type="text", style="margin-top:-20px;width:170px", id="barcode", name="barcode">
 				</div>
 			</div>
 			<div class="row m-t-20">
+				<span class="col-md-2 text-right text-muted small">商品总价</span>
+				<div class="col-md-3">
+					<input class="holo required", type="text", style="margin-top:-20px;width:170px", id="barcode", name="barcode">
+				</div>
+			</div>
+<!-- 			<div class="row m-t-20">
 				<span class="col-md-2 text-right text-muted small">材质</span>
 				<div class="col-md-3">
 					<div class="btn-group" data-toggle="buttons-radio", id="material">
@@ -101,11 +127,11 @@
 				        <%}%>
                     </select>				
                 </div>
-			</div>
-			<div id="attachContent">
-			</div>
+			</div> -->
+<!-- 			<div id="attachContent">
+			</div> -->
 			<div class="row m-t-20">
-				<span class="col-md-2 text-right text-muted small">类型</span>
+				<!-- <span class="col-md-2 text-right text-muted small">类型</span>
 				<div class="col-md-8">
 					<div class="btn-group" data-toggle="buttons-radio", id="type">
 						<%for(var i=0;i<types.length;i++){
@@ -118,7 +144,7 @@
 				        <%}%>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<div class="row" style="margin-top:20px;">
 				<div class="col-md-10 col-md-offset-1">
 					<input class="holo", type="text", style="width: 100%;", placeholder="备注", id="comment", name="comment">
